@@ -18,4 +18,8 @@ export const BtnGris = styled(Btn)`
 export const BtnTransparente = styled(Btn)`
     background-color: transparent;
     border: solid 1px ${colorBlanco};
+    @media (max-width: 768px) {
+        display: none;
+    }  
+    
 `

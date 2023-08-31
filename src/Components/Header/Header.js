@@ -13,6 +13,9 @@ const StyleHeader = styled.header`
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    @media (max-width: 768px) {
+        justify-content: center;
+    }  
 `
 function Header() {
     return(
