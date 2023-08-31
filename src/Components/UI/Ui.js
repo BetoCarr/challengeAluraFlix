@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { colorAzul, colorGris, colorBlanco } from "./variables";
+import { colorNegro, colorAzul, colorGris, colorBlanco, colorGrisLigero } from "./variables";
 
 export const Btn = styled.button`
     min-width: 180px;
@@ -14,6 +14,12 @@ export const Btn = styled.button`
 `
 export const BtnGris = styled(Btn)`
     background-color:${colorGris};
+`
+export const BtnGrisLigero = styled(Btn)`
+    background-color: ${colorGrisLigero};
+    color: ${colorNegro};
+    min-width: 120px;
+    height: 35px;
 `
 export const BtnTransparente = styled(Btn)`
     background-color: transparent;
