@@ -14,9 +14,9 @@ const StyleTitle = styled.div`
     background-color: ${ (props) => props.primary ? colorVerde : colorNaranja };
 `
 export const StyleTitleXL = styled(StyleTitle)`
-    min-width: 276px;
-    height: 76px;
-    font-size: 60px;
+    width: 48%;
+    height: 5rem;
+    font-size: 3rem;
     background-color: ${colorTurquesa};
     margin-bottom: 2rem;
 `

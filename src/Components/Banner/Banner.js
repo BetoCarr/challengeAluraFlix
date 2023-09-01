@@ -16,18 +16,18 @@ const StyleBanner = styled.section`
     padding: 1.5rem;
 `
 const BannerSubTitle= styled.h2`
-    font-size: 30px;
+    font-size: 2rem;
     font-weight: 300;
     color: ${colorGrisLigero};
     margin-bottom: 2rem;
 `
 const BannerText = styled.p`
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: 300;
     color: ${colorGrisLigero};
 `
 const ContainerText = styled.div`
-    max-width: 664px;
+    max-width: 55%;
     height: auto;
 `
 

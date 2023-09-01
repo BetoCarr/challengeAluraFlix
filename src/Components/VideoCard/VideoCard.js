@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import styled from 'styled-components';
 
 const VideoCardStd = styled.img`
@@ -7,6 +7,6 @@ const VideoCardStd = styled.img`
     /* border: solid 1px; */
 `
 export const VideoCardLarge = styled(VideoCardStd)`
-    width: 646px;
-    height: 333px;
+    width: 45%;
+    height: 20.8rem;
 `
