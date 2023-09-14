@@ -5,7 +5,6 @@ import Footer from "../Footer/Footer";
 import { colorNegro } from "../UI/variables";
 
 const StyleDefaultPage = styled.div`
-    background-color: ${colorNegro};
     width: 100%; 
     margin: 0 auto; 
     display: flex;
