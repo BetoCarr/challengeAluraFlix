@@ -8,8 +8,8 @@ import { colorGrisLigero, colorTurquesa } from "../../Components/UI/variables";
 import { VideoCardLarge } from "../VideoCard/VideoCard"
 import Box from '@mui/material/Box';
 import ContainerTitulo from "../TituloCategoria/TituloCategoria"
+import Typography from "@mui/material/Typography";
 
-// `
 const BannerSubTitle= styled.h2`
     font-size: 2rem;
     font-weight: 300;
@@ -27,18 +27,23 @@ function Banner () {
         <Box
             sx={{
                 width: "100%",
-                height: "auto",
+                height: "30rem",
                 display: "flex",
                 alignItems: "center",
                 padding: "1.5rem",
-                backgroundColor: "red"
+                backgroundImage: `url(${banner})`,
+                backgroundSize: "cover", 
+                backgroundPosition: "center",
             }}
             component="section"
         >
-            <Box sx={{}}>
-                <ContainerTitulo title="Front End" color={colorTurquesa}  width= "46%" height= "5rem" />
-                <BannerSubTitle>Challenge React</BannerSubTitle>
-                <BannerText>Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.</BannerText>
+            <Box sx={{
+                    marginRight: "0.5rem"
+                }}
+            >
+                <ContainerTitulo title="Front End" color={colorTurquesa}  width= "30%" height= "5rem" fontSize="2.3rem"/>
+                <Typography variant="h4" color="text.primary">Challenge React</Typography>
+                <Typography variant='body1' color="text.primary">Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.</Typography>
             </Box>
             <VideoCardLarge src={cardPrincipal} />
             {/* <BtnGrisLigero>Ver</BtnGrisLigero> */}
