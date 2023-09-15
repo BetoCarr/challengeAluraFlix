@@ -7,8 +7,11 @@ const tema = createTheme({
             main: "#000000"
         },
         text: {
-            primary: "#F5F5F5", 
+            primary: "#F5F5F5"
         },
+        boton: {
+            primary: "#00000000",
+        }
     },
 });
 

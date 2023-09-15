@@ -19,7 +19,17 @@ function ContainerTitulo({ title, color, width, height, fontSize }) {
                 // border: "none"
             }}
         >
-            <Typography variant='h4' style={{fontSize, fontWeight:"400"}} color="text.primary">{title}</Typography>
+            <Typography variant='h4' 
+                style={{fontSize,
+                        fontWeight:"400",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis"
+                    }} 
+                color="text.primary"
+            >
+                {title}
+            </Typography>
         </Paper>
     );
 }
