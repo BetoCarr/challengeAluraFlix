@@ -1,23 +1,30 @@
 import React from "react";
-import styled from "styled-components";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { colorNegro } from "../UI/variables";
+import Box from '@mui/material/Box';
 
-const StyleDefaultPage = styled.div`
-    width: 100%; 
-    margin: 0 auto; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-`
+// const StyleDefaultPage = styled.div`
+//     width: 100%; 
+//     margin: 0 auto; 
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: space-between;
+// `
 function DefaultPage ({ children }) {
     return(
-        <StyleDefaultPage>
+        <Box sx={{
+                width: "100%",
+                margin: "0 auto",
+                display: "flex",
+                minHeight: "100vh",
+                flexDirection: "column",
+                justifyContent: "space-between",
+            }}
+        >
             <Header />
-            {children}
+                {children}
             <Footer />
-        </StyleDefaultPage>
+        </Box>
     );
 }
 

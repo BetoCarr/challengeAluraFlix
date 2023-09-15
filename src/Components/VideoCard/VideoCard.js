@@ -8,5 +8,5 @@ const VideoCardStd = styled.img`
 `
 export const VideoCardLarge = styled(VideoCardStd)`
     width: 45%;
-    height: 20.8rem;
+    height: 20%;
 `

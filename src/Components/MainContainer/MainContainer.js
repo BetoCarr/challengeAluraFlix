@@ -1,13 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const StyleMain = styled.main`
-    display: flex;
-    flex-direction: column;
-`
+import Box from '@mui/material/Box';
 
 function MainContainer ({ children }) {
-    return <StyleMain>{children}</StyleMain>;
+    return(
+        <Box
+            component="main"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                flex: "1"
+            }}
+        >
+            {children}
+        </Box>
+    );
 }
 
 export default MainContainer;

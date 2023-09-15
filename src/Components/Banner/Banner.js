@@ -2,19 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import banner from "../../assets/img/banner2.webp";
 import cardPrincipal from "../../assets/img/player.png"
-import { colorGrisLigero } from "../../Components/UI/variables";
+import { colorGrisLigero, colorTurquesa } from "../../Components/UI/variables";
 // import { BtnGrisLigero } from "../UI/Ui";
-import{ StyleTitleXL } from "../TituloCategoria/TituloCategoria"
+// import{ StyleTitleXL } from "../TituloCategoria/TituloCategoria"
 import { VideoCardLarge } from "../VideoCard/VideoCard"
-const StyleBanner = styled.section`
-    background-image: url(${banner});
-    background-size: cover;
-    background-position: center;
-    height: 532px;
-    display: flex;
-    align-items: center;
-    padding: 1.5rem;
-`
+import Box from '@mui/material/Box';
+import ContainerTitulo from "../TituloCategoria/TituloCategoria"
+
+// `
 const BannerSubTitle= styled.h2`
     font-size: 2rem;
     font-weight: 300;
@@ -26,22 +21,28 @@ const BannerText = styled.p`
     font-weight: 300;
     color: ${colorGrisLigero};
 `
-const ContainerText = styled.div`
-    max-width: 55%;
-    height: auto;
-`
 
 function Banner () {
     return(
-        <StyleBanner>
-            <ContainerText>
-                <StyleTitleXL>Front End</StyleTitleXL>
+        <Box
+            sx={{
+                width: "100%",
+                height: "auto",
+                display: "flex",
+                alignItems: "center",
+                padding: "1.5rem",
+                backgroundColor: "red"
+            }}
+            component="section"
+        >
+            <Box sx={{}}>
+                <ContainerTitulo title="Front End" color={colorTurquesa}  width= "46%" height= "5rem" />
                 <BannerSubTitle>Challenge React</BannerSubTitle>
                 <BannerText>Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.</BannerText>
-            </ContainerText>
+            </Box>
             <VideoCardLarge src={cardPrincipal} />
             {/* <BtnGrisLigero>Ver</BtnGrisLigero> */}
-        </StyleBanner>
+        </Box>
     );
 }
 
