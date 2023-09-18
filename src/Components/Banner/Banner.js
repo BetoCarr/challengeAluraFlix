@@ -4,7 +4,7 @@ import cardPrincipal from "../../assets/img/player.png"
 import { colorGrisLigero, colorTurquesa } from "../../Components/UI/variables";
 // import { BtnGrisLigero } from "../UI/Ui";
 // import{ StyleTitleXL } from "../TituloCategoria/TituloCategoria"
-import { VideoCardLarge } from "../VideoCard/VideoCard"
+import VideoCard from "../VideoCard/VideoCard"
 import Box from '@mui/material/Box';
 import ContainerTitulo from "../TituloCategoria/TituloCategoria"
 import Typography from "@mui/material/Typography";
@@ -33,7 +33,7 @@ function Banner () {
                 <Typography variant="h4" color="text.primary">Challenge React</Typography>
                 <Typography variant='body1' color="text.primary">Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.</Typography>
             </Box>
-            <VideoCardLarge src={cardPrincipal} />
+            <VideoCard imageUrl={cardPrincipal} videoUrl="https://www.youtube.com/watch?v=QjOWz9avkg8" title="Titulo de prueba" isBanner />
         </Box>
     );
 }
