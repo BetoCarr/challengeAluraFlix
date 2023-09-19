@@ -3,14 +3,14 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import { styled } from '@mui/system';
 
-const VideoCardContainer = styled(Card)(({ isBanner }) => ({
-    width: isBanner ? '70%' : '50%',
+const VideoCardContainer = styled(Card)(({ isbanner }) => ({
+    width: isbanner ? '70%' : '50%',
 }));
 
 
-function VideoCard({ videoUrl, title, imageUrl, isBanner }){
+function VideoCard({ videoUrl, title, imageUrl, isbanner }){
     return (
-        <VideoCardContainer isBanner={isBanner}>
+        <VideoCardContainer isbanner={isbanner.toString()}>
             <a href={videoUrl} target="_blank" rel="noopener noreferrer">
                 <CardMedia
                     component="img"

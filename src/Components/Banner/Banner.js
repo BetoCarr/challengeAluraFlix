@@ -33,7 +33,7 @@ function Banner () {
                 <Typography variant="h4" color="text.primary">Challenge React</Typography>
                 <Typography variant='body1' color="text.primary">Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.</Typography>
             </Box>
-            <VideoCard imageUrl={cardPrincipal} videoUrl="https://www.youtube.com/watch?v=QjOWz9avkg8" title="Titulo de prueba" isBanner />
+            <VideoCard imageUrl={cardPrincipal} videoUrl="https://www.youtube.com/watch?v=QjOWz9avkg8" title="Titulo de prueba" isbanner={true.toString()}  />
         </Box>
     );
 }
