@@ -1,5 +1,5 @@
 import React from 'react';
-import banner from "../../assets/img/banner2.webp";
+import banner from "../../assets/img/banner-deporte.jpg"
 import cardPrincipal from "../../assets/img/player.png"
 import { colorGrisLigero, colorTurquesa } from "../../Components/UI/variables";
 // import { BtnGrisLigero } from "../UI/Ui";
@@ -29,9 +29,9 @@ function Banner () {
                     maxWidth: "50%"
                 }}
             >
-                <ContainerTitulo title="Front End" color={colorTurquesa}  width= "32%" height= "3.6rem" fontSize="auto"/>
-                <Typography variant="h4" color="text.primary">Challenge React</Typography>
-                <Typography variant='body1' color="text.primary">Este challenge es una forma de aprendizaje. Es un mecanismo donde podrás comprometerte en la resolución de un problema para poder aplicar todos los conocimientos adquiridos en la formación React.</Typography>
+                <ContainerTitulo title="Fut-Bol" color={colorTurquesa}  width= "32%" height= "3.6rem" fontSize="auto"/>
+                <Typography variant="h4" color="text.primary">Explora y Aprende Deportes</Typography>
+                <Typography variant='body1' color="text.primary">SportFlix te invita a explorar y aprender una variedad de deportes emocionantes. Sumérgete en el mundo del deporte, desde el longboarding hasta el fútbol y el frontenis. Nuestra plataforma está diseñada para ayudarte a adquirir nuevas habilidades y conocimientos deportivos mientras te diviertes. ¡Unete a la aventura deportiva ahora!</Typography>
             </Box>
             <VideoCard imageUrl={cardPrincipal} videoUrl="https://www.youtube.com/watch?v=QjOWz9avkg8" title="Titulo de prueba" isbanner={true.toString()}  />
         </Box>

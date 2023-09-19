@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 function ContainerTitulo({ title, color, width, height, fontSize }) {
     return(
         <Paper
-            elevation={2} // Puedes ajustar la elevación según tus preferencias
+            elevation={2} 
             style={{
                 backgroundColor: color,
                 padding: "16px",
@@ -16,7 +16,6 @@ function ContainerTitulo({ title, color, width, height, fontSize }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                // border: "none"
             }}
         >
             <Typography variant='h4' 
