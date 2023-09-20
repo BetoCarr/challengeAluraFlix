@@ -1,12 +1,13 @@
-import React from 'react';
 import MySlider from '../Slider/Slider';
 import VideoCard from '../../VideoCard/VideoCard';
 
-function Carousel({ videos }) {
+function Carousel() {
+
+    
     return (
         <div>
             <MySlider>
-                {videos.map((video, index) => (
+                {/* {videos.map((video, index) => (
                     <div key={index}>
                         <VideoCard
                             imageUrl={video.imageUrl}
@@ -15,7 +16,7 @@ function Carousel({ videos }) {
                             isBanner={video.isBanner}
                         />
                     </div>
-                ))}
+                ))} */}
             </MySlider>
         </div>
     );

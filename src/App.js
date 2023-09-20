@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DefaultPage from "./Components/DefaultPage/DefaultPage";
-import MainContainer from "./Components/MainContainer/MainContainer";
-import Banner from "./Components/Banner/Banner";
+import Home from "./pages/home";
 import { ThemeProvider } from '@mui/material/styles';
 import tema from "./Components/Temas/tema";
-import datos from "./datos/datos-iniciales.json"
+import { buscar } from "./api/api";
+
 function App() {
-    console.log(datos)
+    const [categorias, setCategorias] = useState([]);
+    
+    useEffect(() => {
+        buscar("/categorias", setCategorias)
+        console.log(categorias)
+    }, [])
+
     return(
         <ThemeProvider theme={tema}>
             <>
                 <DefaultPage>
-                    <MainContainer>
-                        <Banner />
-                        {/* <Carousel /> */}
-                    </MainContainer>
+                    <Home categorias={categorias} />
                 </DefaultPage>
             </>
         </ThemeProvider>
