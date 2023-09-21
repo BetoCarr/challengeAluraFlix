@@ -9,14 +9,15 @@ const VideoCardContainer = styled(Card)(({ isbanner }) => ({
 
 
 function VideoCard({ videoUrl, title, imageUrl, isbanner }){
+    console.log(imageUrl)
     return (
-        <VideoCardContainer isbanner={isbanner.toString()}>
+        <VideoCardContainer isbanner={isbanner}>
             <a href={videoUrl} target="_blank" rel="noopener noreferrer">
                 <CardMedia
                     component="img"
                     alt={title}
                     height="auto"
-                    image={imageUrl}
+                    src={imageUrl}
                     title={title}
                 />
             </a>

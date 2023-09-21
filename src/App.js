@@ -10,7 +10,6 @@ function App() {
     
     useEffect(() => {
         buscar("/categorias", setCategorias)
-        console.log(categorias)
     }, [])
 
     return(
