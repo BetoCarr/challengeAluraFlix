@@ -4,31 +4,31 @@
             "nombre": "Futbol",
             "videos": [
                 {
-                    "imageUrl": "../assets/img/futbol-img/tip-delanteros.png",
+                    "imageUrl": "images/tip-delanteros.png",
                     "videoUrl": "https://www.youtube.com/watch?v=TloxdC0j_cg",
                     "title": "5 tips para ser un mejor delantero en el futbol ",
                     "isBanner": false
                 },
                 {
-                    "imageUrl": "../assets/img/futbol-img/no-perder-balon.png",
+                    "imageUrl": "images/no-perder-balon.png",
                     "videoUrl": "https://www.youtube.com/watch?v=k4QMNkNV26A",
                     "title": "Tips faciles para no perder el balón ",
                     "isBanner": false
                 },
                 {
-                    "imageUrl": "../assets/img/futbol-img/mejorar-regate.png",
+                    "imageUrl": "images/mejorar-regate.png",
                     "videoUrl": "https://www.youtube.com/watch?v=7ig8v7W4BVw",
                     "title": "3 ejercicos basicos para mejorar regate",
                     "isBanner": false
                 },
                 {
-                    "imageUrl": "../assets/img/futbol-img/fuerza-tiro.png",
+                    "imageUrl": "images/fuerza-tiro.png",
                     "videoUrl": "https://www.youtube.com/watch?v=RgdfCSDjH94",
                     "title": "Aprende 5 tips para pegarle fuerte y como crack al balon",
                     "isBanner": false
                 },
                 {
-                    "imageUrl": "../assets/img/futbol-img/burlar-rival.png",
+                    "imageUrl": "images/burlar-rival.png",
                     "videoUrl": "https://www.youtube.com/watch?v=ZqlKX7c0aP8",
                     "title": "5 formas de burlar a tu rival de forma impresionante",
                     "isBanner": false

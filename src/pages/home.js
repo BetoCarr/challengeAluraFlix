@@ -4,6 +4,7 @@ import Banner from "../Components/Banner/Banner";
 import Carousel from "../Components/Carousel/Carrusel/Carrusel";
 
 function Home ({categorias}) {
+    console.log("categorias >>>" + categorias)
     return(
         <MainContainer>
             <Banner />
