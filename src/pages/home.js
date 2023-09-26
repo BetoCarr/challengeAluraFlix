@@ -4,14 +4,15 @@ import Banner from "../Components/Banner/Banner";
 import Carousel from "../Components/Carousel/Carrusel/Carrusel";
 
 function Home ({categorias}) {
-    console.log("categorias >>>" + categorias)
+    // console.log(categorias)
     return(
         <MainContainer>
-            <Banner />
+            {/* <Banner /> */}
             {categorias.map((categoria, index) => (
                 <Carousel
                     key={index}
-                    videos={categoria.videos}
+                    categoria={categoria}
+                    isBanner={categoria.isBanner}
                 />
             ))}
         </MainContainer>

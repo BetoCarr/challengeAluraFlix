@@ -1,19 +1,24 @@
 import MySlider from '../Slider/Slider';
 import VideoCard from '../../VideoCard/VideoCard';
+import Banner from '../../Banner/Banner';
 
-function Carousel({ videos }) {
-    // console.log(videos)
-    
+function Carousel({ categoria, isBanner }) {
+    console.log(categoria.videos[0])
     return (
         <div>
+            {isBanner && (
+                <Banner
+                    title={categoria.nombre}
+                    video={categoria.videos[0]} 
+                />
+            )}
             <MySlider>
-                {videos.map((video, index) => (
+                {categoria.videos.map((video, index) => (
                     <div key={index}>
                         <VideoCard 
                             imageUrl={video.imageUrl}
                             videoUrl={video.videoUrl}
                             title={video.title}
-                            isBanner={video.isBanner}
                         />
                     </div>
                 ))}
