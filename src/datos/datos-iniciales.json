@@ -2,7 +2,69 @@
     "categorias": [
         {
             "nombre": "Fut-bol",
-            "isBanner": "true",
+            "isBanner": true,
+            "videos": [
+                {
+                    "imageUrl": "images/tip-delanteros.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=TloxdC0j_cg",
+                    "title": "5 tips para ser un mejor delantero en el futbol "
+                },
+                {
+                    "imageUrl": "images/no-perder-balon.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=k4QMNkNV26A",
+                    "title": "Tips faciles para no perder el balón "
+                },
+                {
+                    "imageUrl": "images/mejorar-regate.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=7ig8v7W4BVw",
+                    "title": "3 ejercicos basicos para mejorar regate"
+                },
+                {
+                    "imageUrl": "images/fuerza-tiro.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=RgdfCSDjH94",
+                    "title": "Aprende 5 tips para pegarle fuerte y como crack al balon"
+                },
+                {
+                    "imageUrl": "images/burlar-rival.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=ZqlKX7c0aP8",
+                    "title": "5 formas de burlar a tu rival de forma impresionante"
+                }
+            ]
+        },
+        {
+            "nombre": "Ejemplo",
+            "isBanner": false,
+            "videos": [
+                {
+                    "imageUrl": "images/tip-delanteros.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=TloxdC0j_cg",
+                    "title": "5 tips para ser un mejor delantero en el futbol "
+                },
+                {
+                    "imageUrl": "images/no-perder-balon.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=k4QMNkNV26A",
+                    "title": "Tips faciles para no perder el balón "
+                },
+                {
+                    "imageUrl": "images/mejorar-regate.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=7ig8v7W4BVw",
+                    "title": "3 ejercicos basicos para mejorar regate"
+                },
+                {
+                    "imageUrl": "images/fuerza-tiro.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=RgdfCSDjH94",
+                    "title": "Aprende 5 tips para pegarle fuerte y como crack al balon"
+                },
+                {
+                    "imageUrl": "images/burlar-rival.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=ZqlKX7c0aP8",
+                    "title": "5 formas de burlar a tu rival de forma impresionante"
+                }
+            ]
+        },
+        {
+            "nombre": "Ejemplo 2",
+            "isBanner": false,
             "videos": [
                 {
                     "imageUrl": "images/tip-delanteros.png",

@@ -16,7 +16,7 @@ function Banner ({ title, video }) {
                 height: "30rem",
                 display: "flex",
                 alignItems: "center",
-                padding: "1.5rem",
+                padding: "1.2rem",
                 backgroundImage: `url(${banner})`,
                 backgroundSize: "cover", 
                 backgroundPosition: "center",

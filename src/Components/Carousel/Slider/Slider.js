@@ -11,6 +11,7 @@ function MySlider ({ children }) {
         slidesToShow: 3,
         slidesToScroll: 1,
     };
+    
     return (
         <Slider {...settings}>
             {children}
