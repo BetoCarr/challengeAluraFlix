@@ -4,7 +4,8 @@ import { createTheme } from '@mui/material/styles';
 const tema = createTheme({
     palette: {
         primary: {
-            main: "#000000"
+            main: "#000000",
+            carousel: "#808080 "
         },
         text: {
             primary: "#F5F5F5"

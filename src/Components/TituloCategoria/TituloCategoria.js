@@ -10,7 +10,8 @@ function ContainerTitulo({ title, color, width, height, fontSize }) {
             style={{
                 backgroundColor: color,
                 padding: "16px",
-                marginBottom: "8px", 
+                marginBottom: "8px",
+                marginLeft: "0.2rem",
                 width: width,
                 height: height,
                 display: "flex",

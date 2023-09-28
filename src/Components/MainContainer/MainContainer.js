@@ -6,7 +6,7 @@ function MainContainer ({ children }) {
     const theme = useTheme();
 
     const containerStyles = {
-        backgroundColor: theme.palette.primary.main
+        backgroundColor: theme.palette.primary.carousel
     };
 
     return(
@@ -16,7 +16,8 @@ function MainContainer ({ children }) {
                 ...containerStyles,
                 display: "flex",
                 flexDirection: "column",
-                flex: "1"
+                flex: "1",
+                maxWidth: "100%"
             }}
         >
             {children}
