@@ -5,7 +5,7 @@ const tema = createTheme({
     palette: {
         primary: {
             main: "#000000",
-            carousel: "#808080 "
+            carousel: "#5A5F5E"
         },
         text: {
             primary: "#F5F5F5"

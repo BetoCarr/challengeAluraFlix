@@ -17,7 +17,7 @@ function MainContainer ({ children }) {
                 display: "flex",
                 flexDirection: "column",
                 flex: "1",
-                maxWidth: "100%"
+                maxWidth: "100%",
             }}
         >
             {children}
