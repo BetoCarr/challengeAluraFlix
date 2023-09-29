@@ -5,11 +5,16 @@ import Typography from "@mui/material/Typography";
 import { useTheme } from '@mui/material/styles';
 
 
-function VideoCard({ videoUrl, title, imageUrl }){
+function VideoCard({ videoUrl, title, imageUrl, categoryColor }){
     const theme = useTheme();
 
+    const cardStyles = {
+        border: `4px solid ${categoryColor}`, 
+        borderRadius: '8px', 
+    };
+    
     return (
-        <Card sx={{width:"70%"}}>
+        <Card sx={{width:"70%"}} style={cardStyles}>
             <a href={videoUrl} target="_blank" rel="noopener noreferrer">
                 <CardMedia component="div">
                     <img src={imageUrl} alt={title} style={{width:"100%"}}/>

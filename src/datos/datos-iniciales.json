@@ -26,7 +26,7 @@
                     "title": "Aprende 5 tips para pegarle fuerte y como crack al balon"
                 },
                 {
-                    "imageUrl": "images/futbol/urlar-rival.png",
+                    "imageUrl": "images/futbol/burlar-rival.png",
                     "videoUrl": "https://www.youtube.com/watch?v=ZqlKX7c0aP8",
                     "title": "5 formas de burlar a tu rival de forma impresionante"
                 }
@@ -38,29 +38,29 @@
             "color" : "#04F512",
             "videos": [
                 {
-                    "imageUrl": "images/futbol/tip-delanteros.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=TloxdC0j_cg",
-                    "title": "5 tips para ser un mejor delantero en el futbol "
+                    "imageUrl": "images/frontenis/equipacion.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=1-N1GDAfjp8&list=PLNBRtqdsYrKTuHqJYjShtOEU_hdvklRkT&index=3",
+                    "title": "Equipacion"
                 },
                 {
-                    "imageUrl": "images/futbol/no-perder-balon.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=k4QMNkNV26A",
-                    "title": "Tips faciles para no perder el balón "
+                    "imageUrl": "images/frontenis/coger-raqueta-saque.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=bzrs_fFj6lo&list=PLNBRtqdsYrKTuHqJYjShtOEU_hdvklRkT&index=3&t=12s&pp=iAQB",
+                    "title": "Como coger la raqueta y como sacar"
                 },
                 {
-                    "imageUrl": "images/futbol/mejorar-regate.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=7ig8v7W4BVw",
-                    "title": "3 ejercicos basicos para mejorar regate"
+                    "imageUrl": "images/frontenis/golpe-derecha.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=mXOm1y4L5Z0&list=PLNBRtqdsYrKTuHqJYjShtOEU_hdvklRkT&index=5&pp=iAQB",
+                    "title": "Golpe de derecha"
                 },
                 {
-                    "imageUrl": "images/futbol/fuerza-tiro.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=RgdfCSDjH94",
-                    "title": "Aprende 5 tips para pegarle fuerte y como crack al balon"
+                    "imageUrl": "images/frontenis/golpe-reves.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=yS7j0J54p1I&list=PLNBRtqdsYrKTuHqJYjShtOEU_hdvklRkT&index=6&t=1s&pp=iAQB",
+                    "title": "Golpe de revés"
                 },
                 {
-                    "imageUrl": "images/futbol/burlar-rival.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=ZqlKX7c0aP8",
-                    "title": "5 formas de burlar a tu rival de forma impresionante"
+                    "imageUrl": "images/frontenis/golpe-plano-cortado-derecha.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=TqGYaLTiTmg&list=PLNBRtqdsYrKTuHqJYjShtOEU_hdvklRkT&index=8",
+                    "title": "Golpe plano y golpe cortado de derecha"
                 }
             ]
         },
@@ -70,29 +70,29 @@
             "color" : "#FFC603",
             "videos": [
                 {
-                    "imageUrl": "images/tip-delanteros.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=TloxdC0j_cg",
-                    "title": "5 tips para ser un mejor delantero en el futbol "
+                    "imageUrl": "images/longboard/conceptos-basicos.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=4aT37IcW9M0",
+                    "title": "Conceptos básicos"
                 },
                 {
-                    "imageUrl": "images/no-perder-balon.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=k4QMNkNV26A",
-                    "title": "Tips faciles para no perder el balón "
+                    "imageUrl": "images/longboard/como-remar.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=c0qZk4CSGVY",
+                    "title": "Como remar en Longboard"
                 },
                 {
-                    "imageUrl": "images/mejorar-regate.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=7ig8v7W4BVw",
-                    "title": "3 ejercicos basicos para mejorar regate"
+                    "imageUrl": "images/longboard/empezar-downhill.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=o6g7OegDbqs",
+                    "title": "Como empezar a hacer downhill en Longboard"
                 },
                 {
-                    "imageUrl": "images/fuerza-tiro.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=RgdfCSDjH94",
-                    "title": "Aprende 5 tips para pegarle fuerte y como crack al balon"
+                    "imageUrl": "images/longboard/sitdown-slide.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=xRm2P_vo4iU",
+                    "title": "Como hacer un sit down slide"
                 },
                 {
-                    "imageUrl": "images/burlar-rival.png",
-                    "videoUrl": "https://www.youtube.com/watch?v=ZqlKX7c0aP8",
-                    "title": "5 formas de burlar a tu rival de forma impresionante"
+                    "imageUrl": "images/longboard/180-slide.png",
+                    "videoUrl": "https://www.youtube.com/watch?v=QQEO6AvvY54",
+                    "title": "Como hacer un un 180 slide"
                 }
             ]
         }

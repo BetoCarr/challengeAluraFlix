@@ -11,7 +11,6 @@ function ContainerTitulo({ title, color, width, height, fontSize }) {
                 backgroundColor: color,
                 padding: "16px",
                 marginBottom: "1rem",
-                // marginLeft: "0.2rem",
                 width: width,
                 height: height,
                 display: "flex",

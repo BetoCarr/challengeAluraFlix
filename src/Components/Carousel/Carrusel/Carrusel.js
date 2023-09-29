@@ -5,7 +5,7 @@ import Banner from '../../Banner/Banner';
 import ContainerTitulo from '../../TituloCategoria/TituloCategoria';
 import "./StylesCarrusel.css"
 // Funcion auxiliar para renderizar los videocards dentro del carrusel
-function renderCarouselItems(videos) {
+function renderCarouselItems(videos, color) {
     return (
         <MySlider>
             {videos.map((video, index) => (
@@ -14,6 +14,7 @@ function renderCarouselItems(videos) {
                         imageUrl={video.imageUrl}
                         videoUrl={video.videoUrl}
                         title={video.title}
+                        categoryColor={color}
                     />
                 </div>
             ))}
@@ -25,7 +26,6 @@ function renderCarouselItems(videos) {
 function Carousel({ categoria, isBanner, color }) {
     // Estado para determinar si se muestra el banner o el carrusel normal
     const [showBanner, setShowBanner] = useState(isBanner);
-    
     // Desestructurar las propiedades de la categoría
     const { nombre, videos } = categoria;
     return (
@@ -38,7 +38,7 @@ function Carousel({ categoria, isBanner, color }) {
                         color={color}
                     />
                     <div className="container-carousel">
-                        {renderCarouselItems(videos.slice(1))} 
+                        {renderCarouselItems(videos.slice(1), color)} 
                     </div>
                 </>
             )}
@@ -52,7 +52,7 @@ function Carousel({ categoria, isBanner, color }) {
                         height="3.6rem"
                         fontSize="2rem"
                     />
-                    {renderCarouselItems(videos)}
+                    {renderCarouselItems(videos, color)}
                 </div>
             )}
         </>
