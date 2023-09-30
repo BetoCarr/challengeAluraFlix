@@ -1,0 +1,10 @@
+button.theme-button {
+    background-color: var(--boton-primary);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+div.tool-bar {
+    display: flex;
+    justify-content: space-between;
+}

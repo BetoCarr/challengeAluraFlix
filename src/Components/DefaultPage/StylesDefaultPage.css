@@ -1,0 +1,8 @@
+.default-page {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}

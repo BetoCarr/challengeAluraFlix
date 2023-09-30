@@ -1,11 +1,12 @@
-import React from "react";
-import logo from "../../assets/img/LogoMain.png"
-import { LogotipoGrande } from "../Logotipo/Logotipo";
+import './StylesFooter.css'
+import React from 'react';
+import logo from '../../assets/img/LogoMain.png'
+import { LogotipoGrande } from '../Logotipo/Logotipo';
 import Box from '@mui/material/Box';
 
 function Footer () {
     return(
-        <Box component="footer" sx={{ display: "flex", justifyContent: "center", padding: "0.7rem", backgroundColor: (theme) => theme.palette.primary.main }}>
+        <Box component='footer' className='footer'>
             <LogotipoGrande src={logo} />
         </Box>
     );
