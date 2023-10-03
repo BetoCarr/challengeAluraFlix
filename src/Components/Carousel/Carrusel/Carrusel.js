@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import MySlider from '../Slider/Slider';
 import VideoCard from '../../VideoCard/VideoCard';
 import Banner from '../../Banner/Banner';
-import ContainerTitulo from '../../TituloCategoria/TituloCategoria';
-import "./StylesCarrusel.css"
+import ContainerTitulo from '../../TituloCategoria/ContainerTitulo';
+import './StylesCarrusel.css'
 // Funcion auxiliar para renderizar los videocards dentro del carrusel
 function renderCarouselItems(videos, color) {
     return (
@@ -37,20 +37,17 @@ function Carousel({ categoria, isBanner, color }) {
                         video={videos[0]} 
                         color={color}
                     />
-                    <div className="container-carousel">
+                    <div className='container-carousel'>
                         {renderCarouselItems(videos.slice(1), color)} 
                     </div>
                 </>
             )}
 
             {!showBanner &&( // Renderiza el carrusel normal con ContainerTitulo
-                <div className="container-carousel"> 
+                <div className='container-carousel'> 
                     <ContainerTitulo
                         color={color}
                         title={nombre}
-                        width="20%"
-                        height="3.6rem"
-                        fontSize="2rem"
                     />
                     {renderCarouselItems(videos, color)}
                 </div>

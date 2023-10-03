@@ -1,0 +1,18 @@
+.paper-banner {
+    padding: 16px;
+    margin-bottom: 1rem;
+    width: 32%;
+    height: 3.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.typography-banner {
+    font-size: auto;
+    font-weight:400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+}
