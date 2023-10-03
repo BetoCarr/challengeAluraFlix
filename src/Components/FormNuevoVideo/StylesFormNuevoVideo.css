@@ -1,0 +1,31 @@
+.form-container {
+    width: 100%;
+    height: auto;
+    padding: 2rem;
+}
+.input-container {
+    margin-bottom: 16px; /* Espacio entre los campos */
+}
+
+.input-container label {
+    display: block; /* Para que la etiqueta esté en una línea separada */
+    margin-bottom: 4px; /* Espacio entre la etiqueta y el input */
+    font-size: 18px; /* Tamaño de fuente de la etiqueta */
+}
+
+.input-container input[type="text"] {
+    background-color: var(--inputs-primary);
+    width: 100%; /* Ocupa todo el ancho disponible */
+    height: 3rem; /* Altura específica */
+    padding: 8px; /* Relleno interior para el input */
+    font-size: 24px; /* Tamaño de fuente del input */
+    border: 1px solid #ccc; /* Borde del input */
+    border-radius: 4px; /* Borde redondeado */
+    color: var(--text-primary);
+}
+
+  /* Placeholder estilizado (opcional) */
+.input-container input[type="text"]::placeholder {
+    font-style: italic;
+    color: #999;
+}

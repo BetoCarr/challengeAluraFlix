@@ -2,9 +2,11 @@ import './StylesMainContainer.css';
 import React from 'react';
 import Box from '@mui/material/Box';
 
-function MainContainer ({ children }) {
+function MainContainer ({ children, className }) {
+    const containerClassName = `main-container ${className}`;
+
     return(
-        <Box component="main" className='main-container'>
+        <Box component="main" className={containerClassName}>
             {children}
         </Box>
     );

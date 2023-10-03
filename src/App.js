@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DefaultPage from "./Components/DefaultPage/DefaultPage";
 import Home from "./pages/home";
-import FormularioNuevoVideo from "./pages/new-video";
+import NewVideo from "./pages/new-video";
 import { ThemeProvider } from '@mui/material/styles';
 import tema from "./Components/Temas/tema";
 import { buscar } from "./api/api";
@@ -20,7 +20,7 @@ function App() {
                 <DefaultPage>
                     <Routes>
                         <Route exact path="/" element={<Home categorias={categorias} />} />
-                        <Route exact path="/nuevo-video" element={<FormularioNuevoVideo />} />
+                        <Route exact path="/nuevo-video" element={<NewVideo />} />
                         <Route exact path="*" element={<h1>No existe :C</h1>} />
                     </Routes>
                 </DefaultPage>
