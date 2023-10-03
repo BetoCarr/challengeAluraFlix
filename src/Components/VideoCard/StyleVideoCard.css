@@ -1,0 +1,19 @@
+.card {
+    width: 80%;
+    max-height: 16rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: cent
+}
+.img-card {
+    width: 100%;
+}
+.typography-card {
+    color: var(--text-primary);
+    background-color: var(--main-primary);
+    padding: 0.5rem;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}

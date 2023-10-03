@@ -1,25 +1,24 @@
+import './StyleVideoCard.css'
 import React from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from "@mui/material/Typography";
-import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
 
 function VideoCard({ videoUrl, title, imageUrl, categoryColor }){
-    const theme = useTheme();
 
-    const cardStyles = {
+    const cardBorder= {
         border: `4px solid ${categoryColor}`, 
         borderRadius: '8px', 
     };
     
     return (
-        <Card sx={{width:"70%"}} style={cardStyles}>
-            <a href={videoUrl} target="_blank" rel="noopener noreferrer">
-                <CardMedia component="div">
-                    <img src={imageUrl} alt={title} style={{width:"100%"}}/>
+        <Card style={cardBorder} className='card'>
+            <a href={videoUrl} target='_blank' rel='noopener noreferrer'>
+                <CardMedia component='div'>
+                    <img src={imageUrl} alt={title} className='img-card'/>
                 </CardMedia>
-                <Typography variant='body1' color="text.primary" sx={{backgroundColor:theme.palette.primary.main, padding:"0.5rem"}}>{title}</Typography>
+                <Typography variant='body1' className='typography-card'>{title}</Typography>
             </a>
         </ Card>
     );
