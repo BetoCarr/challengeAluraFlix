@@ -23,9 +23,44 @@
     border-radius: 4px; /* Borde redondeado */
     color: var(--text-primary);
 }
-
-  /* Placeholder estilizado (opcional) */
+/* Placeholder estilizado (opcional) */
 .input-container input[type="text"]::placeholder {
     font-style: italic;
-    color: #999;
+    color: var(--text-primary);
+}
+
+.input-container select {
+    background-color: var(--inputs-primary);
+    width: 100%;
+    height: 3rem;
+    padding: 8px;
+    font-size: 24px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+
+  /* Placeholder estilizado (opcional) */
+.input-container select::placeholder {
+    font-style: italic;
+    color: var(--text-primary);
+}
+
+button.boton-azul {
+    background-color: var(--boton-blue);
+    color: var(--text-primary);
+}
+button.boton-gris {
+    background-color: var(--boton-gray);
+    /* color: var(--text-primary); */
+}
+
+.container-botones {
+    display: flex;
+    justify-content: space-between;
+}
+.container-botones-izquierda {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
 }
