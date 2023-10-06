@@ -64,3 +64,7 @@ button.boton-gris {
     display: flex;
     justify-content: space-between;
 }
+.error {
+    margin-top: 0.5rem;
+    color: red;
+}
