@@ -5,10 +5,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import TextInput from '../TextInput/TextInput';
 import { Link } from 'react-router-dom';
-
-const categorias = ["Categoría 1", "Categoría 2", "Categoría 3"]; // Supongamos que tienes un array de opciones
+import { useCategorias } from '../../CategoriaContext';
+import { agregarNuevoVideo } from '../../api/api';
 
 function FormNuevoVideo () {
+    const categorias = useCategorias();
+
     return (
         <>
             <Typography variant='h3' color='text.primary'>Nuevo Video</Typography>
@@ -18,7 +20,6 @@ function FormNuevoVideo () {
                     linkVideo: '',
                     linkImagen: '',
                     categoria: '',
-                    descripcion: '',
                 }}
 
                 validate={values => {
@@ -47,22 +48,34 @@ function FormNuevoVideo () {
                         errors.categoria = 'Debes elegir una categoria';
                     }
 
-                    if (!/^[a-zA-Z0-9\s\-,.]+$/.test(descripcion)) {
-                        errors.descripcion = 'Proporciona una descripción para el video. Puedes utilizar letras, números y la mayoría de los caracteres especiales.';
-                    }
-
                     return errors;
                 }}
 
-                onSubmit={(values, { setSubmitting, resetForm }) => {
+                onSubmit={async (values, { setSubmitting, resetForm }) => {
                     
                     setSubmitting(true);
 
-                    setTimeout(() => {
-                        console.log("Envio de formulario exitoso", JSON.stringify(values, null, 2));
-                        setSubmitting(false);
+                    const nuevoVideo = {
+                        titulo: values.titulo,
+                        linkVideo: values.linkVideo,
+                        linkImagen: values.linkImagen,
+                    }   
+                    
+                    try {
+                        const categoriaSeleccionada = values.categoria;
+                        const rutaParaAgregarVideo = `/categorias/${categoriaSeleccionada}/videos`;
+                        console.log(typeof rutaParaAgregarVideo, rutaParaAgregarVideo);
+                        // const respuesta = await agregarNuevoVideo(rutaParaAgregarVideo, nuevoVideo);
+                        // console.log("Respuesta del servidor:", respuesta);
+
                         resetForm();
-                    }, 3000);
+                    } catch(error) {
+                        console.error("Error al agregar el video:", error);
+                    } finally {
+                        setSubmitting(false);
+                    }
+
+                
                 }}
             >
                 {({ isSubmitting, errors, resetForm }) => (
@@ -88,22 +101,15 @@ function FormNuevoVideo () {
                         <div className='input-container'>
                             <label htmlFor='categoria'></label>
                             <Field as="select" name="categoria">
-                                <option value="" label="Seleccione una categoría" />
+                                <option value="" label="Seleccione una categoría" disabled defaultValue="" hidden />
                                 {categorias.map((categoria, index) => (
-                                    <option key={index} value={categoria}>
-                                        {categoria}
+                                    <option key={index} value={categoria.nombre}>
+                                        {categoria.nombre}
                                     </option>
                                 ))}
                             </Field>
                             <ErrorMessage name="categoria" component={() => (<div className="error">{errors.categoria}</div>)} />
                         </div>
-
-                        <TextInput 
-                            label="Descripcion"
-                            name="descripcion"
-                            placeholder="Introduce una descripcion del video"
-                        />
-
 
                         <div className='container-botones'>
                             <div className='container-botones-izquierda'>
@@ -122,7 +128,7 @@ function FormNuevoVideo () {
                         </div>
 
                         {isSubmitting && <Typography variant='h6' color='text.primary'>Formulario enviado con exito!</Typography>}
-                        
+
                     </Form>
                 )}
             </Formik>
