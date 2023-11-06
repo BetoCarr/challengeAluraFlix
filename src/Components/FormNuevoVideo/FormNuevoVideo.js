@@ -55,18 +55,19 @@ function FormNuevoVideo () {
                     
                     setSubmitting(true);
 
-                    const nuevoVideo = {
-                        titulo: values.titulo,
-                        linkVideo: values.linkVideo,
-                        linkImagen: values.linkImagen,
-                    }   
-                    
+                    // const nuevoVideo = {
+                    //     id: values.id,
+                    //     titulo: values.titulo,
+                    //     linkVideo: values.linkVideo,
+                    //     linkImagen: values.linkImagen,
+                    // }   
+                    // console .log(values);
+                    const categoriaSeleccionada = values.categoria;
+                    console.log(categoriaSeleccionada)
                     try {
-                        const categoriaSeleccionada = values.categoria;
-                        const rutaParaAgregarVideo = `/categorias/${categoriaSeleccionada}/videos`;
-                        console.log(typeof rutaParaAgregarVideo, rutaParaAgregarVideo);
-                        // const respuesta = await agregarNuevoVideo(rutaParaAgregarVideo, nuevoVideo);
-                        // console.log("Respuesta del servidor:", respuesta);
+                        // console.log(nuevoVideo);
+                        // const rutaParaAgregarVideo = `/categorias/${categoriaSeleccionada}/videos`;
+                        // console.log(typeof rutaParaAgregarVideo, rutaParaAgregarVideo);
 
                         resetForm();
                     } catch(error) {
@@ -103,7 +104,7 @@ function FormNuevoVideo () {
                             <Field as="select" name="categoria">
                                 <option value="" label="Seleccione una categoría" disabled defaultValue="" hidden />
                                 {categorias.map((categoria, index) => (
-                                    <option key={index} value={categoria.nombre}>
+                                    <option key={index} value={categoria.id}>
                                         {categoria.nombre}
                                     </option>
                                 ))}
