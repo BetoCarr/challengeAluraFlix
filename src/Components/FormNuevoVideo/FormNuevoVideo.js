@@ -52,26 +52,25 @@ function FormNuevoVideo () {
                 }}
 
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
-                    
                     setSubmitting(true);
-
-                    // const nuevoVideo = {
-                    //     id: values.id,
-                    //     titulo: values.titulo,
-                    //     linkVideo: values.linkVideo,
-                    //     linkImagen: values.linkImagen,
-                    // }   
-                    // console .log(values);
-                    const categoriaSeleccionada = values.categoria;
-                    console.log(categoriaSeleccionada)
                     try {
-                        // console.log(nuevoVideo);
-                        // const rutaParaAgregarVideo = `/categorias/${categoriaSeleccionada}/videos`;
-                        // console.log(typeof rutaParaAgregarVideo, rutaParaAgregarVideo);
+                        const nuevoVideo = {
+                            titulo: values.titulo,
+                            linkVideo: values.linkVideo,
+                            linkImagen: values.linkImagen,
+                        }   
+
+                        const categoriaSeleccionada = values.categoria;
+                        const rutaParaAgregarVideo = '/categoria/${categoriaSeleccionada}/agregar_video';
+
+                        const respuesta = await agregarNuevoVideo(rutaParaAgregarVideo, nuevoVideo);
+
+                        console.log(respuesta);
 
                         resetForm();
                     } catch(error) {
                         console.error("Error al agregar el video:", error);
+                        alert("Video NO agregado")
                     } finally {
                         setSubmitting(false);
                     }

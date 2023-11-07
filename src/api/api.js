@@ -12,7 +12,13 @@ export async function buscar (url, setData) {
 export async function agregarNuevoVideo(ruta, nuevoVideo) {
     try {
         const respuesta = await api.post(ruta, nuevoVideo);
-        return respuesta.data; // Puedes devolver la respuesta si lo deseas
+
+        if(respuesta.status === 2000) {
+            const resultado = await respuesta;
+            return resultado.data;
+        } else {
+            throw new Error('La solicitud no fue exitosa.');
+        }
     } catch (error) {
         // Manejo de errores
         console.error("Error al agregar nuevo video:", error);
