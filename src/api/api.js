@@ -9,19 +9,16 @@ export async function buscar (url, setData) {
     setData(respuesta.data)
 }
 
-export async function agregarNuevoVideo(ruta, nuevoVideo) {
-    try {
-        const respuesta = await api.post(ruta, nuevoVideo);
 
-        if(respuesta.status === 2000) {
-            const resultado = await respuesta;
-            return resultado.data;
-        } else {
-            throw new Error('La solicitud no fue exitosa.');
-        }
-    } catch (error) {
-        // Manejo de errores
-        console.error("Error al agregar nuevo video:", error);
-        throw error; // Puedes propagar el error para que lo manejes donde llames a esta función
-    }
+export function agregarNuevoVideo(ruta, nuevoVideo) {
+    return new Promise((resolve, reject) => {
+        api
+        .post(ruta, nuevoVideo)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
+        })
+    });
 }

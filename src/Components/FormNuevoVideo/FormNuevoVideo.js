@@ -8,8 +8,11 @@ import { Link } from 'react-router-dom';
 import { useCategorias } from '../../CategoriaContext';
 import { agregarNuevoVideo } from '../../api/api';
 
+import { useNavigate } from 'react-router-dom';
+
 function FormNuevoVideo () {
     const categorias = useCategorias();
+    const navigate = useNavigate();
 
     return (
         <>
@@ -23,7 +26,7 @@ function FormNuevoVideo () {
                 }}
 
                 validate={values => {
-                    const { titulo, linkVideo, linkImagen, categoria, descripcion } = values;
+                    const { titulo, linkVideo, linkImagen, categoria } = values;
                     const errors = {};
 
                     if (!titulo) {
@@ -53,28 +56,35 @@ function FormNuevoVideo () {
 
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
-                    try {
-                        const nuevoVideo = {
-                            titulo: values.titulo,
-                            linkVideo: values.linkVideo,
-                            linkImagen: values.linkImagen,
-                        }   
+            
+                    const nuevoVideo = {
+                        titulo: values.titulo,
+                        linkVideo: values.linkVideo,
+                        linkImagen: values.linkImagen,
+                    }   
 
-                        const categoriaSeleccionada = values.categoria;
-                        const rutaParaAgregarVideo = '/categoria/${categoriaSeleccionada}/agregar_video';
+                    const categoriaSeleccionada = values.categoria;
+                    const rutaParaAgregarVideo = `/categoria/${categoriaSeleccionada}/agregar_video`;
+                    
 
-                        const respuesta = await agregarNuevoVideo(rutaParaAgregarVideo, nuevoVideo);
-
-                        console.log(respuesta);
-
+                    agregarNuevoVideo(rutaParaAgregarVideo, nuevoVideo)
+                    .then((responseData) => {
+                        console.log("¡Video agregado exitosamente!", responseData);
                         resetForm();
-                    } catch(error) {
+                        navigate('/', { replace: true });
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        // Aquí manejas el caso de error, por ejemplo, mostrando un mensaje de error al usuario
                         console.error("Error al agregar el video:", error);
-                        alert("Video NO agregado")
-                    } finally {
-                        setSubmitting(false);
-                    }
+                        alert("Video NO agregado. Error: " + error); // Puedes mostrar el mensaje de error al usuario
+                    })
+                    .finally(() => {
+                        // Esto se ejecutará independientemente de si la solicitud fue exitosa o no
+                        // Puedes realizar acciones adicionales aquí, como restablecer formularios o estados
+                        setSubmitting(false); // Por ejemplo, puedes restablecer el estado de submitting
 
+                    });
                 
                 }}
             >
