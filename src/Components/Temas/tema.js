@@ -20,6 +20,7 @@ const tema = createTheme({
 
 document.documentElement.style.setProperty('--boton-primary', tema.palette.boton.primary);
 document.documentElement.style.setProperty('--text-primary', tema.palette.text.primary);
+
 document.documentElement.style.setProperty('--main-primary', tema.palette.primary.main);
 document.documentElement.style.setProperty('--carousel-primary', tema.palette.primary.carousel);
 document.documentElement.style.setProperty('--inputs-primary', tema.palette.primary.inputs);

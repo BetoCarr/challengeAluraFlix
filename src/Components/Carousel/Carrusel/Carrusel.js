@@ -6,6 +6,7 @@ import ContainerTitulo from '../../TituloCategoria/ContainerTitulo';
 import './StylesCarrusel.css'
 // Funcion auxiliar para renderizar los videocards dentro del carrusel
 function renderCarouselItems(videos, color) {
+    // console.log(videos)
     return (
         <MySlider>
             {videos.map((video, index) => (
@@ -14,6 +15,7 @@ function renderCarouselItems(videos, color) {
                         imageUrl={video.imageUrl}
                         videoUrl={video.videoUrl}
                         title={video.title}
+                        id={video.id}
                         categoryColor={color}
                     />
                 </div>
