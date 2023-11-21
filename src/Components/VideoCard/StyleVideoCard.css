@@ -1,6 +1,6 @@
 .card {
     width: 80%;
-    height: 17rem;
+    height: auto;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -11,11 +11,25 @@
     height: 14rem;
 }
 
-.typography-card {
-    color: var(--text-primary);
+.icotypo-container {
     background-color: var(--main-primary);
     padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.typography-card {
+    color: var(--text-primary);
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
+}
+.icon-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 20px 0px 20px;
+}
+.icon {
+    font-size: 10px;
+    color: var(--text-primary);
 }
