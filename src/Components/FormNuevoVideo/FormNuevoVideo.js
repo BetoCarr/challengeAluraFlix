@@ -71,8 +71,12 @@ function FormNuevoVideo () {
                     .then((responseData) => {
                         console.log("¡Video agregado exitosamente!", responseData);
                         resetForm();
-                        navigate('/', { replace: true });
-                        window.location.reload();
+                        const confirmMessage = "¡Video agregado exitosamente! La página se recargará para mostrar el nuevo video.";
+                        if(window.confirm(confirmMessage)) {
+                            navigate('/', { replace: true });
+                            window.location.reload();
+                        }
+
                     })
                     .catch((error) => {
                         // Aquí manejas el caso de error, por ejemplo, mostrando un mensaje de error al usuario
