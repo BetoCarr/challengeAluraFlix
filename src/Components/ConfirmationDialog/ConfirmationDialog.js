@@ -5,7 +5,9 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import './ConfirmationDialog.css'
 
-function ConfirmationDialog ({ isOpen, onClose, onConfirm, videoId, videoTitle }){
+
+
+function ConfirmationDialog ({ isOpen, onClose, onConfirm, videoId, videoTitle, categoryId }){
     return (
     <Dialog open={isOpen} onClose={onClose}>
         <DialogTitle className='box-dialog'>{`¿Estás seguro de eliminar permanentemente el video "${videoTitle}"?`}</DialogTitle>
@@ -13,7 +15,7 @@ function ConfirmationDialog ({ isOpen, onClose, onConfirm, videoId, videoTitle }
                 <Button onClick={onClose} style={{ color: 'green' }}>
                     Cancelar
                 </Button>
-                <Button onClick={() => onConfirm(videoId)} style={{ color: 'red' }}>
+                <Button onClick={() => onConfirm(categoryId, videoId )} style={{ color: 'red' }}>
                     Eliminar
                 </Button>
         </DialogActions>

@@ -5,8 +5,8 @@ import Banner from '../../Banner/Banner';
 import ContainerTitulo from '../../TituloCategoria/ContainerTitulo';
 import './StylesCarrusel.css'
 // Funcion auxiliar para renderizar los videocards dentro del carrusel
-function renderCarouselItems(videos, color) {
-    // console.log(videos)
+function renderCarouselItems(videos, color, id) {
+    // console.log(id);
     return (
         <MySlider>
             {videos.map((video, index) => (
@@ -16,6 +16,7 @@ function renderCarouselItems(videos, color) {
                         videoUrl={video.videoUrl}
                         title={video.title}
                         id={video.id}
+                        categoryId={id}
                         categoryColor={color}
                     />
                 </div>
@@ -26,10 +27,12 @@ function renderCarouselItems(videos, color) {
 
 
 function Carousel({ categoria, isBanner, color }) {
+    // console.log(categoria.id);
     // Estado para determinar si se muestra el banner o el carrusel normal
     const [showBanner, setShowBanner] = useState(isBanner);
     // Desestructurar las propiedades de la categoría
-    const { nombre, videos } = categoria;
+    const { nombre, videos, id } = categoria;
+    // console.log(id)
     return (
         <>
             {showBanner && ( // Renderiza el carrusel de banner sin ContainerTitulo
@@ -40,7 +43,7 @@ function Carousel({ categoria, isBanner, color }) {
                         color={color}
                     />
                     <div className='container-carousel'>
-                        {renderCarouselItems(videos.slice(1), color)} 
+                        {renderCarouselItems(videos.slice(1), color, id)} 
                     </div>
                 </>
             )}
@@ -51,7 +54,7 @@ function Carousel({ categoria, isBanner, color }) {
                         color={color}
                         title={nombre}
                     />
-                    {renderCarouselItems(videos, color)}
+                    {renderCarouselItems(videos, color, id)}
                 </div>
             )}
         </>

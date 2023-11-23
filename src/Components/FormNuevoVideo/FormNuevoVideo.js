@@ -87,7 +87,6 @@ function FormNuevoVideo () {
                         // Esto se ejecutará independientemente de si la solicitud fue exitosa o no
                         // Puedes realizar acciones adicionales aquí, como restablecer formularios o estados
                         setSubmitting(false); // Por ejemplo, puedes restablecer el estado de submitting
-
                     });
                 
                 }}

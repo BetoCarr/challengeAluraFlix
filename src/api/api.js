@@ -22,3 +22,18 @@ export function agregarNuevoVideo(ruta, nuevoVideo) {
         })
     });
 }
+
+export function eliminarVideo(categoryId, id) {
+    const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`;
+    console.log(rutaEliminarVid);
+    return new Promise((resolve, reject) => {
+        api
+        .delete(rutaEliminarVid)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
+        })
+    });
+}
