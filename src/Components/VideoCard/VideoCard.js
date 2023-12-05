@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import DeleteVideoButton from '../DeleteForeverIcon/DeleteIcon';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import LikeIcon from '../LikeIcon/LikeIcon';
 import Box from '@mui/material/Box';
 
 // Función para renderizar video-cards
@@ -32,7 +32,10 @@ function VideoCard({ videoUrl, title, imageUrl, categoryColor, categoryId, id}){
                 </div>
 
                 <div className="icon-container">
-                    <FavoriteIcon className='icon'></FavoriteIcon>
+                    <LikeIcon
+                        videoId={id}
+                        title={title}
+                    />
                     <DeleteVideoButton
                         categoryId={categoryId}
                         videoId={id}
