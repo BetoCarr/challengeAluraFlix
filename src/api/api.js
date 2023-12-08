@@ -37,3 +37,22 @@ export function eliminarVideo(categoryId, id) {
         })
     });
 }
+
+export function darLikeVideo(videoId, liked) {
+    const rutaLikeVideo = `/video/${videoId}/like`
+    console.log(rutaLikeVideo);
+    return new Promise((resolve, reject) => {
+        api
+        .post(
+            rutaLikeVideo, 
+            { liked }, 
+            { headers: { 'Content-Type': 'application/json' } }
+        )
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
+        })
+    });
+}
