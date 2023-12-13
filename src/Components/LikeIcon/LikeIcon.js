@@ -15,24 +15,32 @@ function LikeIcon ( {videoId, title} ) {
             });
     }, [videoId]);
 
-    function handleLikeClick () {
-        darLikeVideo(videoId, true)
-        .then((data) => {
-            // Realizar cualquier acción necesaria si la solicitud fue exitosa
-            alert(`El usuario dio like al video con el id: ${videoId} y título: ${title}`);
-            setLiked(!liked);
-            console.log(videoId, title);
-            console.log(data);
-        })
-        .catch((error) => {
-            console.error("Error al dar me gusta el video:", error);
-            alert("Video NO likeado. Error: " + error);
-        })
+
+    function handleLikeClick() {
+        if (liked) {
+            // Si el estado actual es 'liked', cambiarlo a 'unliked'
+            darLikeVideo(videoId, false)
+                .then(() => {
+                    setLiked(false);
+                })
+                .catch((error) => {
+                    console.error("Error al quitar 'me gusta' al video:", error);
+                });
+        } else {
+            // Si el estado actual es 'unliked', cambiarlo a 'liked'
+            darLikeVideo(videoId, true)
+                .then(() => {
+                    setLiked(true);
+                })
+                .catch((error) => {
+                    console.error("Error al dar 'me gusta' al video:", error);
+                });
+        }
     }
 
     return(
         <FavoriteIcon
-            className={liked ? 'icon liked' : 'icon'}
+            className={`icon ${liked ? 'liked' : ''}`}
             onClick={handleLikeClick}
         />
     )
