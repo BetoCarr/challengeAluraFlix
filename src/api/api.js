@@ -38,6 +38,20 @@ export function eliminarVideo(categoryId, id) {
     });
 }
 
+export function obtenerEstadoLike(videoId) {
+    const rutaEstadoLike = `/video/${videoId}/liked`
+    return new Promise((resolve, reject) => {
+        api
+        .get(rutaEstadoLike)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
+        })
+    });
+}
+
 export function darLikeVideo(videoId, liked) {
     const rutaLikeVideo = `/video/${videoId}/like`
     console.log(rutaLikeVideo);
