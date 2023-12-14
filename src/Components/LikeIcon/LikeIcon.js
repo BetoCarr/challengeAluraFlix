@@ -1,9 +1,12 @@
 import React, { useState, useEffect }  from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import LikeFeedbackDialog from '../LikeFeedbackDialog/LikeFeedbackDialog';
 import { darLikeVideo, obtenerEstadoLike } from '../../api/api';
 
 function LikeIcon ( {videoId, title} ) {
+
     const [liked, setLiked] = useState(false);
+    const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false);
 
     useEffect(() => {
         obtenerEstadoLike(videoId)
@@ -22,6 +25,8 @@ function LikeIcon ( {videoId, title} ) {
             darLikeVideo(videoId, false)
                 .then(() => {
                     setLiked(false);
+                    setFeedbackDialogOpen(true);
+
                 })
                 .catch((error) => {
                     console.error("Error al quitar 'me gusta' al video:", error);
@@ -31,6 +36,7 @@ function LikeIcon ( {videoId, title} ) {
             darLikeVideo(videoId, true)
                 .then(() => {
                     setLiked(true);
+                    setFeedbackDialogOpen(true);
                 })
                 .catch((error) => {
                     console.error("Error al dar 'me gusta' al video:", error);
@@ -38,12 +44,24 @@ function LikeIcon ( {videoId, title} ) {
         }
     }
 
+    function handleFeedbackDialogClose() {
+        setFeedbackDialogOpen(false);
+    }
+
     return(
-        <FavoriteIcon
-            className={`icon ${liked ? 'liked' : ''}`}
-            onClick={handleLikeClick}
-        />
-    )
+        <>
+            <FavoriteIcon
+                className={`icon ${liked ? 'liked' : ''}`}
+                onClick={handleLikeClick}
+            />
+            <LikeFeedbackDialog
+                isOpen={feedbackDialogOpen}
+                onClose={handleFeedbackDialogClose}
+                title={title}
+                liked={liked}
+            />
+        </>
+    );
 }
 
 export default LikeIcon;
