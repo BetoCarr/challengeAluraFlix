@@ -57,7 +57,7 @@ export function darLikeVideo(videoId, liked) {
     console.log(rutaLikeVideo);
     return new Promise((resolve, reject) => {
         api
-        .post(
+        .put(
             rutaLikeVideo, 
             { liked }, 
             { headers: { 'Content-Type': 'application/json' } }
