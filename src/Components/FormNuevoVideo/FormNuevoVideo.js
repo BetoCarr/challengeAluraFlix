@@ -1,10 +1,8 @@
 import './StylesFormNuevoVideo.css';
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {Typography, Button} from '@mui/material';
 import TextInput from '../TextInput/TextInput';
-import { Link } from 'react-router-dom';
 import { useCategorias } from '../../CategoriaContext';
 import { agregarNuevoVideo } from '../../api/api';
 
@@ -133,11 +131,6 @@ function FormNuevoVideo () {
                                     Limpiar
                                 </Button>
                             </div>
-                            <Link to="/nueva-categoria">
-                                <Button disabled={isSubmitting} size='large' variant='outlined' className='boton-azul'>
-                                    Nueva Categoria
-                                </Button>
-                            </Link>
                         </div>
 
                         {isSubmitting && <Typography variant='h6' color='text.primary'>Formulario enviado con exito!</Typography>}
