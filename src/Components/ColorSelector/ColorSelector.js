@@ -1,20 +1,18 @@
-import React, { useState } from "react";
-import { ChromePicker } from 'react-color';
+import './ColorSelector.css'
+import React from "react";
+import { Box, Typography } from '@mui/material';
 
-function ColorSelector () {
-    const [selectedColor, setSelectedColor] = useState('#02FCE1'); // Color predeterminado
+function ColorSelector ({ initialColor }) {
 
-    const handleColorChange = (newColor) => {
-        setSelectedColor(newColor.hex);
-    
-    };
-    return(
-        <>
-            <ChromePicker 
-                color={selectedColor}
-                onChangeComplete={handleColorChange}
+    return (
+        <Box className='switch-container'>
+            <Typography className='switch-text'>Selecciona un color</Typography>
+            <input  
+                type="color"
+                className='color-selector-input'
+                value={initialColor}
             />
-        </>
+        </Box>
     );
 }
 
