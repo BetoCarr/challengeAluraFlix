@@ -8,6 +8,8 @@ import ColorSelector from '../ColorSelector/ColorSelector';
 function FormNuevaCategoria() {
 
     const initialValues = {
+        nombreCategoria: '',
+        isBanner: false,
         color: '#FFFFFF'
     };
 
@@ -17,12 +19,29 @@ function FormNuevaCategoria() {
             <Formik
                 initialValues={initialValues}
 
-                onSubmit={async () => {
+                validate={values => {
+                    const { nombreCategoria, isBanner, color } = values;
+                    const errors = {};
+
+                    if(!nombreCategoria) {
+                        errors.nombreCategoria = 'El nombre de la categoria es requerido';
+                        console.log(errors)
+                    }
+
+                    if(!color) {
+                        errors.color ='El color es requerido';
+                    }
+                    
+                    return errors;
+                }}
+
+                onSubmit={async (values, { resetForm }) => {
                     alert("Formulario enviado con éxito!")
+                    console.log(initialValues)
                 }}
 
             >
-                {() => (
+                {({errors}) => (
                     <Form className='form-container'>
                         <TextInput
                             label="Nombre"
