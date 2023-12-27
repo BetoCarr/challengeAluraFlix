@@ -1,15 +1,26 @@
 import './FormNuevaCategoria.css';
-import React from "react";
-import {Typography, Switch, Box, Button} from '@mui/material';
+import React, { useState } from "react";
+import {Typography, Button} from '@mui/material';
 import { Formik, Form } from 'formik';
 import TextInput from "../TextInput/TextInput";
+import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner';
 import ColorSelector from '../ColorSelector/ColorSelector';
 
 function FormNuevaCategoria() {
 
+    const [isBanner, setIsBanner] = useState(false);
+
+
+    const handleSwitchChange = (isChecked) => {
+        setIsBanner(isChecked);
+
+        console.log('El estado del Switch es:', isChecked);
+        // Realiza cualquier lógica adicional con el valor del Switch aquí
+    };
+
     const initialValues = {
         nombreCategoria: '',
-        isBanner: false,
+        isBanner,
         color: '#FFFFFF'
     };
 
@@ -20,14 +31,18 @@ function FormNuevaCategoria() {
                 initialValues={initialValues}
 
                 validate={values => {
-                    const { nombreCategoria, isBanner, color } = values;
+                    const { nombreCategoria, color } = values;
                     const errors = {};
 
+
+                    //Validación del nombre de la categoria
                     if(!nombreCategoria) {
                         errors.nombreCategoria = 'El nombre de la categoria es requerido';
-                        console.log(errors)
+                    } else if(!/^[a-zA-Z0-9À-ÿ\s\-]{3,50}$/.test(nombreCategoria)) {
+                        errors.nombreCategoria = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
                     }
 
+                    // Validación de color
                     if(!color) {
                         errors.color ='El color es requerido';
                     }
@@ -37,7 +52,7 @@ function FormNuevaCategoria() {
 
                 onSubmit={async (values, { resetForm }) => {
                     alert("Formulario enviado con éxito!")
-                    console.log(initialValues)
+                    console.log(values)
                 }}
 
             >
@@ -45,15 +60,13 @@ function FormNuevaCategoria() {
                     <Form className='form-container'>
                         <TextInput
                             label="Nombre"
-                            name="nombre-categoria"
+                            name="nombreCategoria"
                             placeholder="Introduce el nombre de la nueva categoria"
                         />
-                        <Box className='switch-container'>
-                            <Typography className='switch-text'>Activa el switch para destacar en el banner</Typography><Switch disabled size='large'/>
-                        </Box>
-                        <ColorSelector
+                        <SwitchIsBanner onSwitchChange={handleSwitchChange} />
+                        {/* <ColorSelector
                             initialColor={initialValues.color}
-                        />
+                        /> */}
                         <Button type="submit" size='large' variant='outlined' className='boton-azul'>
                             Enviarr
                         </Button>
