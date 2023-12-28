@@ -1,8 +1,18 @@
 import './ColorSelector.css'
-import React from "react";
+import React, { useState } from "react";
 import { Box, Typography } from '@mui/material';
 
-function ColorSelector ({ initialColor }) {
+function ColorSelector ({ initialColor, onColorChange }) {
+
+    const [selectedColor, setSelectedColor] = useState(initialColor);
+
+    const handleColorChange = (event) => {
+        const newColor = event.target.value;
+        setSelectedColor(newColor);
+        onColorChange(newColor); // Enviar el nuevo color al componente padre si es necesario
+        // console.log(newColor)
+    };
+
 
     return (
         <Box className='switch-container'>
@@ -10,7 +20,8 @@ function ColorSelector ({ initialColor }) {
             <input  
                 type="color"
                 className='color-selector-input'
-                value={initialColor}
+                value={selectedColor}
+                onChange={handleColorChange}
             />
         </Box>
     );
