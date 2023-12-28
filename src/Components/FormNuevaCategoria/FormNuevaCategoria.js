@@ -5,6 +5,7 @@ import { Formik, Form } from 'formik';
 import TextInput from "../TextInput/TextInput";
 import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner';
 import ColorSelector from '../ColorSelector/ColorSelector';
+import FormButtons from '../FormButtons/FormButtons';
 
 function FormNuevaCategoria() {
 
@@ -56,7 +57,7 @@ function FormNuevaCategoria() {
                 }}
 
             >
-                {({errors}) => (
+                {({isSubmitting, resetForm, errors}) => (
                     <Form className='form-container'>
                         <TextInput
                             label="Nombre"
@@ -67,9 +68,10 @@ function FormNuevaCategoria() {
                         {/* <ColorSelector
                             initialColor={initialValues.color}
                         /> */}
-                        <Button type="submit" size='large' variant='outlined' className='boton-azul'>
-                            Enviarr
-                        </Button>
+                        <FormButtons
+                            isSubmitting={isSubmitting} 
+                            resetForm={resetForm}
+                        />
                     </Form>
                 )}
             </Formik>
