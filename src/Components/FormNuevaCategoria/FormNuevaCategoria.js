@@ -20,7 +20,6 @@ function FormNuevaCategoria() {
 
     const initialValues = {
         nombreCategoria: '',
-        isBanner,
         color: '#FFFFFF'
     };
 
@@ -52,7 +51,8 @@ function FormNuevaCategoria() {
 
                 onSubmit={async (values, { resetForm }) => {
                     alert("Formulario enviado con éxito!")
-                    console.log(values)
+                    const updatedValues = { ...values, isBanner }; // Obteniendo el valor actual de isBanner
+                    console.log(updatedValues);
                 }}
 
             >
