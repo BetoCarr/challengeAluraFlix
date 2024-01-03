@@ -6,8 +6,14 @@ import TextInput from "../TextInput/TextInput";
 import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import FormButtons from '../FormButtons/FormButtons';
+import { useCategorias } from '../../CategoriaContext';
+
 
 function FormNuevaCategoria() {
+
+    const categorias = useCategorias();
+    const coloresCategorias = categorias.map(categoria => categoria.color);
+    console.log(coloresCategorias)
 
     const [isBanner, setIsBanner] = useState(false);
     const [selectedColor, setSelectedColor] = useState('#02FCE1'); // Color inicial

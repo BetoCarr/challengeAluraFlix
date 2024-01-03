@@ -10,7 +10,6 @@ function ColorSelector ({ initialColor, onColorChange }) {
         const newColor = event.target.value;
         setSelectedColor(newColor);
         onColorChange(newColor); // Enviar el nuevo color al componente padre si es necesario
-        // console.log(newColor)
     };
 
 
