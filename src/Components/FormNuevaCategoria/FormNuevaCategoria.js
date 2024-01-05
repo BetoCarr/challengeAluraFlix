@@ -11,12 +11,74 @@ import { useCategorias } from '../../CategoriaContext';
 
 function FormNuevaCategoria() {
 
-    const categorias = useCategorias();
-    const coloresCategorias = categorias.map(categoria => categoria.color);
-    console.log(coloresCategorias)
-
     const [isBanner, setIsBanner] = useState(false);
     const [selectedColor, setSelectedColor] = useState('#02FCE1'); // Color inicial
+
+    const categories = useCategorias();
+    const categoriesColors = categories.map(category => category.color);
+    console.log(categoriesColors)
+
+
+
+    // Función para verificar la similitud de colores
+    const isColorTooSimilar = (newColor, existingColors, threshold) => {
+        for (const color of existingColors) {
+            // Calcula la diferencia de colores (por ejemplo, distancia euclidiana en RGB)
+            const distance = calculateColorDifference(newColor, color);
+            // Si la distancia es menor que el umbral, considera los colores como similares
+            if (distance < threshold) {
+                return true; // Colores similares
+            }
+        }
+        return false; // No se encontraron colores similares
+    };
+
+
+    // Función para calcular la distancia de los colores
+    const calculateColorDifference = (color1, color2) => {
+
+        // Convertir colores hexadecimales a valores RGB
+        const rgb1 = hexToRgb(color1);
+        const rgb2 = hexToRgb(color2);
+
+        // Extraer componentes R, G, B
+        const { r: r1, g: g1, b: b1 } = rgb1;
+        const { r: r2, g: g2, b: b2 } = rgb2;
+
+        // Calcular la diferencia euclidiana
+        const distance = Math.sqrt(
+            Math.pow((r2 - r1), 2) +
+            Math.pow((g2 - g1), 2) +
+            Math.pow((b2 - b1), 2)
+        );
+
+        return distance;
+    };
+
+    // Función para convertir colores hexadecimales a RGB
+    const hexToRgb = (hex) => {
+        // Eliminar el # del inicio si está presente
+        hex = hex.replace("#", "");
+
+        // Obtener componentes R, G, B
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+    
+        return { r, g, b };
+    };
+
+    //Prueba de uso de isColorTooSimilar
+    const newColor = '#02FCE1';
+    const threshold = 50; // Umbral de similitud
+    if (isColorTooSimilar(newColor, categoriesColors, threshold)) {
+        // El nuevo color es demasiado similar a los colores existentes, muestra un mensaje de error
+        console.log('Elige un color más diferente.');
+    } else {
+        // Almacena el nuevo color en la base de datos
+        console.log('Nuevo color aceptado.');
+    }
+
 
     const handleColorChange = (newColor) => {
         setSelectedColor(newColor);
