@@ -13,24 +13,30 @@ function FormNuevaCategoria() {
 
     const [isBanner, setIsBanner] = useState(false);
     const [selectedColor, setSelectedColor] = useState('#02FCE1'); // Color inicial
+    const [formErrors, setFormErrors] = useState({});
+
 
     const categories = useCategorias();
     const categoriesColors = categories.map(category => category.color);
-    console.log(categoriesColors)
+    // console.log(categoriesColors)
 
 
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
+        const errors = {};
+
         for (const color of existingColors) {
             // Calcula la diferencia de colores (por ejemplo, distancia euclidiana en RGB)
             const distance = calculateColorDifference(newColor, color);
             // Si la distancia es menor que el umbral, considera los colores como similares
             if (distance < threshold) {
-                return true; // Colores similares
+                console.log("Elige un color diferente")
+                errors.selectedColor = 'Elige un color diferente'; // Se agrega un error al campo
+                return errors; // Colores similares            
             }
         }
-        return false; // No se encontraron colores similares
+        return errors; // No se encontraron colores similares
     };
 
 
@@ -68,29 +74,15 @@ function FormNuevaCategoria() {
         return { r, g, b };
     };
 
-    //Prueba de uso de isColorTooSimilar
-    const newColor = '#02FCE1';
-    const threshold = 50; // Umbral de similitud
-    if (isColorTooSimilar(newColor, categoriesColors, threshold)) {
-        // El nuevo color es demasiado similar a los colores existentes, muestra un mensaje de error
-        console.log('Elige un color más diferente.');
-    } else {
-        // Almacena el nuevo color en la base de datos
-        console.log('Nuevo color aceptado.');
-    }
-
-
     const handleColorChange = (newColor) => {
         setSelectedColor(newColor);
         // Puedes realizar cualquier lógica adicional con el nuevo color aquí si es necesario
-        // console.log('El estado del color es:', selectedColor);
-
+        const colorErrors = isColorTooSimilar(newColor, categoriesColors, 50);
+        setFormErrors((prevErrors) => ({ ...prevErrors, ...colorErrors }));
     }; 
 
     const handleSwitchChange = (isChecked) => {
         setIsBanner(isChecked);
-
-        console.log('El estado del Switch es:', isChecked);
         // Realiza cualquier lógica adicional con el valor del Switch aquí
     };
 
@@ -108,26 +100,31 @@ function FormNuevaCategoria() {
                     const { nombreCategoria } = values;
                     const errors = {};
 
-
                     //Validación del nombre de la categoria
                     if(!nombreCategoria) {
                         errors.nombreCategoria = 'El nombre de la categoria es requerido';
                     } else if(!/^[a-zA-Z0-9À-ÿ\s\-]{3,50}$/.test(nombreCategoria)) {
                         errors.nombreCategoria = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
                     }
-
-                    // // Validación de color
-                    // if(!color) {
-                    //     errors.color ='El color es requerido';
-                    // }
                     
                     return errors;
                 }}
 
                 onSubmit={async (values, { resetForm }) => {
-                    alert("Formulario enviado con éxito!")
-                    const updatedValues = { ...values, isBanner, selectedColor }; // Obteniendo el valor actual de isBanner
-                    console.log(updatedValues);
+                    
+                    const colorErrors = isColorTooSimilar(selectedColor, categoriesColors, 50);
+                    setFormErrors({ ...colorErrors });
+
+                    if (Object.keys(colorErrors).length === 0) {
+                        // No hay errores de color, enviar el formulario
+                        alert("Formulario enviado con éxito!");
+                        const updatedValues = { ...values, isBanner, selectedColor };
+                        console.log(updatedValues);
+                        resetForm();
+                    }
+                    // alert("Formulario enviado con éxito!")
+                    // const updatedValues = { ...values, isBanner, selectedColor }; // Obteniendo el valor actual de isBanner
+                    // console.log(updatedValues);
                 }}
 
             >
@@ -143,6 +140,9 @@ function FormNuevaCategoria() {
                             initialColor={selectedColor}
                             onColorChange={handleColorChange}
                         />
+                        {/* {colorErrors.selectedColor && (
+                            <div className="error-message">{colorErrors.selectedColor}</div>
+                        )} */}
                         <FormButtons
                             isSubmitting={isSubmitting} 
                             resetForm={resetForm}
