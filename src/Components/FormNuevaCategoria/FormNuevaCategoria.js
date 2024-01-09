@@ -31,7 +31,6 @@ function FormNuevaCategoria() {
             const distance = calculateColorDifference(newColor, color);
             // Si la distancia es menor que el umbral, considera los colores como similares
             if (distance < threshold) {
-                console.log("Elige un color diferente")
                 errors.selectedColor = 'Elige un color diferente'; // Se agrega un error al campo
                 return errors; // Colores similares            
             }

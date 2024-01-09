@@ -1,7 +1,6 @@
 import './ColorSelector.css'
 import React, { useState } from "react";
 import { Box, Typography } from '@mui/material';
-import { ErrorMessage } from "formik";
 
 function ColorSelector ({ initialColor, onColorChange, name, error }) {
 
@@ -15,8 +14,8 @@ function ColorSelector ({ initialColor, onColorChange, name, error }) {
 
 
     return (
-        <Box className='colorSelector-container'>
-            <Box className='left-container'>
+        <div>
+            <Box className='colorSelector-container'>
                 <Typography className='switch-text'>Selecciona un color</Typography>
                 <input  
                     type="color"
@@ -27,13 +26,11 @@ function ColorSelector ({ initialColor, onColorChange, name, error }) {
                     onChange={handleColorChange}
                 />
             </Box>
-            
-            {error && <div className="error">{error}
-                <ErrorMessage name={name} component="div" />
-            </div>}
-            
-        </Box>
+            {error && (
+                <div className='error'>{error}</div>
+            )}
+        </div>
     );
 }
 
-export default ColorSelector;
+export default ColorSelector;   
