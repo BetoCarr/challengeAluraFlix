@@ -122,9 +122,6 @@ function FormNuevaCategoria() {
                         console.log(updatedValues);
                         resetForm();
                     }
-                    // alert("Formulario enviado con éxito!")
-                    // const updatedValues = { ...values, isBanner, selectedColor }; // Obteniendo el valor actual de isBanner
-                    // console.log(updatedValues);
                 }}
 
             >
@@ -137,12 +134,11 @@ function FormNuevaCategoria() {
                         />
                         <SwitchIsBanner onSwitchChange={handleSwitchChange} />
                         <ColorSelector
+                            name="selectedColor"
                             initialColor={selectedColor}
                             onColorChange={handleColorChange}
+                            error={formErrors.selectedColor}
                         />
-                        {/* {colorErrors.selectedColor && (
-                            <div className="error-message">{colorErrors.selectedColor}</div>
-                        )} */}
                         <FormButtons
                             isSubmitting={isSubmitting} 
                             resetForm={resetForm}

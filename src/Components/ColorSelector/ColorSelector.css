@@ -1,3 +1,20 @@
+.colorSelector-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+    background-color: var(--inputs-primary);
+    width: 100%; /* Ocupa todo el ancho disponible */
+    height: 3rem; /* Altura específica */
+    padding: 8px; /* Relleno interior para el input */
+    border: 1px solid #ccc; /* Borde del input */
+    border-radius: 4px; /* Borde redondeado */
+    color: var(--text-primary);
+}
+.left-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
 .color-selector-input {
     width: 90px;
     height: 35px;

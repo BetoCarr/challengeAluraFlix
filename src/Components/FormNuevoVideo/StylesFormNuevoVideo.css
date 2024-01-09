@@ -58,6 +58,7 @@ button.boton-gris {
 .container-botones {
     display: flex;
     justify-content: space-between;
+    margin-top: 1.6rem;
 }
 .container-botones-izquierda {
     width: 20%;
