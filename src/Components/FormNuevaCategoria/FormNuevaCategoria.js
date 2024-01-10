@@ -8,17 +8,19 @@ import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import FormButtons from '../FormButtons/FormButtons';
 import { useCategorias } from '../../CategoriaContext';
-
+import { agregarCategoria } from '../../api/api';
+import { useNavigate } from 'react-router-dom';
 
 function FormNuevaCategoria() {
     // Estado local para gestionar el banner, color seleccionado y errores del formulario
     const [isBanner, setIsBanner] = useState(false);
-    const [selectedColor, setSelectedColor] = useState('#02FCE1'); // Color inicial
+    const [color, setcolor] = useState('#02FCE1'); // Color inicial
     const [formErrors, setFormErrors] = useState({});
 
     // Obtener las categorías y sus colores
     const categories = useCategorias();
     const categoriesColors = categories.map(category => category.color);
+    const navigate = useNavigate();
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
@@ -28,7 +30,7 @@ function FormNuevaCategoria() {
             const distance = calculateColorDifference(newColor, color);
             // Si la distancia es menor que el umbral, considera los colores como similares
             if (distance < threshold) {
-                errors.selectedColor = 'Elige un color diferente'; // Se agrega un error al campo
+                errors.color = 'Elige un color diferente'; // Se agrega un error al campo
                 return errors; // Colores similares            
             }
         }
@@ -67,7 +69,7 @@ function FormNuevaCategoria() {
 
     // Obtener las categorías y sus colores
     const handleColorChange = (newColor) => {
-        setSelectedColor(newColor);
+        setcolor(newColor);
         // Verificar la similitud de colores y actualizar los errores del formulario
         const colorErrors = isColorTooSimilar(newColor, categoriesColors, 50);
         setFormErrors((prevErrors) => ({ ...prevErrors, ...colorErrors }));
@@ -81,7 +83,7 @@ function FormNuevaCategoria() {
 
     // Valores iniciales del formulario
     const initialValues = {
-        nombreCategoria: ''
+        nombre: ''
     };
 
     return(
@@ -94,14 +96,14 @@ function FormNuevaCategoria() {
 
                 // Validación del formulario
                 validate={values => {
-                    const { nombreCategoria } = values;
+                    const { nombre } = values;
                     const errors = {};
 
                     //Validación del nombre de la categoria
-                    if(!nombreCategoria) {
-                        errors.nombreCategoria = 'El nombre de la categoria es requerido';
-                    } else if(!/^[a-zA-Z0-9À-ÿ\s\-]{3,50}$/.test(nombreCategoria)) {
-                        errors.nombreCategoria = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
+                    if(!nombre) {
+                        errors.nombre = 'El nombre de la categoria es requerido';
+                    } else if(!/^[a-zA-Z0-9À-ÿ\s\-]{3,50}$/.test(nombre)) {
+                        errors.nombre = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
                     }
                     
                     return errors;
@@ -109,36 +111,54 @@ function FormNuevaCategoria() {
 
                 // Enviar el formulario
                 onSubmit={async (values, { resetForm }) => {
+
                     // Verificar errores de color al enviar el formulario
-                    const colorErrors = isColorTooSimilar(selectedColor, categoriesColors, 50);
+                    const colorErrors = isColorTooSimilar(color, categoriesColors, 50);
                     setFormErrors({ ...colorErrors });
+
                     // Si no hay errores, enviar el formulario
                     if (Object.keys(colorErrors).length === 0) {
                         // No hay errores de color, enviar el formulario
                         alert("Formulario enviado con éxito!");
-                        const updatedValues = { ...values, isBanner, selectedColor };
-                        console.log(updatedValues);
-                        resetForm();
+                        const newCategory = { ...values, isBanner, color };
+
+                        agregarCategoria(newCategory)
+                        .then((responseData) => {
+                            console.log("Categoria agregada exitosamente!", responseData);
+                            const confirmMessage = "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.";
+                            if(window.confirm(confirmMessage)) {
+                                navigate('/', { replace: true });
+                                window.location.reload();
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error al agregar la categoria:", error);
+                            alert("Categoria NO agregada. Error: " + error);
+                        })
+                        .finally(() => {
+                            console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
+                            resetForm();
+                        });
                     }
                 }}
 
             >
-                {({isSubmitting, resetForm, errors}) => (
+                {({isSubmitting, resetForm}) => (
                     <Form className='form-container'>
                         {/* Componente para el nombre */}
                         <TextInput
                             label="Nombre"
-                            name="nombreCategoria"
+                            name="nombre"
                             placeholder="Introduce el nombre de la nueva categoria"
                         />
                         {/* Componente para el banner */}
                         <SwitchIsBanner onSwitchChange={handleSwitchChange} />
                         {/* Componente para seleccionar el color */}
                         <ColorSelector
-                            name="selectedColor"
-                            initialColor={selectedColor}
+                            name="color"
+                            initialColor={color}
                             onColorChange={handleColorChange}
-                            error={formErrors.selectedColor}
+                            error={formErrors.color}
                         />
                         {/* Componente para los botones del formulario */}                       
                         <FormButtons
