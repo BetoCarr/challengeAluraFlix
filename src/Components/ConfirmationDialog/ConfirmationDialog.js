@@ -5,8 +5,6 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import './ConfirmationDialog.css'
 
-
-
 function ConfirmationDialog ({ isOpen, onClose, onConfirm, videoId, videoTitle, categoryId }){
     return (
     <Dialog open={isOpen} onClose={onClose}>

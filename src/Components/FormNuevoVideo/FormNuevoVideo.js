@@ -1,10 +1,9 @@
 import './StylesFormNuevoVideo.css';
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {Typography} from '@mui/material';
 import TextInput from '../TextInput/TextInput';
-import { Link } from 'react-router-dom';
+import FormButtons from '../FormButtons/FormButtons';
 import { useCategorias } from '../../CategoriaContext';
 import { agregarNuevoVideo } from '../../api/api';
 
@@ -124,21 +123,10 @@ function FormNuevoVideo () {
                             <ErrorMessage name="categoria" component={() => (<div className="error">{errors.categoria}</div>)} />
                         </div>
 
-                        <div className='container-botones'>
-                            <div className='container-botones-izquierda'>
-                                <Button type="submit" disabled={isSubmitting} size='large' variant='outlined' className='boton-azul'>
-                                    Guardar
-                                </Button>
-                                <Button  disabled={isSubmitting} size='large' variant='outlined' className='boton-gris' type='button' onClick={() => resetForm()}>
-                                    Limpiar
-                                </Button>
-                            </div>
-                            <Link to="/nueva-categoria">
-                                <Button disabled={isSubmitting} size='large' variant='outlined' className='boton-azul'>
-                                    Nueva Categoria
-                                </Button>
-                            </Link>
-                        </div>
+                        <FormButtons
+                            isSubmitting={isSubmitting} 
+                            resetForm={resetForm}
+                        />
 
                         {isSubmitting && <Typography variant='h6' color='text.primary'>Formulario enviado con exito!</Typography>}
 

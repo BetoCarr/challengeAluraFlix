@@ -23,9 +23,22 @@ export function agregarNuevoVideo(ruta, nuevoVideo) {
     });
 }
 
+export function agregarCategoria(newCategory) {
+    const rutaAgregarCategoria = `/categorias/agregar`;
+    return new Promise((resolve, reject) => {
+        api
+        .post(rutaAgregarCategoria, newCategory)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
+        })
+    });
+}
+
 export function eliminarVideo(categoryId, id) {
     const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`;
-    console.log(rutaEliminarVid);
     return new Promise((resolve, reject) => {
         api
         .delete(rutaEliminarVid)
@@ -54,7 +67,6 @@ export function obtenerEstadoLike(videoId) {
 
 export function darLikeVideo(videoId, liked) {
     const rutaLikeVideo = `/video/${videoId}/like`
-    console.log(rutaLikeVideo);
     return new Promise((resolve, reject) => {
         api
         .put(

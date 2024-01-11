@@ -1,0 +1,18 @@
+.container-botones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.container-botones-izquierda {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+button.boton-azul {
+    background-color: var(--boton-blue);
+    color: var(--text-primary);
+}
+button.boton-gris {
+    background-color: var(--boton-gray);
+}
