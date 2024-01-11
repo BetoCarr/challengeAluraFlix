@@ -12,7 +12,6 @@ function ColorSelector ({ initialColor, onColorChange, name, error }) {
         onColorChange(newColor); // Enviar el nuevo color al componente padre si es necesario
     };
 
-
     return (
         <div>
             <Box className='colorSelector-container'>

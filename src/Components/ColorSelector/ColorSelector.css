@@ -1,7 +1,6 @@
 .colorSelector-container {
     display: flex;
     justify-content: space-between;
-    /* margin-bottom: 16px; */
     background-color: var(--inputs-primary);
     width: 100%; /* Ocupa todo el ancho disponible */
     height: auto; /* Altura específica */
