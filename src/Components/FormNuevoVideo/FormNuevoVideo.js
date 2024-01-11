@@ -1,15 +1,16 @@
 import './StylesFormNuevoVideo.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import {Typography} from '@mui/material';
 import TextInput from '../TextInput/TextInput';
 import FormButtons from '../FormButtons/FormButtons';
+import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import { useCategorias } from '../../CategoriaContext';
 import { agregarNuevoVideo } from '../../api/api';
-
 import { useNavigate } from 'react-router-dom';
 
 function FormNuevoVideo () {
+    const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
     const categorias = useCategorias();
     const navigate = useNavigate();
 
@@ -70,24 +71,29 @@ function FormNuevoVideo () {
                     .then((responseData) => {
                         console.log("¡Video agregado exitosamente!", responseData);
                         resetForm();
-                        const confirmMessage = "¡Video agregado exitosamente! La página se recargará para mostrar el nuevo video.";
-                        if(window.confirm(confirmMessage)) {
-                            navigate('/', { replace: true });
-                            window.location.reload();
-                        }
+                        // Configura el feedback para mostrar un mensaje de éxito
+                        setFeedback({
+                            isOpen: true,
+                            message: "¡Video agregado exitosamente! La página se recargará para mostrar el nuevo video.",
+                            onConfirm: () => {
+                                setFeedback({ isOpen: false });  // Cierra el feedback
+                                navigate('/', { replace: true });
+                                window.location.reload();
+                            }
+                        });
 
                     })
                     .catch((error) => {
-                        // Aquí manejas el caso de error, por ejemplo, mostrando un mensaje de error al usuario
                         console.error("Error al agregar el video:", error);
-                        alert("Video NO agregado. Error: " + error); // Puedes mostrar el mensaje de error al usuario
+                        setFeedback({
+                            isOpen: true,
+                            message: `Video NO agregado. Error: ${error}`,
+                            onConfirm: () => setFeedback({ isOpen: false })  // Cierra el feedback
+                        });
                     })
                     .finally(() => {
-                        // Esto se ejecutará independientemente de si la solicitud fue exitosa o no
-                        // Puedes realizar acciones adicionales aquí, como restablecer formularios o estados
-                        setSubmitting(false); // Por ejemplo, puedes restablecer el estado de submitting
+                        setSubmitting(false); 
                     });
-                
                 }}
             >
                 {({ isSubmitting, errors, resetForm }) => (
@@ -133,6 +139,13 @@ function FormNuevoVideo () {
                     </Form>
                 )}
             </Formik>
+            {/* Componente FeedbackDialog que se muestra según el estado del feedback */}
+            <FeedbackDialog
+                isOpen={feedback.isOpen}
+                onClose={() => setFeedback({ isOpen: false })}
+                message={feedback.message}
+                onConfirm={feedback.onConfirm}
+            />
         </>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import LikeFeedbackDialog from '../LikeFeedbackDialog/LikeFeedbackDialog';
+import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import { darLikeVideo, obtenerEstadoLike } from '../../api/api';
 
 function LikeIcon ( {videoId, title} ) {
@@ -20,28 +20,17 @@ function LikeIcon ( {videoId, title} ) {
 
 
     function handleLikeClick() {
-        if (liked) {
-            // Si el estado actual es 'liked', cambiarlo a 'unliked'
-            darLikeVideo(videoId, false)
-                .then(() => {
-                    setLiked(false);
-                    setFeedbackDialogOpen(true);
 
-                })
-                .catch((error) => {
-                    console.error("Error al quitar 'me gusta' al video:", error);
-                });
-        } else {
-            // Si el estado actual es 'unliked', cambiarlo a 'liked'
-            darLikeVideo(videoId, true)
-                .then(() => {
-                    setLiked(true);
-                    setFeedbackDialogOpen(true);
-                })
-                .catch((error) => {
-                    console.error("Error al dar 'me gusta' al video:", error);
-                });
-        }
+        const newLikeState = !liked;
+
+        darLikeVideo(videoId, newLikeState)
+            .then(() => {
+                setLiked(newLikeState);
+                setFeedbackDialogOpen(true);
+            })
+            .catch((error) => {
+                console.error(`Error al ${newLikeState ? 'dar' : 'quitar'} 'me gusta' al video:`, error);
+            });
     }
 
     function handleFeedbackDialogClose() {
@@ -54,11 +43,10 @@ function LikeIcon ( {videoId, title} ) {
                 className={`icon ${liked ? 'liked' : ''}`}
                 onClick={handleLikeClick}
             />
-            <LikeFeedbackDialog
+            <FeedbackDialog
                 isOpen={feedbackDialogOpen}
                 onClose={handleFeedbackDialogClose}
-                title={title}
-                liked={liked}
+                message={liked ? `¡"${title}" añadido a tus favoritos!` : `¡"${title}" eliminado de tus favoritos!`}
             />
         </>
     );

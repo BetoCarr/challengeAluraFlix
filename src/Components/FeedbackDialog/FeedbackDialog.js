@@ -4,14 +4,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
-function LikeFeedbackDialog({ isOpen, onClose, title, liked }) {
+function FeedbackDialog({ isOpen, onClose, message, onConfirm, confirmLabel }) {
 
-    let message = '';
-    if (liked === true) {
-        message = `¡"${title}" añadido a tus favoritos!`;
-    } else if (liked === false) {
-        message = `¡"${title}" eliminado de tus favoritos!`;
-    }
     function handleClose() {
         onClose();
     }
@@ -22,12 +16,14 @@ function LikeFeedbackDialog({ isOpen, onClose, title, liked }) {
                 {message}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Ok
-                </Button>
+                {onConfirm && (
+                    <Button onClick={onConfirm} color="primary">
+                        {confirmLabel || 'Ok'}
+                    </Button>
+                )}
             </DialogActions>
         </Dialog>
-    );
+    )
 }
 
-export default LikeFeedbackDialog;
+export default FeedbackDialog;
