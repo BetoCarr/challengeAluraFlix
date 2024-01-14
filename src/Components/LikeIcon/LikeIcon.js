@@ -1,13 +1,17 @@
 import React, { useState, useEffect }  from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import LikeFeedbackDialog from '../LikeFeedbackDialog/LikeFeedbackDialog';
+import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import { darLikeVideo, obtenerEstadoLike } from '../../api/api';
 
 function LikeIcon ( {videoId, title} ) {
 
+    // Estado para manejar si el video está marcado como 'me gusta'
     const [liked, setLiked] = useState(false);
+    
+    // Estado para manejar si mostrar el cuadro de diálogo de feedback
     const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false);
-
+    
+    // Efecto para obtener y establecer el estado inicial de 'me gusta' al cargar el componente
     useEffect(() => {
         obtenerEstadoLike(videoId)
             .then((data) => {
@@ -18,47 +22,39 @@ function LikeIcon ( {videoId, title} ) {
             });
     }, [videoId]);
 
-
+    // Función para manejar el clic en el ícono de 'me gusta'
     function handleLikeClick() {
-        if (liked) {
-            // Si el estado actual es 'liked', cambiarlo a 'unliked'
-            darLikeVideo(videoId, false)
-                .then(() => {
-                    setLiked(false);
-                    setFeedbackDialogOpen(true);
-
-                })
-                .catch((error) => {
-                    console.error("Error al quitar 'me gusta' al video:", error);
-                });
-        } else {
-            // Si el estado actual es 'unliked', cambiarlo a 'liked'
-            darLikeVideo(videoId, true)
-                .then(() => {
-                    setLiked(true);
-                    setFeedbackDialogOpen(true);
-                })
-                .catch((error) => {
-                    console.error("Error al dar 'me gusta' al video:", error);
-                });
-        }
+        // Invertir el estado actual de 'liked'
+        const newLikeState = !liked;
+        // Llamar a la API para actualizar el estado de 'me gusta' en el backend
+        darLikeVideo(videoId, newLikeState)
+            .then(() => {
+                setLiked(newLikeState); // Actualizar el estado de 'liked'
+                setFeedbackDialogOpen(true); // Mostrar el cuadro de diálogo de feedback
+            })
+            .catch((error) => {
+                console.error(`Error al ${newLikeState ? 'dar' : 'quitar'} 'me gusta' al video:`, error);
+            });
     }
 
+    // Función para manejar el cierre del cuadro de diálogo de feedback
     function handleFeedbackDialogClose() {
         setFeedbackDialogOpen(false);
     }
 
     return(
         <>
+            {/* Ícono de 'me gusta' con clase adicional si está marcado como 'liked' */}
             <FavoriteIcon
                 className={`icon ${liked ? 'liked' : ''}`}
                 onClick={handleLikeClick}
             />
-            <LikeFeedbackDialog
+            {/* Cuadro de diálogo de feedback para mostrar el resultado de dar/quitar 'me gusta' */}
+            <FeedbackDialog
                 isOpen={feedbackDialogOpen}
                 onClose={handleFeedbackDialogClose}
-                title={title}
-                liked={liked}
+                message={liked ? `¡"${title}" añadido a tus favoritos!` : `¡"${title}" eliminado de tus favoritos!`}
+                onConfirm={handleFeedbackDialogClose}
             />
         </>
     );

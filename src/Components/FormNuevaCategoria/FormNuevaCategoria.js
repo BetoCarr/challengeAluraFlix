@@ -7,6 +7,7 @@ import TextInput from "../TextInput/TextInput";
 import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import FormButtons from '../FormButtons/FormButtons';
+import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import { useCategorias } from '../../CategoriaContext';
 import { agregarCategoria } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ function FormNuevaCategoria() {
     const [isBanner, setIsBanner] = useState(false);
     const [color, setcolor] = useState('#02FCE1'); // Color inicial
     const [formErrors, setFormErrors] = useState({});
+    const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
 
     // Obtener las categorías y sus colores
     const categories = useCategorias();
@@ -36,7 +38,6 @@ function FormNuevaCategoria() {
         }
         return errors; // No se encontraron colores similares
     };
-
 
     // Función para calcular la distancia de los colores
     const calculateColorDifference = (color1, color2) => {
@@ -119,21 +120,28 @@ function FormNuevaCategoria() {
                     // Si no hay errores, enviar el formulario
                     if (Object.keys(colorErrors).length === 0) {
                         // No hay errores de color, enviar el formulario
-                        alert("Formulario enviado con éxito!");
                         const newCategory = { ...values, isBanner, color };
-
                         agregarCategoria(newCategory)
                         .then((responseData) => {
                             console.log("Categoria agregada exitosamente!", responseData);
-                            const confirmMessage = "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.";
-                            if(window.confirm(confirmMessage)) {
-                                navigate('/', { replace: true });
-                                window.location.reload();
-                            }
+                            setFeedback({
+                                isOpen: true,
+                                message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
+                                onConfirm: () => {
+                                    navigate('/', { replace: true });
+                                    window.location.reload();
+                                    resetForm();
+                                    setFeedback({ isOpen: false });
+                                }
+                            });
                         })
                         .catch((error) => {
                             console.error("Error al agregar la categoria:", error);
-                            alert("Categoria NO agregada. Error: " + error);
+                            setFeedback({
+                                isOpen: true,
+                                message: `Categoria NO agregada. Error: ${error}`,
+                                onConfirm: () => setFeedback({ isOpen: false })
+                            });
                         })
                         .finally(() => {
                             console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
@@ -168,6 +176,14 @@ function FormNuevaCategoria() {
                     </Form>
                 )}
             </Formik>
+            {/* Componente FeedbackDialog */}
+            <FeedbackDialog
+                isOpen={feedback.isOpen}
+                onClose={() => setFeedback({ isOpen: false })}
+                message={feedback.message}
+                onConfirm={feedback.onConfirm}
+                confirmLabel="Aceptar"
+            />
         </>
 
     );
