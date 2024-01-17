@@ -9,8 +9,8 @@ function renderCarouselItems(videos, color, id) {
     // console.log(id);
     return (
         <MySlider>
-            {videos.map((video, index) => (
-                <div key={index}>
+            {videos.map(( video ) => (
+                <div key={video.id}>
                     <VideoCard 
                         imageUrl={video.imageUrl}
                         videoUrl={video.videoUrl}
@@ -25,14 +25,13 @@ function renderCarouselItems(videos, color, id) {
     );
 }
 
-
 function Carousel({ categoria, isBanner, color }) {
     // console.log(categoria.id);
     // Estado para determinar si se muestra el banner o el carrusel normal
     const [showBanner, setShowBanner] = useState(isBanner);
     // Desestructurar las propiedades de la categoría
     const { nombre, videos, id } = categoria;
-    // console.log(id)
+    console.log(videos);
     return (
         <>
             {showBanner && ( // Renderiza el carrusel de banner sin ContainerTitulo
