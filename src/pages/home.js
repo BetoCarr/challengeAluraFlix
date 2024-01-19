@@ -10,12 +10,11 @@ function Home () {
     // Utiliza el hook useCategorias para obtener la lista de categorías
     const categorias = useCategorias();
 
-    // Funcion para eliminar categoria
+    // Funcion para eliminar categoria, que llama a funcion importada de la api
     const handleDeleteCategory = (categoriaId) => {
         // Lógica para eliminar la categoría con el ID proporcionado
         eliminarCategoria(categoriaId)
     }
-
 
     // Retorna la estructura principal del componente
     return(
@@ -27,7 +26,7 @@ function Home () {
                     categoria={categoria} // Pasa la categoría al componente Carousel
                     isBanner={categoria.isBanner} // Pasa la propiedad isBanner al componente Carousel
                     color={categoria.color} // Pasa el color al componente Carousel
-                    onDelete={handleDeleteCategory}
+                    onDelete={handleDeleteCategory} // Pasa la función de eliminacion a Carousel
                 />
             ))}
         </MainContainer>
