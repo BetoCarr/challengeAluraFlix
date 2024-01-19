@@ -36,7 +36,10 @@ export function agregarCategoria(newCategory) {
         })
     });
 }
+export function eliminarCategoria(categoriaId) {
+    console.log(`Categoría eliminada con el id: ${categoriaId}`);
 
+}
 export function eliminarVideo(categoryId, id) {
     const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`;
     return new Promise((resolve, reject) => {

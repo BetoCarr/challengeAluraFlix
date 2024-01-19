@@ -16,14 +16,6 @@ function MenuCategory ({ onDelete }) {
         setAnchorEl(null);
     };
 
-    const handleEliminarCategoria = () => {
-        // Lógica para confirmar la eliminación y llamar a la función onDelete
-        if (window.confirm('¿Seguro que deseas eliminar esta categoría?')) {
-            onDelete();
-            handleClose();
-        }
-    };
-
     return (
         <>
             <IconButton
@@ -41,7 +33,7 @@ function MenuCategory ({ onDelete }) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleEliminarCategoria}>Eliminar</MenuItem>
+                <MenuItem onClick={onDelete}>Eliminar</MenuItem>
                 {/* Puedes agregar más elementos del menú aquí */}
             </Menu>
         </>

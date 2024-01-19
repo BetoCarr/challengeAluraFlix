@@ -28,12 +28,22 @@ function renderCarouselItems(videos, color, id) {
 }
 
 // Componente principal Carousel
-function Carousel({ categoria, isBanner, color }) {
+function Carousel({ categoria, isBanner, color, onDelete }) {
+    // console.log(categoria)
     // Estado para determinar si se muestra el banner o el carrusel normal
     const [showBanner, setShowBanner] = useState(isBanner);
 
     // Desestructurar las propiedades de la categoría
     const { nombre, videos, id } = categoria;
+
+    // Función para manejar la eliminación de la categoría
+    const handleEliminarCategoria = () => {
+        // Lógica para confirmar la eliminación y llamar a la función onDelete
+        if (window.confirm(`¿Seguro que deseas eliminar la categoría "${nombre}"?`)) {
+            onDelete(); // Pasa el ID de la categoría al componente padre
+        }
+    };
+
     return (
         <>
             {showBanner && ( // Renderiza el carrusel de banner sin ContainerTitulo
@@ -57,6 +67,7 @@ function Carousel({ categoria, isBanner, color }) {
                     <ContainerTitulo
                         color={color}
                         title={nombre}
+                        onDelete={handleEliminarCategoria} // Pasa la función de eliminación al ContainerTitulo
                     />
                     {/* Renderiza los VideoCards en el carrusel */}
                     {renderCarouselItems(videos, color, id)}
