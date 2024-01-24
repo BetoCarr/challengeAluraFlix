@@ -14,8 +14,11 @@ const tema = createTheme({
             primary: "#00000000",
             blue: "#2A7AE4",
             gray: "#9E9E9E"
+        },
+        categorymenu: {
+            primary: "#423F3E"
         }
-    },
+    }
 });
 
 document.documentElement.style.setProperty('--boton-primary', tema.palette.boton.primary);
@@ -27,5 +30,6 @@ document.documentElement.style.setProperty('--inputs-primary', tema.palette.prim
 document.documentElement.style.setProperty('--boton-blue', tema.palette.boton.blue);
 document.documentElement.style.setProperty('--boton-gray', tema.palette.boton.gray);
 
+document.documentElement.style.setProperty('--menu-primay', tema.palette.categorymenu.primary);
 
 export default tema;

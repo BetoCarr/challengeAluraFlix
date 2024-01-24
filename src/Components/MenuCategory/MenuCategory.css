@@ -1,10 +1,6 @@
-/* .menu-icon-button {
-    color: blueviolet;
+li.menu-item {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 0;
 }
-.menu-container {
-    width: 800px;
-    background-color: black;
-}
-.menu-item {
-    color: red;
-} */
+
