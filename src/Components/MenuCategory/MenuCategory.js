@@ -1,4 +1,4 @@
-// Importación de Reac y componentes
+// Importación de React y componentes
 import './MenuCategory.css'
 import * as React from 'react';
 import { useState } from 'react';
@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 
 
 const StyledMenu = styled((props) => (
+    // Estiliza el componente Menu de Material-UI y hereda las props
     <Menu
         elevation={0}
         anchorOrigin={{
@@ -26,6 +27,7 @@ const StyledMenu = styled((props) => (
     />
 ))(({ theme }) => ({
     '& .MuiPaper-root': {
+        // Estilos para el contenedor del menú
         borderRadius: 6,        
         minWidth: 180,
         width:200,
@@ -34,6 +36,7 @@ const StyledMenu = styled((props) => (
         // Otros estilos que desees aplicar al menú
     },
     '& .MuiMenuItem-root': {
+        // Estilos para los elementos del menú
         '&:active': {
             backgroundColor: alpha(
                 theme.palette.primary.main,
@@ -94,7 +97,7 @@ function MenuCategory ({ onDelete }) {
             >
                 {/* Elemento de menú para la opción "Eliminar" */}
                 <MenuItem className='menu-item' onClick={handleMenuDelete}>
-                    <DeleteForeverIcon style={{ fill: theme.palette.text.primary, fontSize: '20px', fontSize: "23px" }} />
+                    <DeleteForeverIcon style={{ fill: theme.palette.text.primary, fontSize: "23px" }} />
                     Eliminar
                 </MenuItem>
                 <Divider sx={{ my: 0.5 }} />
