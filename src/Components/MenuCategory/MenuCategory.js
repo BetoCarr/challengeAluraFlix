@@ -2,12 +2,11 @@
 import './MenuCategory.css'
 import * as React from 'react';
 import { useState } from 'react';
-import { styled, alpha, useTheme } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import Menu  from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import DeleteCategoryMenuItem from '../DeleteCategoryMenuItem/DeleteCategoryMenuItem';
 import Divider from '@mui/material/Divider';
 
 
@@ -49,12 +48,9 @@ const StyledMenu = styled((props) => (
 
 
 // Componente principal MenuCategory
-function MenuCategory ({ onDelete }) {
+function MenuCategory ({ categoryId, categoryName  }) {
     // Estado para gestionar la apertura y cierre del menú
     const [anchorEl, setAnchorEl] = useState(null);
-
-    // Variable para acceder a ThemeProvider
-    const theme = useTheme();
 
     // Manejador de clic para abrir el menú
     const handleClick = (event) => {
@@ -64,12 +60,6 @@ function MenuCategory ({ onDelete }) {
     // Manejador para cerrar el menú
     const handleClose = () => {
         setAnchorEl(null);
-    };
-
-    // Función para manejar la eliminación de la categoría desde el menú
-    const handleMenuDelete = () => {
-        handleClose(); // Cierra el menú al hacer clic en "Eliminar"
-        onDelete();    // Llama a la función onDelete proporcionada por el padre
     };
 
     // Retorna un conjunto de componentes: un botón de menú y el menú desplegable
@@ -96,12 +86,12 @@ function MenuCategory ({ onDelete }) {
                 onClose={handleClose}
             >
                 {/* Elemento de menú para la opción "Eliminar" */}
-                <MenuItem className='menu-item' onClick={handleMenuDelete}>
-                    <DeleteForeverIcon style={{ fill: theme.palette.text.primary, fontSize: "23px" }} />
-                    Eliminar
-                </MenuItem>
+                <DeleteCategoryMenuItem 
+                    categoryId={categoryId} 
+                    categoryName={categoryName} 
+                />
                 <Divider sx={{ my: 0.5 }} />
-                {/* Puedes agregar más elementos del menú aquí */}
+
             </StyledMenu>
         </>
     );

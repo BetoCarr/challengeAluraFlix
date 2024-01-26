@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import MenuCategory from '../MenuCategory/MenuCategory';
 
 // Componente que representa un contenedor de título con un menú desplegable
-function ContainerTitulo({ title, color, onDelete}) {
+function ContainerTitulo({ title, color, categoryId, categoryName }) {
     return(
         // Contenedor de Material-UI con sombra y color de fondo personalizado
         <Paper elevation={2} style={{backgroundColor: color}} className='paper'>
@@ -15,7 +15,10 @@ function ContainerTitulo({ title, color, onDelete}) {
                 {title}
             </Typography>
             {/* Componente del menú desplegable para acciones en la categoría */}
-            <MenuCategory onDelete={onDelete}/>
+            <MenuCategory
+                categoryId={categoryId}
+                categoryName={categoryName}
+            />
         </Paper>
     );
 }
