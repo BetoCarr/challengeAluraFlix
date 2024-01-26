@@ -89,9 +89,9 @@ function MenuCategory ({ categoryId, categoryName  }) {
                 <DeleteCategoryMenuItem 
                     categoryId={categoryId} 
                     categoryName={categoryName} 
+                    handleClose={handleClose}
                 />
                 <Divider sx={{ my: 0.5 }} />
-
             </StyledMenu>
         </>
     );
