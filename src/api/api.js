@@ -8,8 +8,6 @@ export async function buscar (url, setData) {
     const respuesta = await api.get(url)
     setData(respuesta.data)
 }
-
-
 export function agregarNuevoVideo(ruta, nuevoVideo) {
     return new Promise((resolve, reject) => {
         api
@@ -22,7 +20,6 @@ export function agregarNuevoVideo(ruta, nuevoVideo) {
         })
     });
 }
-
 export function agregarCategoria(newCategory) {
     const rutaAgregarCategoria = `/categorias/agregar`;
     return new Promise((resolve, reject) => {
@@ -36,9 +33,18 @@ export function agregarCategoria(newCategory) {
         })
     });
 }
-export function eliminarCategoria(categoriaId) {
-    console.log(`Categoría eliminada con el id: ${categoriaId}`);
-
+export function eliminarCategoria(categoryId) {
+    const rutaEliminarCategoria = `/categoria/${categoryId}/eliminar`;
+    return new Promise((resolve, reject) => {
+        api
+        .delete(rutaEliminarCategoria)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
+        })
+    });
 }
 export function eliminarVideo(categoryId, id) {
     const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`;
