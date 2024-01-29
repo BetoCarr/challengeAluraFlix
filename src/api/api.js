@@ -46,6 +46,21 @@ export function eliminarCategoria(categoryId) {
         })
     });
 }
+
+export function obtenerListaVideos(categoryId) {
+    const rutaObtenerListaVideos = `/videos/${categoryId}/obtener`;
+    return new Promise((resolve, reject) => {
+        api
+        .get(rutaObtenerListaVideos)
+        .then((response) => {
+            resolve(response.data)
+        })
+        .catch((error) => {
+            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
+        })
+    });
+}
+
 export function eliminarVideo(categoryId, id) {
     const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`;
     return new Promise((resolve, reject) => {

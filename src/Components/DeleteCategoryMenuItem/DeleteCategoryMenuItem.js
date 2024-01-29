@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import { useTheme } from '@mui/material/styles';
-import { eliminarCategoria } from '../../api/api';
+import { obtenerListaVideos, eliminarCategoria } from '../../api/api';
 
 function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
     // Estado para controlar la apertura y cierre del cuadro de diálogo de eliminación
@@ -17,6 +17,22 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
     const handleReloadPage = () => {
         window.location.reload();
     }
+
+    // Función principal para verificar si existen videos para una categoría
+    const checkIfVideosExistForCategory = async(categoryId) => {
+        // Obtener la lista de videos asociados a la categoría
+        try {
+            // Obtener la lista de videos asociados a la categoría
+            const videos = await obtenerListaVideos(categoryId);
+            // Verificar si hay videos
+            const videosExist = videos.length > 0;
+            return videosExist;
+        } catch (error) {
+            console.error("Error al verificar si existen videos para la categoría:", error);
+            // Manejar el error según sea necesario
+            throw error; // Puedes lanzar el error para que sea manejado por el código que llama a esta función
+        }
+    };
 
     // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
     const handleOpendeleteDialog = () => {
@@ -37,28 +53,44 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
     };
 
     // Función que maneja la confirmación de eliminación de la categoría
-    const handleDeleteCategory = () => {
-        eliminarCategoria(categoryId) // Llama directamente a la función de la API
-        .then((responseData) => {
-            console.log("¡Categoria eliminada exitosamente!", responseData);
-            // Configura el cuadro de diálogo de retroalimentación con un mensaje de éxito y una función de confirmación
+    const handleDeleteCategory = async () => {
+        try {
+            // Verificar si hay videos asociados a la categoría
+            const hayVideosAsociados = await checkIfVideosExistForCategory(categoryId);
+
+            // Si hay videos asociados, mostrar un mensaje de error en el feedback
+            if (hayVideosAsociados) {
+                setFeedback({
+                    isOpen: true,
+                    message: "No se puede eliminar la categoría porque hay videos asociados.",
+                    onConfirm: () => setFeedback({ isOpen: false }),
+                    confirmLabel: 'Aceptar',
+                });
+            } else {
+                // No hay videos asociados, proceder con la eliminación
+                const responseData = await eliminarCategoria(categoryId);
+
+                // Mostrar mensaje de éxito en el feedback y configurar la recarga de la página al confirmar
+                console.log("¡Categoría eliminada exitosamente!", responseData);
+                setFeedback({
+                    isOpen: true,
+                    message: "Categoría eliminada exitosamente! Haz clic en Aceptar para recargar la página.",
+                    onConfirm: handleReloadPage,
+                    confirmLabel: 'Aceptar',
+                });
+            }
+        } catch (error) {
+            // Manejar errores durante la verificación de videos
+            console.error("Error al verificar si existen videos para la categoría:", error);
+            
+            // Mostrar mensaje de error en el feedback y cerrar el feedback al confirmar
             setFeedback({
                 isOpen: true,
-                message: "Categoría eliminada exitosamente! Haz clic en Aceptar para recargar la página.",
-                onConfirm: handleReloadPage,
-                confirmLabel: 'Aceptar',
-            });
-        })
-        .catch((error) => {
-            console.error("Error al eliminar la categoria:", error);
-            // Configura el cuadro de diálogo de retroalimentación con un mensaje de error y una función de confirmación
-            setFeedback({
-                isOpen: true,
-                message: `Categoría NO eliminada. Error: ${error}`,
+                message: `Error al verificar si existen videos para la categoría. Detalles: ${error}`,
                 onConfirm: () => setFeedback({ isOpen: false }),
                 confirmLabel: 'Aceptar',
             });
-        })
+        }
     };
 
     return (

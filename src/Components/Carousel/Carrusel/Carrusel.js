@@ -34,7 +34,8 @@ function Carousel({ categoria, isBanner, color }) {
 
     // Desestructurar las propiedades de la categoría
     const { nombre, videos, id } = categoria;
-
+    
+    // Retorna componente principal
     return (
         <>
             {showBanner && ( // Renderiza el carrusel de banner sin ContainerTitulo
