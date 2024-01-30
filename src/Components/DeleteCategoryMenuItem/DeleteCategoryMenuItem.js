@@ -1,17 +1,19 @@
 // Importación de React y componentes
 import React, { useState }  from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+// import MenuItem from '@mui/material/MenuItem';
+// import Divider from '@mui/material/Divider';
+// import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
-import { useTheme } from '@mui/material/styles';
+// // import { useTheme } from '@mui/material/styles';
+import ManageCategoryMenuItem from '../ManageCategoryMenuItem/ManageCategoryMenuItem';
 import { obtenerListaVideos, eliminarCategoria } from '../../api/api';
 
 function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
     // Estado para controlar la apertura y cierre del cuadro de diálogo de eliminación
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
 
-    // Variable para acceder a ThemeProvider
-    const theme = useTheme();
+    // // Variable para acceder a ThemeProvider
+    // const theme = useTheme();
 
     // Función auxuliar para recargar la página
     const handleReloadPage = () => {
@@ -34,23 +36,23 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
         }
     };
 
-    // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
-    const handleOpendeleteDialog = () => {
-        setFeedback({
-            isOpen: true,
-            message: `¿Estás seguro de eliminar permanentemente la categoria "${categoryName}"?`,
-            onCancel: handleCloseDeleteDialog,
-            onConfirm: handleDeleteCategory,
-            cancelLabel: 'Cancelar',
-            confirmLabel: 'Aceptar',
-        });
-    };
+    // // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
+    // const handleOpendeleteDialog = () => {
+    //     setFeedback({
+    //         isOpen: true,
+    //         message: `¿Estás seguro de eliminar permanentemente la categoria "${categoryName}"?`,
+    //         onCancel: handleCloseDeleteDialog,
+    //         onConfirm: handleDeleteCategory,
+    //         cancelLabel: 'Cancelar',
+    //         confirmLabel: 'Aceptar',
+    //     });
+    // };
 
-    // Función para cerrar cuadro de dialogo de confirmación de eliminación de la categoría
-    const handleCloseDeleteDialog = () => {
-        handleClose(); // Llama a la función de cierre de menu proporcionada como prop
-        setFeedback({ isOpen: false });
-    };
+    // // Función para cerrar cuadro de dialogo de confirmación de eliminación de la categoría
+    // const handleCloseDeleteDialog = () => {
+    //     handleClose(); // Llama a la función de cierre de menu proporcionada como prop
+    //     setFeedback({ isOpen: false });
+    // };
 
     // Función que maneja la confirmación de eliminación de la categoría
     const handleDeleteCategory = async () => {
@@ -95,19 +97,27 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
 
     return (
         <>
+            <ManageCategoryMenuItem 
+                operation="Eliminar"
+                categoryId={categoryId}
+                categoryName={categoryName}
+                handleClose={handleClose}
+                handleBackendOperation={handleDeleteCategory}
+            />
             {/* Elemento de menú para iniciar el cuadro de diálogo */}
-            <MenuItem className='menu-item' onClick={handleOpendeleteDialog}>
+            {/* <MenuItem className='menu-item' onClick={handleOpendeleteDialog}>
                 <DeleteForeverIcon style={{ fill: theme.palette.text.primary, fontSize: "23px" }} />
                 Eliminar
-            </MenuItem>
+            </MenuItem> */}
             {/* Cuadro de diálogo de confirmación de eliminación */}
             <FeedbackDialog
                 isOpen={feedback.isOpen}
-                onClose={handleCloseDeleteDialog}
                 message={feedback.message}
-                onCancel={handleCloseDeleteDialog}
+                // onClose={handleCloseDeleteDialog}
+                // onCancel={handleCloseDeleteDialog}
                 onConfirm={feedback.onConfirm}
-                confirmLabel={feedback.confirmLabel}            />
+                confirmLabel={feedback.confirmLabel}            
+            />
         </>
     );
 }

@@ -7,7 +7,7 @@ import Menu  from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteCategoryMenuItem from '../DeleteCategoryMenuItem/DeleteCategoryMenuItem';
-import Divider from '@mui/material/Divider';
+// import Divider from '@mui/material/Divider';
 
 
 const StyledMenu = styled((props) => (
@@ -91,7 +91,7 @@ function MenuCategory ({ categoryId, categoryName  }) {
                     categoryName={categoryName} 
                     handleClose={handleClose}
                 />
-                <Divider sx={{ my: 0.5 }} />
+                {/* <Divider sx={{ my: 0.5 }} /> */}
             </StyledMenu>
         </>
     );
