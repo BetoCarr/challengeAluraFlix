@@ -7,6 +7,7 @@ import Menu  from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteCategoryMenuItem from '../DeleteCategoryMenuItem/DeleteCategoryMenuItem';
+import EditCategroyMenuItem from '../EditCategoryMenuItem/EditCategoryMenuItem';
 
 const StyledMenu = styled((props) => (
     // Estiliza el componente Menu de Material-UI y hereda las props
@@ -85,6 +86,12 @@ function MenuCategory ({ categoryId, categoryName  }) {
             >
                 {/* Elemento de menú para la opción "Eliminar" */}
                 <DeleteCategoryMenuItem 
+                    categoryId={categoryId} 
+                    categoryName={categoryName} 
+                    handleClose={handleClose}
+                />
+                {/* Elemento de menú para la opción "Editar" */}
+                <EditCategroyMenuItem 
                     categoryId={categoryId} 
                     categoryName={categoryName} 
                     handleClose={handleClose}
