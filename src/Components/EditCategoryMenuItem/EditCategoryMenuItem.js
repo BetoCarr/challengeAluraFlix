@@ -13,9 +13,10 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
         isBanner: isBanner
     }
 
-    // const handleEditCategory = () => {
-    
-    // }
+    const handleEditCategory = () => {
+        handleEditClick();
+        
+    }
 
     // Función para manejar la apertura del formulario de edición
     const handleEditClick = () => {
@@ -34,14 +35,13 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
                 categoryId={categoryId}
                 categoryName={categoryName}
                 handleClose={handleClose}
-                handleClick={handleEditClick}
-                // handleBackendOperation={handleEditCategory}
+                handleBackendOperation={handleEditCategory}
             />
             {/* Renderiza el formulario de edición condicionalmente */}
             {showEditForm && (
                 <FormEditarCategoria
-                initialValuesForEdit={initialValuesForEdit}
-                handleClose={handleEditClose}
+                    initialValuesForEdit={initialValuesForEdit}
+                    handleClose={handleEditClose}
                 />
             )}
         </>
