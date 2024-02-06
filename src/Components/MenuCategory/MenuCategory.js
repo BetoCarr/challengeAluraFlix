@@ -47,7 +47,7 @@ const StyledMenu = styled((props) => (
 
 
 // Componente principal MenuCategory
-function MenuCategory ({ categoryId, categoryName  }) {
+function MenuCategory ({ categoryId, categoryName, categoryColor, isBanner  }) {
     // Estado para gestionar la apertura y cierre del menú
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -94,6 +94,8 @@ function MenuCategory ({ categoryId, categoryName  }) {
                 <EditCategroyMenuItem 
                     categoryId={categoryId} 
                     categoryName={categoryName} 
+                    categoryColor={categoryColor}
+                    isBanner={isBanner}
                     handleClose={handleClose}
                 />
             </StyledMenu>

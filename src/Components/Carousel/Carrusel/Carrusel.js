@@ -61,6 +61,7 @@ function Carousel({ categoria, isBanner, color }) {
                         title={nombre}
                         categoryId={id} 
                         categoryName={nombre} 
+                        isBanner={isBanner}
                     />
                     {/* Renderiza los VideoCards en el carrusel */}
                     {renderCarouselItems(videos, color, id)}

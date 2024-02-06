@@ -12,10 +12,10 @@ import { useCategorias } from '../../CategoriaContext';
 import { agregarCategoria } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-function FormNuevaCategoria() {
+function FormNuevaCategoria({ initialValuesForEdit }) {
     // Estado local para gestionar el banner, color seleccionado y errores del formulario
-    const [isBanner, setIsBanner] = useState(false);
-    const [color, setcolor] = useState('#02FCE1'); // Color inicial
+    const [isBanner, setIsBanner] = useState(initialValuesForEdit ? initialValuesForEdit.isBanner : false);
+    const [color, setcolor] = useState(initialValuesForEdit ? initialValuesForEdit.color : '#02FCE1');    
     const [formErrors, setFormErrors] = useState({});
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
 
@@ -83,7 +83,7 @@ function FormNuevaCategoria() {
     };
 
     // Valores iniciales del formulario
-    const initialValues = {
+    const initialValues = initialValuesForEdit || {
         nombre: ''
     };
 

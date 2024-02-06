@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import MenuCategory from '../MenuCategory/MenuCategory';
 
 // Componente que representa un contenedor de título con un menú desplegable
-function ContainerTitulo({ title, color, categoryId, categoryName }) {
+function ContainerTitulo({ title, color, categoryId, categoryName, isBanner }) {
     return(
         // Contenedor de Material-UI con sombra y color de fondo personalizado
         <Paper elevation={2} style={{backgroundColor: color}} className='paper'>
@@ -18,6 +18,8 @@ function ContainerTitulo({ title, color, categoryId, categoryName }) {
             <MenuCategory
                 categoryId={categoryId}
                 categoryName={categoryName}
+                categoryColor={color}
+                isBanner={isBanner}
             />
         </Paper>
     );
