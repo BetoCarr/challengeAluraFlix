@@ -46,6 +46,7 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
             confirmLabel: 'Aceptar',
         });
     };
+
     // Funcion para cerrar cuadro de dialogo de confirmación de eliminación de la categoria
     const handleDeleteDialogClose = (handleClose) => {
         handleClose(); // Cierra el menú
@@ -97,6 +98,7 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
         <>
             {/* Componente que muestra el ícono y el mensaje de eliminación y maneja la operación en el backend */}
             <MenuItem 
+                className='menu-item'
                 categoryId={categoryId}
                 categoryName={categoryName}
                 onClick={handleDeleteConfirmationDialogOpen} // Abre el diálogo de confirmación al hacer clic en el menú
