@@ -109,12 +109,12 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
             <Divider />
             {/* Cuadro de diálogo de confirmación de eliminación */}
             <FeedbackDialog
-                onClose={() => handleDeleteDialogClose(handleClose)} // Maneja el cierre del cuadro de diálogo
+                onClose={handleClose} // Maneja el cierre del cuadro de diálogo
                 isOpen={feedback.isOpen}
                 message={feedback.message}
                 onConfirm={feedback.onConfirm}
                 confirmLabel={feedback.confirmLabel}
-                onCancel={handleClose} 
+                onCancel={feedback.onCancel} 
                 cancelLabel={feedback.cancelLabel}          
             />
         </>
