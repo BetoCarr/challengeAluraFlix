@@ -1,12 +1,26 @@
 // Importa React y el componente FormNuevaCategoria
 import React from "react";
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 import FormNuevaCategoria from "../FormNuevaCategoria/FormNuevaCategoria";
 
 // Definición del componente FormEditarCategoria
-function FormEditarCategoria({ initialValuesForEdit }) {
+function FormEditarCategoria({ initialValuesForEdit, handleClose, setShowEditForm }) {
+
+    const handleEditFormOpen = () => {
+        setShowEditForm(true); // Actualiza el estado en EditCategoryMenuItem para mostrar el formulario
+        handleClose(); // Cierra el cuadro de diálogo después de abrir el formulario
+    };
+    
     // Retorna el componente FormNuevaCategoria con los valores iniciales para la edición
     return (
-        <FormNuevaCategoria initialValuesForEdit={initialValuesForEdit} />
+        <>
+            <Dialog open={true} onClose={handleClose}>
+                <DialogContent>
+                    <FormNuevaCategoria initialValuesForEdit={initialValuesForEdit} />
+                </DialogContent>
+            </Dialog>
+        </>
     );
 }
 

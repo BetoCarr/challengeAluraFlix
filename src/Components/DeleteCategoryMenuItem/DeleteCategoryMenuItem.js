@@ -40,7 +40,7 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
         setFeedback({
             isOpen: true,
             message: `¿Quieres eliminar la categoría '${categoryName}'?`, // Mensaje de confirmación con el nombre de la categoría
-            onCancel: handleDeleteDialogClose, // Maneja el cierre del diálogo de confirmación
+            onCancel: () => handleDeleteDialogClose(handleClose), // Maneja el cierre del diálogo de confirmación
             onConfirm: handleDeleteCategory, // Maneja la eliminación de la categoría
             cancelLabel: 'Cancelar',
             confirmLabel: 'Aceptar',
@@ -109,10 +109,13 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
             <Divider />
             {/* Cuadro de diálogo de confirmación de eliminación */}
             <FeedbackDialog
+                onClose={() => handleDeleteDialogClose(handleClose)} // Maneja el cierre del cuadro de diálogo
                 isOpen={feedback.isOpen}
                 message={feedback.message}
                 onConfirm={feedback.onConfirm}
-                confirmLabel={feedback.confirmLabel}            
+                confirmLabel={feedback.confirmLabel}
+                onCancel={handleClose} 
+                cancelLabel={feedback.cancelLabel}          
             />
         </>
     );

@@ -41,20 +41,6 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
         setFeedback({ isOpen: false }); // Cierra el diálogo de confirmación
     }
 
-    // // Función para manejar la operación de edición en el backend
-    // const handleEditOperation = async (editedCategory) => {
-    //     try {
-    //         // Realizar la solicitud al backend con la categoría editada
-    //         // await yourBackendEditCategoryFunction(categoryId, editedCategory);
-    //         // Cerrar el formulario de edición después de completar la operación
-    //         handleEditClose();
-    //     } catch (error) {
-    //         console.error('Error al editar la categoría:', error);
-    //         // Manejar el error si ocurre
-    //         // Puedes mostrar un mensaje de error al usuario si lo deseas
-    //     }
-    // };
-
     // Función para abrir el formulario de edición
     const handleEditFormOpen = () => {
         setShowEditForm(true);
@@ -90,8 +76,7 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
                 <FormEditarCategoria
                     initialValuesForEdit={initialValuesForEdit}
                     handleClose={handleEditFormClose}
-                    // Pasa handleEditOperation como prop al formulario de edición
-                    // handleEditOperation={handleEditOperation}
+                    setShowEditForm={setShowEditForm} // Pasar la función de actualización de estado
                 />
             )}
         </>
