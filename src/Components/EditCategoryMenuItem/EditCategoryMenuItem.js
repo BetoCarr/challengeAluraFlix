@@ -29,7 +29,7 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
         setFeedback({
             isOpen: true,
             message: `¿Quieres editar la categoría '${categoryName}'?`, // Mensaje de confirmacion de edicion con el nombre de la categoría
-            onCancel: handleEditDialogClose, // Maneja el cierre del diálogo de confirmación
+            onCancel: () => handleEditDialogClose(handleClose), // Maneja el cierre del diálogo de confirmación
             onConfirm: () => handleEditFormOpen(), // Abre el formulario de edición al confirmar
             cancelLabel: 'Cancelar',
             confirmLabel: 'Aceptar',
@@ -37,14 +37,15 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
     };
 
     // Funcion para cerrar cuadro de dialogo de confirmación de eliminación de la categoria
-    const handleEditDialogClose = () => {
+    const handleEditDialogClose = (handleClose) => {
+        handleClose();
         setFeedback({ isOpen: false }); // Cierra el diálogo de confirmación
     }
 
     // Función para abrir el formulario de edición
     const handleEditFormOpen = () => {
         setShowEditForm(true);
-        handleEditDialogClose(); // Cierra el cuadro de diálogo después de abrir el formulario
+        setFeedback({ isOpen: false })
     };
 
     // Función para cerrar el formulario de edición
@@ -66,10 +67,13 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
             </MenuItem>
             {/* Cuadro de diálogo de confirmación de eliminación */}
             <FeedbackDialog
+                onClose={handleClose}
                 isOpen={feedback.isOpen}
                 message={feedback.message}
                 onConfirm={feedback.onConfirm}
-                confirmLabel={feedback.confirmLabel}            
+                confirmLabel={feedback.confirmLabel}    
+                onCancel={feedback.onCancel} 
+        
             />
             {/* Renderiza el formulario de edición condicionalmente */}
             {showEditForm && (
