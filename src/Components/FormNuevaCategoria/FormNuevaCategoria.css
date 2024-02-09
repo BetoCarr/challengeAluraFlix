@@ -12,5 +12,5 @@
     color: var(--text-primary);
 }
 p.switch-text {
-    font-size: 22px;
+    font-size: 125%;
 }

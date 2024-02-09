@@ -13,7 +13,7 @@
     width: 100%; /* Ocupa todo el ancho disponible */
     height: 3rem; /* Altura específica */
     padding: 8px; /* Relleno interior para el input */
-    font-size: 24px; /* Tamaño de fuente del input */
+    font-size: 125%; /* Tamaño de fuente del input */
     border: 1px solid #ccc; /* Borde del input */
     border-radius: 4px; /* Borde redondeado */
     color: var(--text-primary);

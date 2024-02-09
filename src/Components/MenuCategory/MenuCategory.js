@@ -1,5 +1,5 @@
 // Importación de React y componentes
-import './MenuCategory.css'
+import './MenuCategory.css';
 import * as React from 'react';
 import { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';

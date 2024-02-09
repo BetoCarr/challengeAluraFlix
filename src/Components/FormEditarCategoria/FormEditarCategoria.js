@@ -1,4 +1,5 @@
 // Importa React y el componente FormNuevaCategoria
+import './FormEditarCategoria.css';
 import React from "react";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,8 +17,10 @@ function FormEditarCategoria({ initialValuesForEdit, handleClose, setShowEditFor
     return (
         <>
             <Dialog open={true} onClose={handleClose}>
-                <DialogContent>
-                    <FormNuevaCategoria initialValuesForEdit={initialValuesForEdit} />
+                <DialogContent className='dialog-form'>
+                    <FormNuevaCategoria
+                        initialValuesForEdit={initialValuesForEdit} 
+                    />
                 </DialogContent>
             </Dialog>
         </>
