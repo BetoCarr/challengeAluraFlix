@@ -12,7 +12,7 @@ import { useCategorias } from '../../CategoriaContext';
 import { agregarCategoria } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-function FormNuevaCategoria({ initialValuesForEdit }) {
+function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
     // Estado local para gestionar el banner, color seleccionado y errores del formulario
     const [isBanner, setIsBanner] = useState(initialValuesForEdit ? initialValuesForEdit.isBanner : false);
     const [color, setcolor] = useState(initialValuesForEdit ? initialValuesForEdit.color : '#02FCE1');    
@@ -90,7 +90,7 @@ function FormNuevaCategoria({ initialValuesForEdit }) {
     return(
         <>
             {/* Encabezado */}
-            <Typography variant='h3' color='text.primary'>Nueva Categoria</Typography>
+            <Typography variant='h3' color='text.primary'>{headerText}</Typography>
             {/* Formulario con Formik */}
             <Formik
                 initialValues={initialValues}

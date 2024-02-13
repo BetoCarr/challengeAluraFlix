@@ -20,6 +20,7 @@ function FormEditarCategoria({ initialValuesForEdit, handleClose, setShowEditFor
                 <DialogContent className='dialog-form'>
                     <FormNuevaCategoria
                         initialValuesForEdit={initialValuesForEdit} 
+                        headerText={"Editar Categoria"}
                     />
                 </DialogContent>
             </Dialog>

@@ -5,7 +5,9 @@ import FormNuevaCategoria from "../Components/FormNuevaCategoria/FormNuevaCatego
 function NewCategory () {
     return(
         <MainContainer className={"main-container-form"}>
-            <FormNuevaCategoria />
+            <FormNuevaCategoria
+                headerText={"Nueva Categoria"}
+            />
         </MainContainer>
     );
 }
