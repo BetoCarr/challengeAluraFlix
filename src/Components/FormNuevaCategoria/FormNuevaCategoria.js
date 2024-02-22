@@ -15,28 +15,20 @@ import { useNavigate } from 'react-router-dom';
 function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
     // Estado local para gestionar el banner, color seleccionado y errores del formulario
     const [isBanner, setIsBanner] = useState(initialValuesForEdit ? initialValuesForEdit.isBanner : false);
-    const [color, setcolor] = useState(initialValuesForEdit ? initialValuesForEdit.color : '#02FCE1');    
-    const [formErrors, setFormErrors] = useState({});
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
-
-    // Obtener las categorías y sus colores
-    const categories = useCategorias();
-    const categoriesColors = categories.map(category => category.color);
     const navigate = useNavigate();
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
-        const errors = {};
         for (const color of existingColors) {
             // Calcula la diferencia de colores (por ejemplo, distancia euclidiana en RGB)
             const distance = calculateColorDifference(newColor, color);
             // Si la distancia es menor que el umbral, considera los colores como similares
             if (distance < threshold) {
-                errors.color = 'Elige un color diferente'; // Se agrega un error al campo
-                return errors; // Colores similares            
+                return true;
             }
         }
-        return errors; // No se encontraron colores similares
+        return false; // No se encontraron colores similares
     };
 
     // Función para calcular la distancia de los colores
@@ -64,27 +56,23 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
         const r = parseInt(hex.substring(0, 2), 16);
         const g = parseInt(hex.substring(2, 4), 16);
         const b = parseInt(hex.substring(4, 6), 16);
-    
+
         return { r, g, b };
     };
-
-    // Obtener las categorías y sus colores
-    const handleColorChange = (newColor) => {
-        setcolor(newColor);
-        // Verificar la similitud de colores y actualizar los errores del formulario
-        const colorErrors = isColorTooSimilar(newColor, categoriesColors, 50);
-        setFormErrors((prevErrors) => ({ ...prevErrors, ...colorErrors }));
-    }; 
 
     // Manejar el cambio del banner
     const handleSwitchChange = (isChecked) => {
         setIsBanner(isChecked);
         // Realiza cualquier lógica adicional con el valor del Switch aquí
     };
-
+   // Obtener las categorías y sus colores
+    const categories = useCategorias();
+    const categoriesColors = categories.map(category => category.color);
+    
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
-        nombre: ''
+        nombre: '',
+        color:'#00fff8'
     };
 
     return(
@@ -95,9 +83,11 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
             <Formik
                 initialValues={initialValues}
 
+                validateOnChange={true} // Activar la validación en cada cambio del campo
+
                 // Validación del formulario
                 validate={values => {
-                    const { nombre } = values;
+                    const { nombre, color } = values;
                     const errors = {};
 
                     //Validación del nombre de la categoria
@@ -106,52 +96,57 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
                     } else if(!/^[a-zA-Z0-9À-ÿ\s\-]{3,50}$/.test(nombre)) {
                         errors.nombre = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
                     }
-                    
+
+                    // Validación del color
+                    const colorIsSimilar = isColorTooSimilar(color, categoriesColors, 50);
+                    if (colorIsSimilar) {
+                        errors.color = 'Ya existe una categoría con el color seleccionado';
+                    }
+
                     return errors;
                 }}
 
                 // Enviar el formulario
                 onSubmit={async (values, { resetForm }) => {
-
+                    resetForm();
+                    console.log(values);
                     // Verificar errores de color al enviar el formulario
-                    const colorErrors = isColorTooSimilar(color, categoriesColors, 50);
-                    setFormErrors({ ...colorErrors });
+                    // const colorErrors = isColorTooSimilar(color, categoriesColors, 50);
+                    // setFormErrors({ ...colorErrors });
 
-                    // Si no hay errores, enviar el formulario
-                    if (Object.keys(colorErrors).length === 0) {
-                        // No hay errores de color, enviar el formulario
-                        const newCategory = { ...values, isBanner, color };
-                        agregarCategoria(newCategory)
-                        .then((responseData) => {
-                            console.log("Categoria agregada exitosamente!", responseData);
-                            setFeedback({
-                                isOpen: true,
-                                message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
-                                onConfirm: () => {
-                                    navigate('/', { replace: true });
-                                    window.location.reload();
-                                    resetForm();
-                                    setFeedback({ isOpen: false });
-                                }
-                            });
-                        })
-                        .catch((error) => {
-                            console.error("Error al agregar la categoria:", error);
-                            setFeedback({
-                                isOpen: true,
-                                message: `Categoria NO agregada. Error: ${error}`,
-                                onConfirm: () => setFeedback({ isOpen: false })
-                            });
-                        })
-                        .finally(() => {
-                            console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
-                            resetForm();
-                        });
-                    }
+                    // // No hay errores de color, enviar el formulario
+                    // const newCategory = { ...values, isBanner };
+                    // agregarCategoria(newCategory)
+                    // .then((responseData) => {
+                    //     console.log("Categoria agregada exitosamente!", responseData);
+                    //     setFeedback({
+                    //         isOpen: true,
+                    //         message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
+                    //         onConfirm: () => {
+                    //             navigate('/', { replace: true });
+                    //             window.location.reload();
+                    //             resetForm();
+                    //             setFeedback({ isOpen: false });
+                    //         }
+                    //     });
+                    // })
+                    // .catch((error) => {
+                    //     console.error("Error al agregar la categoria:", error);
+                    //     setFeedback({
+                    //         isOpen: true,
+                    //         message: `Categoria NO agregada. Error: ${error}`,
+                    //         onConfirm: () => setFeedback({ isOpen: false })
+                    //     });
+                    // })
+                    // .finally(() => {
+                    //     console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
+                    //     resetForm();
+                    // });
+                    
                 }}
 
             >
-                {({isSubmitting, resetForm}) => (
+                {({isSubmitting, resetForm, values, errors}) => (
                     <Form className='form-container'>
                         {/* Componente para el nombre */}
                         <TextInput
@@ -164,9 +159,12 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
                         {/* Componente para seleccionar el color */}
                         <ColorSelector
                             name="color"
-                            initialColor={color}
-                            onColorChange={handleColorChange}
-                            error={formErrors.color}
+                            id="color" 
+                            label={("PROJET.COLOR")}
+                            onChange={color => {
+                                values.color = color;
+                            }}
+                            error={errors.color} // Pasa el error del campo de color como una propiedad
                         />
                         {/* Componente para los botones del formulario */}                       
                         <FormButtons
@@ -185,7 +183,6 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
                 confirmLabel="Aceptar"
             />
         </>
-
     );
 }
 
