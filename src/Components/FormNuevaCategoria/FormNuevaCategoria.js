@@ -14,8 +14,7 @@ import { useNavigate } from 'react-router-dom';
 
 function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
     
-    // Estado local para gestionar el banner, color seleccionado y errores del formulario
-    const [isBanner, setIsBanner] = useState(initialValuesForEdit ? initialValuesForEdit.isBanner : false);
+    // Estado local para gestionar mensajes del formulario
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
     const navigate = useNavigate();
 
@@ -61,11 +60,6 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
         return { r, g, b };
     };
 
-    // Manejar el cambio del banner
-    const handleSwitchChange = (isChecked) => {
-        setIsBanner(isChecked);
-        // Realiza cualquier lógica adicional con el valor del Switch aquí
-    };
    // Obtener las categorías y sus colores
     const categories = useCategorias();
     const categoriesColors = categories.map(category => category.color);
@@ -73,7 +67,8 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
         nombre: '',
-        color:'#00fff8'
+        color:'#00fff8', 
+        isBanner: false
     };
 
     return(
@@ -88,7 +83,7 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
 
                 // Validación del formulario
                 validate={values => {
-                    const { nombre, color } = values;
+                    const { nombre, color, isBanner } = values;
                     const errors = {};
 
                     //Validación del nombre de la categoria
@@ -156,7 +151,12 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
                             placeholder="Introduce el nombre de la nueva categoria"
                         />
                         {/* Componente para el banner */}
-                        <SwitchIsBanner onSwitchChange={handleSwitchChange} />
+                        <SwitchIsBanner
+                            name="isBanner"
+                            onChange={isBanner => {
+                                values.isBanner = isBanner;
+                            }} 
+                        />
                         {/* Componente para seleccionar el color */}
                         <ColorSelector
                             name="color"
