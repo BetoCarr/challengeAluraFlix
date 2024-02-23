@@ -13,6 +13,7 @@ import { agregarCategoria } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
 function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
+    
     // Estado local para gestionar el banner, color seleccionado y errores del formulario
     const [isBanner, setIsBanner] = useState(initialValuesForEdit ? initialValuesForEdit.isBanner : false);
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });

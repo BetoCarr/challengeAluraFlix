@@ -1,3 +1,4 @@
+// Importar los estilos y los componentes necesarios
 import './ColorSelector.css'
 import React, { useState } from "react";
 import { HuePicker } from 'react-color';
@@ -26,8 +27,10 @@ function ColorSelector({ name, error }) {
 
     return (
         <>
+            {/* Contenedor del selector de color */}
             <Box className='colorSelector-container'>
                 <Typography className='switch-text'>Selecciona un color</Typography>
+                {/* Selector de color */}
                 <HuePicker
                     color={field.value}
                     onChange={handleChange}
@@ -43,4 +46,5 @@ function ColorSelector({ name, error }) {
     );
 }
 
+// Exporta componente ColorSelector
 export default ColorSelector;
