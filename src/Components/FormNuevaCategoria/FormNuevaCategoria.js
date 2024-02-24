@@ -99,6 +99,11 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
                         errors.color = 'Ya existe una categoría con el color seleccionado';
                     }
 
+                    // Validación de isBanner
+                    if (typeof isBanner !== 'boolean') {
+                        errors.isBanner = 'El valor de isBanner debe ser booleano';
+                    }
+
                     return errors;
                 }}
 
