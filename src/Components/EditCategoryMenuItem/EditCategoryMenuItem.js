@@ -58,8 +58,6 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
             {/* Componente que muestra el ícono y el mensaje de edicion y maneja la operación en el backend */}
             <MenuItem 
                 className='menu-item'
-                categoryId={categoryId}
-                categoryName={categoryName}
                 onClick={handleEditConfirmationDialogOpen} // Abre el diálogo de confirmación al hacer clic en el menú
             >
                 <EditIcon style={{ fill: theme.palette.text.primary, fontSize: '23px' }} />

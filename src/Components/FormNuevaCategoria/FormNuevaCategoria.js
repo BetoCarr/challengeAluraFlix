@@ -109,43 +109,36 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
 
                 // Enviar el formulario
                 onSubmit={async (values, { resetForm }) => {
-                    resetForm();
-                    console.log(values);
-                    // Verificar errores de color al enviar el formulario
-                    // const colorErrors = isColorTooSimilar(color, categoriesColors, 50);
-                    // setFormErrors({ ...colorErrors });
-
-                    // // No hay errores de color, enviar el formulario
-                    // const newCategory = { ...values, isBanner };
-                    // agregarCategoria(newCategory)
-                    // .then((responseData) => {
-                    //     console.log("Categoria agregada exitosamente!", responseData);
-                    //     setFeedback({
-                    //         isOpen: true,
-                    //         message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
-                    //         onConfirm: () => {
-                    //             navigate('/', { replace: true });
-                    //             window.location.reload();
-                    //             resetForm();
-                    //             setFeedback({ isOpen: false });
-                    //         }
-                    //     });
-                    // })
-                    // .catch((error) => {
-                    //     console.error("Error al agregar la categoria:", error);
-                    //     setFeedback({
-                    //         isOpen: true,
-                    //         message: `Categoria NO agregada. Error: ${error}`,
-                    //         onConfirm: () => setFeedback({ isOpen: false })
-                    //     });
-                    // })
-                    // .finally(() => {
-                    //     console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
-                    //     resetForm();
-                    // });
-                    
+                    // No hay errores de color, enviar el formulario
+                    const newCategory = { ...values };
+                    console.log(newCategory)
+                    agregarCategoria(newCategory)
+                    .then((responseData) => {
+                        console.log("Categoria agregada exitosamente!", responseData);
+                        setFeedback({
+                            isOpen: true,
+                            message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
+                            onConfirm: () => {
+                                navigate('/', { replace: true });
+                                window.location.reload();
+                                resetForm();
+                                setFeedback({ isOpen: false });
+                            }
+                        });
+                    })
+                    .catch((error) => {
+                        console.error("Error al agregar la categoria:", error);
+                        setFeedback({
+                            isOpen: true,
+                            message: `Categoria NO agregada. Error: ${error}`,
+                            onConfirm: () => setFeedback({ isOpen: false })
+                        });
+                    })
+                    .finally(() => {
+                        console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
+                        resetForm();
+                    });
                 }}
-
             >
                 {({isSubmitting, resetForm, values, errors}) => (
                     <Form className='form-container'>
