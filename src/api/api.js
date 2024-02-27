@@ -20,18 +20,10 @@ export function agregarNuevoVideo(ruta, nuevoVideo) {
         })
     });
 }
+
 export function agregarCategoria(newCategory) {
     const rutaAgregarCategoria = `/categorias/agregar`;
-    return new Promise((resolve, reject) => {
-        api
-        .post(rutaAgregarCategoria, newCategory)
-        .then((response) => {
-            resolve(response.data)
-        })
-        .catch((error) => {
-            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
-        })
-    });
+    return api.post(rutaAgregarCategoria, newCategory);
 }
 
 export function editarCategoria(categoryId, updatedVideoData) {
@@ -41,16 +33,7 @@ export function editarCategoria(categoryId, updatedVideoData) {
 
 export function eliminarCategoria(categoryId) {
     const rutaEliminarCategoria = `/categoria/${categoryId}/eliminar`;
-    return new Promise((resolve, reject) => {
-        api
-        .delete(rutaEliminarCategoria)
-        .then((response) => {
-            resolve(response.data)
-        })
-        .catch((error) => {
-            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
-        })
-    });
+    return api.delete(rutaEliminarCategoria);
 }
 
 export function obtenerListaVideos(categoryId) {
@@ -66,49 +49,17 @@ export function obtenerListaVideos(categoryId) {
         })
     });
 }
-
 export function eliminarVideo(categoryId, id) {
     const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`;
-    return new Promise((resolve, reject) => {
-        api
-        .delete(rutaEliminarVid)
-        .then((response) => {
-            resolve(response.data)
-        })
-        .catch((error) => {
-            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
-        })
-    });
+    return api.delete(rutaEliminarVid);
 }
 
 export function obtenerEstadoLike(videoId) {
-    const rutaEstadoLike = `/video/${videoId}/liked`
-    return new Promise((resolve, reject) => {
-        api
-        .get(rutaEstadoLike)
-        .then((response) => {
-            resolve(response.data)
-        })
-        .catch((error) => {
-            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
-        })
-    });
+    const rutaEstadoLike = `/video/${videoId}/liked`;
+    return api.get(rutaEstadoLike);
 }
 
 export function darLikeVideo(videoId, liked) {
-    const rutaLikeVideo = `/video/${videoId}/like`
-    return new Promise((resolve, reject) => {
-        api
-        .put(
-            rutaLikeVideo, 
-            { liked }, 
-            { headers: { 'Content-Type': 'application/json' } }
-        )
-        .then((response) => {
-            resolve(response.data)
-        })
-        .catch((error) => {
-            reject(error.response ? error.response.data : error.message); // Puedes manejar el error aquí
-        })
-    });
+    const rutaLikeVideo = `/video/${videoId}/like`;
+    return api.put(rutaLikeVideo, { liked }, { headers: { 'Content-Type': 'application/json' } });
 }
