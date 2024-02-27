@@ -12,12 +12,12 @@ import { useCategorias } from '../../CategoriaContext';
 import { agregarCategoria } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
+function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
     
     // Estado local para gestionar mensajes del formulario
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
     const navigate = useNavigate();
-
+    // const categoryId = categoryId;  
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
         for (const color of existingColors) {
@@ -62,6 +62,7 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
 
    // Obtener las categorías y sus colores
     const categories = useCategorias();
+    // console.log(categories)
     const categoriesColors = categories.map(category => category.color);
     
     // Valores iniciales del formulario
@@ -74,7 +75,9 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
     return(
         <>
             {/* Encabezado */}
-            <Typography variant='h3' color='text.primary'>{headerText}</Typography>
+            <Typography variant='h3' color='text.primary'>
+                {isEditing ? 'Editar Categoría' : 'Nueva Categoría'}
+            </Typography>
             {/* Formulario con Formik */}
             <Formik
                 initialValues={initialValues}
@@ -110,34 +113,39 @@ function FormNuevaCategoria({ initialValuesForEdit, headerText }) {
                 // Enviar el formulario
                 onSubmit={async (values, { resetForm }) => {
                     // No hay errores de color, enviar el formulario
-                    const newCategory = { ...values };
-                    console.log(newCategory)
-                    agregarCategoria(newCategory)
-                    .then((responseData) => {
-                        console.log("Categoria agregada exitosamente!", responseData);
-                        setFeedback({
-                            isOpen: true,
-                            message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
-                            onConfirm: () => {
-                                navigate('/', { replace: true });
-                                window.location.reload();
-                                resetForm();
-                                setFeedback({ isOpen: false });
-                            }
+                    if(isEditing) {
+                        console.log( `Categoria Editada con el id. ${categoryId}`)
+                
+                    } else {
+                        const newCategory = { ...values };
+                        console.log(newCategory)
+                        agregarCategoria(newCategory)
+                        .then((responseData) => {
+                            console.log("Categoria agregada exitosamente!", responseData);
+                            setFeedback({
+                                isOpen: true,
+                                message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
+                                onConfirm: () => {
+                                    navigate('/', { replace: true });
+                                    window.location.reload();
+                                    resetForm();
+                                    setFeedback({ isOpen: false });
+                                }
+                            });
+                        })
+                        .catch((error) => {
+                            console.error("Error al agregar la categoria:", error);
+                            setFeedback({
+                                isOpen: true,
+                                message: `Categoria NO agregada. Error: ${error}`,
+                                onConfirm: () => setFeedback({ isOpen: false })
+                            });
+                        })
+                        .finally(() => {
+                            console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
+                            resetForm();
                         });
-                    })
-                    .catch((error) => {
-                        console.error("Error al agregar la categoria:", error);
-                        setFeedback({
-                            isOpen: true,
-                            message: `Categoria NO agregada. Error: ${error}`,
-                            onConfirm: () => setFeedback({ isOpen: false })
-                        });
-                    })
-                    .finally(() => {
-                        console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
-                        resetForm();
-                    });
+                    }
                 }}
             >
                 {({isSubmitting, resetForm, values, errors}) => (

@@ -79,6 +79,7 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
                     initialValuesForEdit={initialValuesForEdit}
                     handleClose={handleEditFormClose}
                     setShowEditForm={setShowEditForm} // Pasar la función de actualización de estado
+                    categoryId={categoryId}
                 />
             )}
         </>

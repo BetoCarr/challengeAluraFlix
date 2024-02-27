@@ -6,7 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import FormNuevaCategoria from "../FormNuevaCategoria/FormNuevaCategoria";
 
 // Definición del componente FormEditarCategoria
-function FormEditarCategoria({ initialValuesForEdit, handleClose, setShowEditForm }) {
+function FormEditarCategoria({ initialValuesForEdit, handleClose, setShowEditForm, categoryId }) {
+    // console .log(categoryId)
 
     const handleEditFormOpen = () => {
         setShowEditForm(true); // Actualiza el estado en EditCategoryMenuItem para mostrar el formulario
@@ -20,7 +21,8 @@ function FormEditarCategoria({ initialValuesForEdit, handleClose, setShowEditFor
                 <DialogContent className='dialog-form'>
                     <FormNuevaCategoria
                         initialValuesForEdit={initialValuesForEdit} 
-                        headerText={"Editar Categoria"}
+                        isEditing={true}
+                        categoryId={categoryId}
                     />
                 </DialogContent>
             </Dialog>
