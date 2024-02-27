@@ -9,7 +9,7 @@ import ColorSelector from '../ColorSelector/ColorSelector';
 import FormButtons from '../FormButtons/FormButtons';
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import { useCategorias } from '../../CategoriaContext';
-import { agregarCategoria } from '../../api/api';
+import { agregarCategoria, editarCategoria } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
 function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
@@ -17,7 +17,7 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
     // Estado local para gestionar mensajes del formulario
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
     const navigate = useNavigate();
-    // const categoryId = categoryId;  
+
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
         for (const color of existingColors) {
@@ -56,15 +56,13 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
         const r = parseInt(hex.substring(0, 2), 16);
         const g = parseInt(hex.substring(2, 4), 16);
         const b = parseInt(hex.substring(4, 6), 16);
-
         return { r, g, b };
     };
 
    // Obtener las categorías y sus colores
     const categories = useCategorias();
-    // console.log(categories)
     const categoriesColors = categories.map(category => category.color);
-    
+
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
         nombre: '',
@@ -112,16 +110,51 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
 
                 // Enviar el formulario
                 onSubmit={async (values, { resetForm }) => {
-                    // No hay errores de color, enviar el formulario
+                    // Verificar si se está editando una categoría existente
                     if(isEditing) {
-                        console.log( `Categoria Editada con el id. ${categoryId}`)
-                
+                        // Crear un objeto con los datos actualizados de la categoría
+                        const updatedVideoData = { ...values };
+                        // Llamar a la función para editar la categoría en la API
+                        editarCategoria(categoryId, updatedVideoData)
+                        // Manejar la respuesta exitosa
+                        .then((responseData) => {
+                            console.log("Categoria editada exitosamente!", responseData);
+                            // Mostrar un mensaje de éxito y recargar la página
+                            setFeedback({
+                                isOpen: true,
+                                message: "Categoria editada exitosamente! La página se recargará para mostrar los cambios.",
+                                onConfirm: () => {
+                                    navigate('/', { replace: true });
+                                    window.location.reload();
+                                    resetForm();
+                                    setFeedback({ isOpen: false });
+                                }
+                            });
+                        })
+                        // Manejar cualquier error que ocurra
+                        .catch((error) => {
+                            console.error("Error al editar la categoria:", error);
+                            // Mostrar un mensaje de error
+                            setFeedback({
+                                isOpen: true,
+                                message: `Categoria NO editada. Error: ${error}`,
+                                onConfirm: () => setFeedback({ isOpen: false })
+                            });
+                        })
+                        // Ejecutar acciones adicionales independientemente de si la solicitud fue exitosa o no
+                        .finally(() => {
+                            console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
+                            resetForm();
+                        });
                     } else {
+                        // Crear un objeto con los datos de la nueva categoría
                         const newCategory = { ...values };
-                        console.log(newCategory)
+                        // Llamar a la función para agregar la categoría a la API
                         agregarCategoria(newCategory)
+                        // Manejar la respuesta exitosa
                         .then((responseData) => {
                             console.log("Categoria agregada exitosamente!", responseData);
+                            // Mostrar un mensaje de éxito y recargar la página
                             setFeedback({
                                 isOpen: true,
                                 message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
@@ -133,14 +166,17 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                                 }
                             });
                         })
+                        // Manejar cualquier error que ocurra
                         .catch((error) => {
                             console.error("Error al agregar la categoria:", error);
+                            // Mostrar un mensaje de error
                             setFeedback({
                                 isOpen: true,
                                 message: `Categoria NO agregada. Error: ${error}`,
                                 onConfirm: () => setFeedback({ isOpen: false })
                             });
                         })
+                        // Ejecutar acciones adicionales independientemente de si la solicitud fue exitosa o no
                         .finally(() => {
                             console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
                             resetForm();

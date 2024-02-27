@@ -33,6 +33,12 @@ export function agregarCategoria(newCategory) {
         })
     });
 }
+
+export function editarCategoria(categoryId, updatedVideoData) {
+    const rutaEditarCategoria = `/categoria/${categoryId}/editar`;
+    return api.put(rutaEditarCategoria, updatedVideoData);
+}
+
 export function eliminarCategoria(categoryId) {
     const rutaEliminarCategoria = `/categoria/${categoryId}/eliminar`;
     return new Promise((resolve, reject) => {
