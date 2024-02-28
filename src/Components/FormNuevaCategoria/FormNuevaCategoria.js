@@ -1,22 +1,23 @@
 // Importar los estilos y los componentes necesarios
-import './FormNuevaCategoria.css';
-import React, { useState } from "react";
-import {Typography} from '@mui/material';
-import { Formik, Form } from 'formik';
-import TextInput from "../TextInput/TextInput";
-import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner';
-import ColorSelector from '../ColorSelector/ColorSelector';
-import FormButtons from '../FormButtons/FormButtons';
-import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
-import { useCategorias } from '../../CategoriaContext';
-import { agregarCategoria, editarCategoria } from '../../api/api';
-import { useNavigate } from 'react-router-dom';
+import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
+import React, { useState } from "react"; // Importa React y el hook useState
+import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
+import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
+import TextInput from "../TextInput/TextInput"; // Importa el componente TextInput
+import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
+import ColorSelector from '../ColorSelector/ColorSelector'; // Importa el componente ColorSelector
+import FormButtons from '../FormButtons/FormButtons'; // Importa el componente FormButtons
+import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
+import { useCategorias } from '../../CategoriaContext'; // Importa el hook useCategorias del contexto de categorías
+import { agregarCategoria, editarCategoria } from '../../api/api'; // Importa las funciones de agregar y editar categoría de la API
+import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
+// Función del componente principal FormNuevaCategoria
 function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
-    
+
     // Estado local para gestionar mensajes del formulario
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Hook para navegar entre rutas
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
@@ -228,5 +229,5 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
         </>
     );
 }
-
+// Exporta comoponente principal
 export default FormNuevaCategoria;
