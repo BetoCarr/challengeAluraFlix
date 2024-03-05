@@ -28,12 +28,14 @@ function renderCarouselItems(videos, color, id) {
 }
 
 // Componente principal Carousel
-function Carousel({ categoria, isBanner, color }) {
+function Carousel({ categoria, isBanner, color }) {    
     // Estado para determinar si se muestra el banner o el carrusel normal
     const [showBanner, setShowBanner] = useState(isBanner);
 
     // Desestructurar las propiedades de la categoría
     const { nombre, videos, id } = categoria;
+    
+    // Retorna componente principal
     return (
         <>
             {showBanner && ( // Renderiza el carrusel de banner sin ContainerTitulo
@@ -57,6 +59,9 @@ function Carousel({ categoria, isBanner, color }) {
                     <ContainerTitulo
                         color={color}
                         title={nombre}
+                        categoryId={id} 
+                        categoryName={nombre} 
+                        isBanner={isBanner}
                     />
                     {/* Renderiza los VideoCards en el carrusel */}
                     {renderCarouselItems(videos, color, id)}

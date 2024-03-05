@@ -1,42 +1,35 @@
 // Importar los estilos y los componentes necesarios
-import './FormNuevaCategoria.css';
-import React, { useState } from "react";
-import {Typography} from '@mui/material';
-import { Formik, Form } from 'formik';
-import TextInput from "../TextInput/TextInput";
-import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner';
-import ColorSelector from '../ColorSelector/ColorSelector';
-import FormButtons from '../FormButtons/FormButtons';
-import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
-import { useCategorias } from '../../CategoriaContext';
-import { agregarCategoria } from '../../api/api';
-import { useNavigate } from 'react-router-dom';
+import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
+import React, { useState } from "react"; // Importa React y el hook useState
+import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
+import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
+import TextInput from "../TextInput/TextInput"; // Importa el componente TextInput
+import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
+import ColorSelector from '../ColorSelector/ColorSelector'; // Importa el componente ColorSelector
+import FormButtons from '../FormButtons/FormButtons'; // Importa el componente FormButtons
+import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
+import { useCategorias } from '../../CategoriaContext'; // Importa el hook useCategorias del contexto de categorías
+import { agregarCategoria, editarCategoria } from '../../api/api'; // Importa las funciones de agregar y editar categoría de la API
+import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
-function FormNuevaCategoria() {
-    // Estado local para gestionar el banner, color seleccionado y errores del formulario
-    const [isBanner, setIsBanner] = useState(false);
-    const [color, setcolor] = useState('#02FCE1'); // Color inicial
-    const [formErrors, setFormErrors] = useState({});
+// Función del componente principal FormNuevaCategoria
+function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
+
+    // Estado local para gestionar mensajes del formulario
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
-
-    // Obtener las categorías y sus colores
-    const categories = useCategorias();
-    const categoriesColors = categories.map(category => category.color);
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Hook para navegar entre rutas
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
-        const errors = {};
         for (const color of existingColors) {
             // Calcula la diferencia de colores (por ejemplo, distancia euclidiana en RGB)
             const distance = calculateColorDifference(newColor, color);
             // Si la distancia es menor que el umbral, considera los colores como similares
             if (distance < threshold) {
-                errors.color = 'Elige un color diferente'; // Se agrega un error al campo
-                return errors; // Colores similares            
+                return true;
             }
         }
-        return errors; // No se encontraron colores similares
+        return false; // No se encontraron colores similares
     };
 
     // Función para calcular la distancia de los colores
@@ -64,40 +57,35 @@ function FormNuevaCategoria() {
         const r = parseInt(hex.substring(0, 2), 16);
         const g = parseInt(hex.substring(2, 4), 16);
         const b = parseInt(hex.substring(4, 6), 16);
-    
         return { r, g, b };
     };
 
-    // Obtener las categorías y sus colores
-    const handleColorChange = (newColor) => {
-        setcolor(newColor);
-        // Verificar la similitud de colores y actualizar los errores del formulario
-        const colorErrors = isColorTooSimilar(newColor, categoriesColors, 50);
-        setFormErrors((prevErrors) => ({ ...prevErrors, ...colorErrors }));
-    }; 
-
-    // Manejar el cambio del banner
-    const handleSwitchChange = (isChecked) => {
-        setIsBanner(isChecked);
-        // Realiza cualquier lógica adicional con el valor del Switch aquí
-    };
+   // Obtener las categorías y sus colores
+    const categories = useCategorias();
+    const categoriesColors = categories.map(category => category.color);
 
     // Valores iniciales del formulario
-    const initialValues = {
-        nombre: ''
+    const initialValues = initialValuesForEdit || {
+        nombre: '',
+        color:'#00fff8', 
+        isBanner: false
     };
 
     return(
         <>
             {/* Encabezado */}
-            <Typography variant='h3' color='text.primary'>Nueva Categoria</Typography>
+            <Typography variant='h3' color='text.primary'>
+                {isEditing ? 'Editar Categoría' : 'Nueva Categoría'}
+            </Typography>
             {/* Formulario con Formik */}
             <Formik
                 initialValues={initialValues}
 
+                validateOnChange={true} // Activar la validación en cada cambio del campo
+
                 // Validación del formulario
                 validate={values => {
-                    const { nombre } = values;
+                    const { nombre, color, isBanner } = values;
                     const errors = {};
 
                     //Validación del nombre de la categoria
@@ -106,24 +94,68 @@ function FormNuevaCategoria() {
                     } else if(!/^[a-zA-Z0-9À-ÿ\s\-]{3,50}$/.test(nombre)) {
                         errors.nombre = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
                     }
-                    
+
+                    // Validación del color
+                    const colorIsSimilar = isColorTooSimilar(color, categoriesColors, 50);
+                    if (colorIsSimilar) {
+                        errors.color = 'Ya existe una categoría con el color seleccionado';
+                    }
+
+                    // Validación de isBanner
+                    if (typeof isBanner !== 'boolean') {
+                        errors.isBanner = 'El valor de isBanner debe ser booleano';
+                    }
+
                     return errors;
                 }}
 
                 // Enviar el formulario
                 onSubmit={async (values, { resetForm }) => {
-
-                    // Verificar errores de color al enviar el formulario
-                    const colorErrors = isColorTooSimilar(color, categoriesColors, 50);
-                    setFormErrors({ ...colorErrors });
-
-                    // Si no hay errores, enviar el formulario
-                    if (Object.keys(colorErrors).length === 0) {
-                        // No hay errores de color, enviar el formulario
-                        const newCategory = { ...values, isBanner, color };
+                    // Verificar si se está editando una categoría existente
+                    if(isEditing) {
+                        // Crear un objeto con los datos actualizados de la categoría
+                        const updatedVideoData = { ...values };
+                        // Llamar a la función para editar la categoría en la API
+                        editarCategoria(categoryId, updatedVideoData)
+                        // Manejar la respuesta exitosa
+                        .then((responseData) => {
+                            console.log("Categoria editada exitosamente!", responseData);
+                            // Mostrar un mensaje de éxito y recargar la página
+                            setFeedback({
+                                isOpen: true,
+                                message: "Categoria editada exitosamente! La página se recargará para mostrar los cambios.",
+                                onConfirm: () => {
+                                    navigate('/', { replace: true });
+                                    window.location.reload();
+                                    resetForm();
+                                    setFeedback({ isOpen: false });
+                                }
+                            });
+                        })
+                        // Manejar cualquier error que ocurra
+                        .catch((error) => {
+                            console.error("Error al editar la categoria:", error);
+                            // Mostrar un mensaje de error
+                            setFeedback({
+                                isOpen: true,
+                                message: `Categoria NO editada. Error: ${error}`,
+                                onConfirm: () => setFeedback({ isOpen: false })
+                            });
+                        })
+                        // Ejecutar acciones adicionales independientemente de si la solicitud fue exitosa o no
+                        .finally(() => {
+                            console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
+                            resetForm();
+                        });
+                    } else {
+                        // Crear un objeto con los datos de la nueva categoría
+                        const newCategory = { ...values };
+                        // Llamar a la función para agregar la categoría a la API
                         agregarCategoria(newCategory)
+                        // Manejar la respuesta exitosa
                         .then((responseData) => {
                             console.log("Categoria agregada exitosamente!", responseData);
+                            // Mostrar un mensaje de éxito y recargar la página
                             setFeedback({
                                 isOpen: true,
                                 message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
@@ -135,23 +167,25 @@ function FormNuevaCategoria() {
                                 }
                             });
                         })
+                        // Manejar cualquier error que ocurra
                         .catch((error) => {
                             console.error("Error al agregar la categoria:", error);
+                            // Mostrar un mensaje de error
                             setFeedback({
                                 isOpen: true,
                                 message: `Categoria NO agregada. Error: ${error}`,
                                 onConfirm: () => setFeedback({ isOpen: false })
                             });
                         })
+                        // Ejecutar acciones adicionales independientemente de si la solicitud fue exitosa o no
                         .finally(() => {
                             console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
                             resetForm();
                         });
                     }
                 }}
-
             >
-                {({isSubmitting, resetForm}) => (
+                {({isSubmitting, resetForm, values, errors}) => (
                     <Form className='form-container'>
                         {/* Componente para el nombre */}
                         <TextInput
@@ -160,13 +194,21 @@ function FormNuevaCategoria() {
                             placeholder="Introduce el nombre de la nueva categoria"
                         />
                         {/* Componente para el banner */}
-                        <SwitchIsBanner onSwitchChange={handleSwitchChange} />
+                        <SwitchIsBanner
+                            name="isBanner"
+                            onChange={isBanner => {
+                                values.isBanner = isBanner;
+                            }} 
+                        />
                         {/* Componente para seleccionar el color */}
                         <ColorSelector
                             name="color"
-                            initialColor={color}
-                            onColorChange={handleColorChange}
-                            error={formErrors.color}
+                            id="color" 
+                            label={("PROJET.COLOR")}
+                            onChange={color => {
+                                values.color = color;
+                            }}
+                            error={errors.color} // Pasa el error del campo de color como una propiedad
                         />
                         {/* Componente para los botones del formulario */}                       
                         <FormButtons
@@ -185,8 +227,7 @@ function FormNuevaCategoria() {
                 confirmLabel="Aceptar"
             />
         </>
-
     );
 }
-
+// Exporta comoponente principal
 export default FormNuevaCategoria;

@@ -1,35 +1,50 @@
+// Importar los estilos y los componentes necesarios
 import './ColorSelector.css'
 import React, { useState } from "react";
+import { HuePicker } from 'react-color';
+import { useField } from 'formik'; // Importa el hook useField de Formik
 import { Box, Typography } from '@mui/material';
 
-function ColorSelector ({ initialColor, onColorChange, name, error }) {
+function ColorSelector({ name, error }) {
+    // Usa el hook useField para obtener los props del campo de Formik
+    const [field, meta, helpers] = useField("color");
 
-    const [selectedColor, setSelectedColor] = useState(initialColor);
+    // Estado local para rastrear si el campo de color ha sido tocado
+    const [touched, setTouched] = useState(false);
 
-    const handleColorChange = (event) => {
-        const newColor = event.target.value;
-        setSelectedColor(newColor);
-        onColorChange(newColor); // Enviar el nuevo color al componente padre si es necesario
+    // Función para manejar el cambio de color
+    const handleChange = color => {
+        helpers.setValue(color.hex); // Actualiza el valor del campo de Formik con el nuevo color seleccionado
+        setTouched(true); // Marcar el campo como tocado cuando se cambia el color
+
+    };
+
+    // Función para manejar la selección completa del color
+    const onComplete = color => {
+        helpers.setValue(color.hex); // Actualiza el valor del campo de Formik cuando se completa la selección del color
+        setTouched(true); // Marcar el campo como tocado cuando se cambia el color
     };
 
     return (
-        <div>
+        <>
+            {/* Contenedor del selector de color */}
             <Box className='colorSelector-container'>
                 <Typography className='switch-text'>Selecciona un color</Typography>
-                <input  
-                    type="color"
-                    className='color-selector-input'
-                    id={name}
+                {/* Selector de color */}
+                <HuePicker
+                    color={field.value}
+                    onChange={handleChange}
+                    onChangeComplete={onComplete}
                     name={name}
-                    value={selectedColor}
-                    onChange={handleColorChange}
                 />
             </Box>
-            {error && (
+            {/* Muestra el mensaje de error si el campo ha sido tocado y hay un error */}
+            {touched && error && (
                 <div className='error'>{error}</div>
-            )}
-        </div>
+            )}        
+        </>
     );
 }
 
-export default ColorSelector;   
+// Exporta componente ColorSelector
+export default ColorSelector;

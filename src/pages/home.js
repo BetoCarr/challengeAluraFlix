@@ -6,6 +6,7 @@ import { useCategorias } from '../CategoriaContext';
 
 // Función principal del componente Home
 function Home () {
+
     // Utiliza el hook useCategorias para obtener la lista de categorías
     const categorias = useCategorias();
 

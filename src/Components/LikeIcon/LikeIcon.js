@@ -15,7 +15,7 @@ function LikeIcon ( {videoId, title} ) {
     useEffect(() => {
         obtenerEstadoLike(videoId)
             .then((data) => {
-                setLiked(data.liked); // Establece el estado actual de "liked" al cargar el componente
+                setLiked(data.data.liked); // Establece el estado actual de "liked" al cargar el componente
             })
             .catch((error) => {
                 console.error("Error al obtener estado de 'me gusta':", error);

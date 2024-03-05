@@ -1,0 +1,8 @@
+.dialog-form {
+    background-color: var(--carousel-primary);
+    height: 27rem;
+    width: 100%;
+}
+.dialog-form h3 {
+    text-align: center;
+}
