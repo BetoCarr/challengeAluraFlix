@@ -199,6 +199,7 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                             onChange={isBanner => {
                                 values.isBanner = isBanner;
                             }} 
+                            categories={categories}
                         />
                         {/* Componente para seleccionar el color */}
                         <ColorSelector

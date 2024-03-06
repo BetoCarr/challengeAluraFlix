@@ -3,7 +3,7 @@ import React from 'react';
 import { Typography, Switch, Box } from '@mui/material';
 import { useField } from 'formik'; // Importa el hook useField de Formik
 
-function SwitchIsBanner ({ name }) {
+function SwitchIsBanner ({ name, categories }) {
 
     // Usa el hook useField para obtener los props del campo de Formik relacionado con el switch
     const [field, meta, helpers] = useField(name);
@@ -13,6 +13,8 @@ function SwitchIsBanner ({ name }) {
         // Actualiza el valor del campo de Formik con el nuevo estado del switch
         helpers.setValue(event.target.checked);
     }
+    // const { isBanner } = categories;
+    console.log(categories);
 
     // Retorna componente 
     return(
@@ -25,7 +27,7 @@ function SwitchIsBanner ({ name }) {
                 checked={field.value} // Establece el estado del switch basado en el valor del campo de Formik
                 onChange={handleChange} // Maneja el cambio del switch
                 name={name}
-                disabled
+                // disabled
                 size='large' // Tamaño del switch
             />
         </Box>

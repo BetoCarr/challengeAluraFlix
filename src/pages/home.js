@@ -9,7 +9,6 @@ function Home () {
 
     // Utiliza el hook useCategorias para obtener la lista de categorías
     const categorias = useCategorias();
-
     // Retorna la estructura principal del componente
     return(
         <MainContainer>
@@ -19,7 +18,6 @@ function Home () {
                     key={index} // Clave única para el mapeo de React
                     categoria={categoria} // Pasa la categoría al componente Carousel
                     isBanner={categoria.isBanner} // Pasa la propiedad isBanner al componente Carousel
-                    color={categoria.color} // Pasa el color al componente Carousel
                 />
             ))}
         </MainContainer>
