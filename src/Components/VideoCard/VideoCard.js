@@ -9,7 +9,7 @@ import LikeIcon from '../LikeIcon/LikeIcon';
 import Box from '@mui/material/Box';
 
 // Función para renderizar video-cards
-function VideoCard({ videoUrl, title, imageUrl, categoryColor, categoryId, id}){
+function VideoCard({ videoUrl, title, imageUrl, categoryColor, categoryId, id, isBanner }){
 
     // Estilo para el borde del card, con el color de la categoría
     const cardBorder= {
@@ -17,19 +17,23 @@ function VideoCard({ videoUrl, title, imageUrl, categoryColor, categoryId, id}){
         borderRadius: '8px', 
     };
 
+    // Determina la clase de estilo basada en si es un banner o no
+    const cardClassName = isBanner ? 'card-banner' : 'card';
+    const imgClassName = isBanner ? 'image-card-banner' : 'image-card';
+
     // Función para manejar la eliminación de un video
     const handleVideoDeleted = () => {
         window.location.reload();
     };
-    
+
     return (
         // Card que representa un video
-        <Card style={cardBorder} className='card'>
+        <Card style={cardBorder} className={cardClassName}>
             {/* Enlace al video (se abre en una nueva pestaña) */}
             <a href={videoUrl} target='_blank' rel='noopener noreferrer'>
                 {/* Contenido multimedia del card (imagen del video) */}
                 <CardMedia component='div'>
-                    <img src={imageUrl} alt={title} className='img-card'/>
+                    <img src={imageUrl} alt={title} className={imgClassName}/>
                 </CardMedia>
             </a>
             {/* Contenedor para el título y los iconos del card */}
