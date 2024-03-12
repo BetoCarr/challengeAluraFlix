@@ -8,19 +8,16 @@ import { useCategorias } from '../CategoriaContext';
 function Home () {
     // Utiliza el hook useCategorias para obtener la lista de categorías
     const categorias = useCategorias();
+
     // Identifica la categoría marcada actualmente como Banner
     const currentBannerCategory = categorias.find(categoria => categoria.isBanner);
-    console.log(currentBannerCategory)
+
   // Ordena las categorías, colocando la categoría marcada como banner primero
     const categoriasOrdenadas = [...categorias].sort((a, b) => {
         if (a.isBanner) return -1; // La categoría a es marcada como banner
         if (b.isBanner) return 1; // La categoría b es marcada como banner
         return 0; // Ninguna de las categorías es marcada como banner
     });
-    // // Loguea la categoría marcada actualmente como Banner solo cuando se renderiza el componente por primera vez
-    // useEffect(() => {
-    //     console.log(currentBannerCategory);
-    // }, [])    // Retorna la estructura principal del componente
 
     return(
         <MainContainer>
