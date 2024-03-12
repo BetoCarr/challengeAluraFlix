@@ -31,7 +31,7 @@ function renderCarouselItems(videos, color, id) {
 function Carousel({ categoria, isBanner }) {    
     // Estado para determinar si se muestra el banner o el carrusel normal
     const [showBanner, setShowBanner] = useState(isBanner);
-
+    // console.log(isBanner)
     // Desestructurar las propiedades de la categoría
     const { nombre, videos, color, id } = categoria;
     

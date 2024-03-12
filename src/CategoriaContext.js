@@ -9,9 +9,15 @@ export function useCategoriaContext() {
 export function CategoriaProvider({ children }) {
     const [categorias, setCategorias] = useState([]);
     
+
+    // const actualizarCategorias = (nuevasCategorias) => {
+    //     setCategorias(nuevasCategorias);
+    // };
+
     useEffect(() => {
         buscar("/categorias", setCategorias)
     }, []);
+
     return (
         <CategoriaContext.Provider value={categorias}>
             {children}
