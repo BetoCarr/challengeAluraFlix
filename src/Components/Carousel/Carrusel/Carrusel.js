@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import MySlider from '../Slider/Slider';
 import VideoCard from '../../VideoCard/VideoCard';
 import Banner from '../../Banner/Banner';
-import ContainerTitulo from '../../TituloCategoria/ContainerTitulo';
+import ContainerTitulo from '../../ContainerTitulo/ContainerTitulo';
 import './StylesCarrusel.css'
 
 // Funcion auxiliar para renderizar los videocards dentro del carrusel

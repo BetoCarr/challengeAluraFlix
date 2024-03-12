@@ -2,14 +2,14 @@ import './StylesBanner.css'
 import React from 'react';
 import VideoCardBanner from '../VideoCard/VideoCardBanner';
 import Box from '@mui/material/Box';
-import ContainerTituloBanner from '../TituloCategoria/ContainerTituloBanner';
+import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import Typography from '@mui/material/Typography';
 
 function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
     return(
         <Box component='section' className='banner-container banner-image'>
             <Box className='content-container'>
-                <ContainerTituloBanner 
+                <ContainerTitulo 
                     title={title} 
                     color={color} 
                     categoryId={categoryId} 
