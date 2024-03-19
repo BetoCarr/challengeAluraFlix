@@ -21,3 +21,13 @@
     margin-right: 0.5rem;
     max-width: 50%;
 }
+.content-container-error {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.no-video-img {
+    height: 25rem;
+    background-color: transparent;
+}

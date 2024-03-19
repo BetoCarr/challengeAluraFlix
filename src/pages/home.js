@@ -8,6 +8,7 @@ import { useCategorias } from '../CategoriaContext';
 function Home () {
     // Utiliza el hook useCategorias para obtener la lista de categorías
     const categorias = useCategorias();
+    console.log(categorias);
 
     // Identifica la categoría marcada actualmente como Banner
     const currentBannerCategory = categorias.find(categoria => categoria.isBanner);
