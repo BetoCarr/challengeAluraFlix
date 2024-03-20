@@ -22,12 +22,22 @@
     max-width: 50%;
 }
 .content-container-error {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 100%;
 }
 
 .no-video-img {
-    height: 25rem;
-    background-color: transparent;
+    width: 80%;
+    height: 19rem;
+}
+
+.not-found {
+    width: 50%;
+}
+.not-found-card {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 8rem;
 }
