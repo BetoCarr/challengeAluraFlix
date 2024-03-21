@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import VideoCard from '../VideoCard/VideoCard';
 import Typography from '@mui/material/Typography';
+import MessageBanner from './MessageBanner';
 import noVideoImage from '../../assets/img/no-video2.jpeg';
 
 function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
@@ -25,13 +26,7 @@ function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
                             isBanner={isBanner}
                         />
                         {/* Mensaje de invitación a explorar deportes */}
-                        <Typography variant='h4' color='text.primary'>
-                            Explora y Aprende Deportes
-                        </Typography>
-                        {/* Descripción de la plataforma */}
-                        <Typography variant='body1' color='text.primary'>
-                            SportFlix te invita a explorar y aprender una variedad de deportes emocionantes. Sumérgete en el mundo del deporte, desde el longboarding hasta el fútbol y el frontenis. Nuestra plataforma está diseñada para ayudarte a adquirir nuevas habilidades y conocimientos deportivos mientras te diviertes. ¡Unete a la aventura deportiva ahora!
-                        </Typography>
+                        <MessageBanner />
                     </Box>
                     {/* Contenedor para la imagen y el mensaje de error */}
                     <Box className='not-found-card'>
@@ -66,12 +61,7 @@ function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
                         isBanner={isBanner}
                     />
                     {/* Mensaje de invitación a explorar deportes */}
-                    <Typography variant='h4' color='text.primary'>
-                        Explora y Aprende Deportes
-                    </Typography>
-                    <Typography variant='body1' color='text.primary'>
-                        SportFlix te invita a explorar y aprender una variedad de deportes emocionantes. Sumérgete en el mundo del deporte, desde el longboarding hasta el fútbol y el frontenis. Nuestra plataforma está diseñada para ayudarte a adquirir nuevas habilidades y conocimientos deportivos mientras te diviertes. ¡Unete a la aventura deportiva ahora!
-                    </Typography>
+                    <MessageBanner />
                 </Box>
                 {/* Componente de tarjeta de video */}
                 <VideoCard
