@@ -13,7 +13,7 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
     
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
-    
+
     // Función auxuliar para recargar la página
     const handleReloadPage = () => {
         window.location.reload();

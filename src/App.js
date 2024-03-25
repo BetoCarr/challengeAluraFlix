@@ -24,7 +24,6 @@ function App() {
                     </DefaultPage>
                 </Router>
             </CategoriaProvider>
-
         </ThemeProvider>
     );
 }

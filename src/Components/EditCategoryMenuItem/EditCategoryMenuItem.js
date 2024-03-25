@@ -3,6 +3,7 @@ import React, { useState }  from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
+import Divider from '@mui/material/Divider';
 import FormEditarCategoria from '../FormEditarCategoria/FormEditarCategoria';
 import { useTheme } from '@mui/material/styles'; 
 
@@ -63,6 +64,7 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
                 <EditIcon style={{ fill: theme.palette.text.primary, fontSize: '23px' }} />
                 Editar
             </MenuItem>
+            <Divider />
             {/* Cuadro de diálogo de confirmación de eliminación */}
             <FeedbackDialog
                 onClose={handleClose}

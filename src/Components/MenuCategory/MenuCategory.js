@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteCategoryMenuItem from '../DeleteCategoryMenuItem/DeleteCategoryMenuItem';
 import EditCategroyMenuItem from '../EditCategoryMenuItem/EditCategoryMenuItem';
+import AddVideoMenuItem from '../AddVideoMenuItem/AddVideoMenuItem';
 
 const StyledMenu = styled((props) => (
     // Estiliza el componente Menu de Material-UI y hereda las props
@@ -96,6 +97,11 @@ function MenuCategory ({ categoryId, categoryName, categoryColor, isBanner  }) {
                     categoryName={categoryName} 
                     categoryColor={categoryColor}
                     isBanner={isBanner}
+                    handleClose={handleClose}
+                />
+                <AddVideoMenuItem 
+                    categoryId={categoryId} 
+                    categoryName={categoryName}
                     handleClose={handleClose}
                 />
             </StyledMenu>
