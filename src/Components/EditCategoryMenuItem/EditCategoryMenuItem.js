@@ -2,88 +2,65 @@
 import React, { useState }  from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
-import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import Divider from '@mui/material/Divider';
+import ConfirmationDialogWithForm from '../ConfirmationDialogWithForm/ConfirmationDialogWithForm';
 import FormEditarCategoria from '../FormEditarCategoria/FormEditarCategoria';
 import { useTheme } from '@mui/material/styles'; 
 
 function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanner, handleClose }) {
 
-    // Estado para controlar la apertura y cierre del cuadro de diálogo de edición
-    const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
-
-    // Estado para controlar la visibilidad del formulario de edición
-    const [showEditForm, setShowEditForm] = useState(false);  
+    const [isOpen, setIsOpen] = useState(false);
 
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
-    
-    // Objeto que contiene los valores iniciales para el formulario de edición de categoría
-    const initialValuesForEdit = {
-        nombre: categoryName,
-        color: categoryColor,
-        isBanner: isBanner
-    }
 
-    // Función para manejar la confirmación de edición de la categoría
-    const handleEditConfirmationDialogOpen = () => {
-        setFeedback({
-            isOpen: true,
-            message: `¿Quieres editar la categoría '${categoryName}'?`, // Mensaje de confirmacion de edicion con el nombre de la categoría
-            onCancel: () => handleEditDialogClose(handleClose), // Maneja el cierre del diálogo de confirmación
-            onConfirm: () => handleEditFormOpen(), // Abre el formulario de edición al confirmar
-            cancelLabel: 'Cancelar',
-            confirmLabel: 'Aceptar',
-        });
+    const handleConfirmation = () => {
+        setIsOpen(false); // Cierra el diálogo de confirmación
     };
-
-    // Funcion para cerrar cuadro de dialogo de confirmación de eliminación de la categoria
-    const handleEditDialogClose = (handleClose) => {
-        handleClose();
-        setFeedback({ isOpen: false }); // Cierra el diálogo de confirmación
-    }
 
     // Función para abrir el formulario de edición
     const handleEditFormOpen = () => {
-        setShowEditForm(true);
-        setFeedback({ isOpen: false })
+        setIsOpen(true);
     };
 
-    // Función para cerrar el formulario de edición
-    const handleEditFormClose = () => {
-        setShowEditForm(false);
+    const handleCancel = () => {
+        setIsOpen(false); // Cierra el diálogo de confirmación
+        handleClose(); // Cierra el menú
     };
+
     
     return(
         <>
             {/* Componente que muestra el ícono y el mensaje de edicion y maneja la operación en el backend */}
             <MenuItem 
                 className='menu-item'
-                onClick={handleEditConfirmationDialogOpen} // Abre el diálogo de confirmación al hacer clic en el menú
+                onClick={handleEditFormOpen} // Abre el diálogo de confirmación al hacer clic en el menú
             >
                 <EditIcon style={{ fill: theme.palette.text.primary, fontSize: '23px' }} />
                 Editar
             </MenuItem>
             <Divider />
             {/* Cuadro de diálogo de confirmación de eliminación */}
-            <FeedbackDialog
-                onClose={handleClose}
-                isOpen={feedback.isOpen}
-                message={feedback.message}
-                onConfirm={feedback.onConfirm}
-                confirmLabel={feedback.confirmLabel}    
-                onCancel={feedback.onCancel} 
-        
+            <ConfirmationDialogWithForm
+                isOpen={isOpen}
+                onClose={handleCancel}
+                message={`¿Quieres editar la categoría '${categoryName}'?`}
+                onConfirm={handleConfirmation}
+                confirmLabel="Aceptar"
+                onCancel={handleCancel}
+                cancelLabel="Cancelar"
+                formComponent={(handleFormClose) => (
+                    <FormEditarCategoria
+                        initialValuesForEdit={{
+                            nombre: categoryName,
+                            color: categoryColor,
+                            isBanner: isBanner
+                        }}
+                        handleClose={handleFormClose}
+                        categoryId={categoryId}
+                    />
+                )}
             />
-            {/* Renderiza el formulario de edición condicionalmente */}
-            {showEditForm && (
-                <FormEditarCategoria
-                    initialValuesForEdit={initialValuesForEdit}
-                    handleClose={handleEditFormClose}
-                    setShowEditForm={setShowEditForm} // Pasar la función de actualización de estado
-                    categoryId={categoryId}
-                />
-            )}
         </>
     );
 }

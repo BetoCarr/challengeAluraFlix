@@ -9,7 +9,7 @@ import { useCategorias } from '../../CategoriaContext'; // Importación de hook 
 import { agregarNuevoVideo } from '../../api/api'; // Importación de función para agregar un nuevo video desde la API
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
-function FormNuevoVideo ( handleClose, setShowFormNewVideo ) {
+function FormNuevoVideo ({ handleClose, setShowFormNewVideo}) {
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null }); // Estado para manejar el cuadro de diálogo de retroalimentación
     const categorias = useCategorias(); // Obtención de la lista de categorías utilizando un hook personalizado
     const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
