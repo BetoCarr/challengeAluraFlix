@@ -1,5 +1,6 @@
 // Importación de React y componentes
 import React, { useState }  from 'react';
+import FormNuevoVideo from '../FormNuevoVideo/FormNuevoVideo';
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import MenuItem from '@mui/material/MenuItem';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -10,6 +11,8 @@ function AddVideoMenuItem ({ categoryId, categoryName, handleClose }) {
     // Estado para controlar la apertura y cierre del cuadro de diálogo de eliminación
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
 
+    const [showFormNewVideo, setShowFormNewVideo] = useState(false); // Estado para controlar la visibilidad del formulario de edición
+
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
 
@@ -19,7 +22,7 @@ function AddVideoMenuItem ({ categoryId, categoryName, handleClose }) {
             isOpen: true,
             message: `¿Quieres agregar video a la categoría '${categoryName}'?`, // Mensaje de confirmación con el nombre de la categoría
             onCancel: () => handleAddVideoDialogClose(handleClose), // Maneja el cierre del diálogo de confirmación
-            onConfirm: handleAddVideo, // Maneja la eliminación de la categoría
+            onConfirm: handleFormOpen(), // Maneja la eliminación de la categoría
             cancelLabel: 'Cancelar',
             confirmLabel: 'Aceptar',
         });
@@ -29,10 +32,22 @@ function AddVideoMenuItem ({ categoryId, categoryName, handleClose }) {
     const handleAddVideoDialogClose = (handleClose) => {
         handleClose();
         setFeedback({ isOpen: false }); // Cierra el diálogo de confirmación
-    }
-    const handleAddVideo = () => {
-        console.log( `¿Quieres agregar video a la categoría '${categoryName}' con el id ${categoryId}?`)
-    }
+}
+    // Función para abrir el formulario de edición
+    const handleFormOpen = () => {
+        setShowFormNewVideo(true);
+        setFeedback({ isOpen: false })
+    };
+
+    // Función para cerrar el formulario de edición
+    const handleFormClose = () => {
+        setShowFormNewVideo(false);
+    };
+
+    // const handleAddVideo = () => {
+    //     console.log( `¿Quieres agregar video a la categoría '${categoryName}' con el id ${categoryId}?`)
+    // }
+
     return(
         <>
             {/* Componente que muestra el ícono y el mensaje de eliminación y maneja la operación en el backend */}
@@ -54,6 +69,15 @@ function AddVideoMenuItem ({ categoryId, categoryName, handleClose }) {
                 onCancel={feedback.onCancel} 
                 cancelLabel={feedback.cancelLabel}          
             />
+            {/* Renderiza el formulario de edición condicionalmente */}
+            {showFormNewVideo && (
+                <FormNuevoVideo
+                    // initialValuesForEdit={initialValuesForEdit}
+                    handleClose={handleFormClose}
+                    setShowFormNewVideo={setShowFormNewVideo}                   
+                    // categoryId={categoryId}
+                />
+            )}
         </>
     );
 }

@@ -13,11 +13,11 @@ function Header() {
                     <Logotipo src={logo}/>
                 </Link>
                 <Box className='button-container'>
-                    <Link to="/nuevo-video">
+                    {/* <Link to="/nuevo-video">
                         <Button size='medium' variant='outlined' className='theme-button'>
                             <Typography>Nuevo Video</Typography> 
                         </Button>
-                    </Link>
+                    </Link> */}
                     <Link to="/nueva-categoria">
                         <Button size='medium' variant='outlined' className='theme-button'>
                             <Typography>Nueva Categoria</Typography>
