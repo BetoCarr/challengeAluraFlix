@@ -22,7 +22,7 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo}) {
     return (
         <>
             <Dialog open={true} onClose={handleClose} >
-                <DialogContent> 
+                <DialogContent className='dialog-form'> 
                     {/* Título del formulario */}
                     <Typography variant='h3' color='text.primary'>Nuevo Video</Typography>
                     {/* Componente Formik para manejar el formulario */}

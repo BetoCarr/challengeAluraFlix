@@ -4,6 +4,32 @@
     padding: 2rem;
 }
 
+.MuiDialog-paperWidthSm {
+    width: 100%; /* Ajusta el ancho máximo del contenedor del formulario según tus necesidades */
+}
+/* Estilos de campo para seleccionar categoria */
+.input-container select {
+    background-color: var(--inputs-primary);
+    width: 100%;
+    height: 3rem;
+    padding: 8px;
+    font-size: 125%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+
+  /* Placeholder estilizado (opcional) */
+.input-container select::placeholder {
+    font-style: italic;
+    color: var(--text-primary);
+}
+
+.error {
+    margin-top: 0.5rem;
+    color: red;
+}
+
 /* Estilos de campo para seleccionar categoria */
 .input-container select {
     background-color: var(--inputs-primary);
