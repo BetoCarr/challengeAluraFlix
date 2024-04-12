@@ -9,7 +9,7 @@ import { useCategorias } from '../../CategoriaContext'; // Importación de hook 
 import { agregarNuevoVideo } from '../../api/api'; // Importación de función para agregar un nuevo video desde la API
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
-function FormNuevoVideo ({ handleClose, setShowFormNewVideo}) {
+function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categoryName}) {
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null }); // Estado para manejar el cuadro de diálogo de retroalimentación
     const categorias = useCategorias(); // Obtención de la lista de categorías utilizando un hook personalizado
     const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
@@ -19,6 +19,8 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo}) {
         handleClose();
     };
 
+    console.log(categoryId)
+    
     return (
         <>
             <Dialog open={true} onClose={handleClose} >
@@ -107,6 +109,9 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo}) {
                     >
                         {({ isSubmitting, errors, resetForm }) => (
                             <Form className='form-container'>
+                                <div className='input-container-category '>
+                                    <Typography >Categoria seleccionada: {categoryName}</Typography>
+                                </div>
                                 {/* Componentes TextInput para los campos del formulario */}
                                 <TextInput 
                                     label="Título"
@@ -126,21 +131,6 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo}) {
                                     placeholder="Introduce el link de la imagen"
                                 />
 
-                                <div className='input-container'>
-                                    {/* Campo select para seleccionar la categoría del video */}
-                                    <label htmlFor='categoria'></label>
-                                    <Field as="select" name="categoria">
-                                        {/* Opciones para seleccionar la categoría */}
-                                        <option value="" label="Seleccione una categoría" disabled defaultValue="" hidden />
-                                        {categorias.map((categoria, index) => (
-                                            <option key={index} value={categoria.id}>
-                                                {categoria.nombre}
-                                            </option>
-                                        ))}
-                                    </Field>
-                                    {/* Mensaje de error para la selección de categoría */}
-                                    <ErrorMessage name="categoria" component={() => (<div className="error">{errors.categoria}</div>)} />
-                                </div>
                                 {/* Componente FormButtons para los botones de envío y restablecimiento del formulario */}
                                 <FormButtons
                                     isSubmitting={isSubmitting} 

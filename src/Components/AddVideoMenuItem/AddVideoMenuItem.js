@@ -25,6 +25,8 @@ function AddVideoMenuItem ({ categoryId, categoryName, handleClose }) {
         setIsOpen(false); // Cierra el diálogo de confirmación
         handleClose(); // Cierra el menú
     };
+    
+    // console.log(categoryId)
 
     return(
         <>
@@ -47,7 +49,12 @@ function AddVideoMenuItem ({ categoryId, categoryName, handleClose }) {
                 onCancel={handleCancel}
                 cancelLabel="Cancelar"
                 formComponent={(handleFormClose) => (
-                    <FormNuevoVideo handleClose={handleFormClose} setShowFormNewVideo={setIsOpen} />
+                    <FormNuevoVideo 
+                        handleClose={handleFormClose}
+                        setShowFormNewVideo={setIsOpen} 
+                        categoryId={categoryId}
+                        categoryName={categoryName}
+                    />
                 )}
             />
         </>
