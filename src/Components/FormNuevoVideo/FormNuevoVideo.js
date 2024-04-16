@@ -1,17 +1,16 @@
 import './StylesFormNuevoVideo.css'; // Importación de estilos CSS específicos para el formulario
 import React, { useState } from 'react'; // Importación de React y el hook useState
-import { Formik, Form, Field, ErrorMessage } from 'formik'; // Importación de componentes de Formik para manejar formularios
+import { Formik, Form } from 'formik'; // Importación de componentes de Formik para manejar formularios
 import {Typography, Dialog, DialogContent } from '@mui/material'; // Importación de componente Typography de Material-UI
 import TextInput from '../TextInput/TextInput'; // Importación de componente personalizado de entrada de texto
 import FormButtons from '../FormButtons/FormButtons'; // Importación de componente personalizado para botones de formulario
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importación de componente de cuadro de diálogo de retroalimentación
-import { useCategorias } from '../../CategoriaContext'; // Importación de hook personalizado para obtener categorías
 import { agregarNuevoVideo } from '../../api/api'; // Importación de función para agregar un nuevo video desde la API
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
 function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categoryName}) {
+
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null }); // Estado para manejar el cuadro de diálogo de retroalimentación
-    const categorias = useCategorias(); // Obtención de la lista de categorías utilizando un hook personalizado
     const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
 
     const handleFormOpen = () => {
@@ -19,8 +18,6 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categor
         handleClose();
     };
 
-    console.log(categoryId)
-    
     return (
         <>
             <Dialog open={true} onClose={handleClose} >
@@ -32,13 +29,12 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categor
                         initialValues={{
                             titulo: '',
                             linkVideo: '',
-                            linkImagen: '',
-                            categoria: '',
+                            linkImagen: ''
                         }}
 
                         // Validación de los valores del formulario
                         validate={values => {
-                            const { titulo, linkVideo, linkImagen, categoria } = values;
+                            const { titulo, linkVideo, linkImagen } = values;
                             const errors = {};
 
                             if (!titulo) {
@@ -59,15 +55,12 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categor
                                 errors.linkImagen = 'Por favor, ingresa un enlace de imagen válido. Asegúrate de que comience con http:// o https:// y que contenga solo letras, números, guiones, puntos y otros caracteres válidos.';
                             }
 
-                            if (!categoria) {
-                                errors.categoria = 'Debes elegir una categoria';
-                            }
-
                             return errors;
                         }}
 
                         // Manejo de la acción de envío del formulario
                         onSubmit={async (values, { setSubmitting, resetForm }) => {
+
                             setSubmitting(true);
 
                             const newVideo = {
@@ -76,7 +69,6 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categor
                                 linkImagen: values.linkImagen,
                             }   
 
-                            const categoryId = values.categoria;
                             // Llamada a la función para agregar un nuevo video a través de la API
                             agregarNuevoVideo(categoryId, newVideo)
                             .then((responseData) => {
@@ -107,8 +99,9 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categor
                             });
                         }}
                     >
-                        {({ isSubmitting, errors, resetForm }) => (
+                        {({ isSubmitting, resetForm }) => (
                             <Form className='form-container'>
+                                {/* Sección para mostrar la categoría seleccionada */}
                                 <div className='input-container-category '>
                                     <Typography >Categoria seleccionada: {categoryName}</Typography>
                                 </div>
