@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles';
 
 function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanner, handleClose }) {
 
+    // Estado para controlar la apertura del formulario de editar categoria
     const [isOpen, setIsOpen] = useState(false);
 
     // Variable para acceder a ThemeProvider
@@ -40,7 +41,7 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
                 Editar
             </MenuItem>
             <Divider />
-            {/* Cuadro de diálogo de confirmación de eliminación */}
+            {/* Cuadro de diálogo de confirmación de edicion */}
             <ConfirmationDialogWithForm
                 isOpen={isOpen}
                 onClose={handleCancel}
@@ -64,5 +65,5 @@ function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanne
         </>
     );
 }
-
+// Exporta componente EditCategroyMenuItem
 export default EditCategroyMenuItem;

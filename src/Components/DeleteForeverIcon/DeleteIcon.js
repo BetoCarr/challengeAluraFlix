@@ -1,3 +1,4 @@
+// Importación de React y componentes
 import React, { useState } from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
@@ -7,10 +8,12 @@ function DeleteVideoButton({ categoryId, videoId, title, onVideoDeleted }) {
 
     // Estado para gestionar la información del cuadro de diálogo de retroalimentación
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
-    
+
+    // Función para cerrar el cuadro de diálogo
     const handleDialogClose = () => {
         setFeedback({ isOpen: false });
     };
+
     // Maneja el clic en el icono de eliminar para abrir el cuadro de diálogo
     const handleDeleteClick = () => {
         // Configura el cuadro de diálogo con el mensaje y la función de confirmación
@@ -23,6 +26,7 @@ function DeleteVideoButton({ categoryId, videoId, title, onVideoDeleted }) {
             confirmLabel: 'Aceptar',
         });    
     };
+
     // Maneja la lógica de eliminación del video
     const handleVideoDelete = () => {
         eliminarVideo(categoryId, videoId)
@@ -64,8 +68,8 @@ function DeleteVideoButton({ categoryId, videoId, title, onVideoDeleted }) {
                 confirmLabel="Aceptar"
             />
         </>
-
     );
 }
 
+// Exporta el componente DeleteVideoButton para su uso en otras partes de la aplicación
 export default DeleteVideoButton;

@@ -99,6 +99,7 @@ function MenuCategory ({ categoryId, categoryName, categoryColor, isBanner  }) {
                     isBanner={isBanner}
                     handleClose={handleClose}
                 />
+                {/* Elemento de menú para la opción "Agregar video" */}
                 <AddVideoMenuItem 
                     categoryId={categoryId} 
                     categoryName={categoryName}

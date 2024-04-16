@@ -13,11 +13,6 @@ function FormNuevoVideo ({ handleClose, setShowFormNewVideo, categoryId, categor
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null }); // Estado para manejar el cuadro de diálogo de retroalimentación
     const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
 
-    const handleFormOpen = () => {
-        setShowFormNewVideo(true);
-        handleClose();
-    };
-
     return (
         <>
             <Dialog open={true} onClose={handleClose} >
