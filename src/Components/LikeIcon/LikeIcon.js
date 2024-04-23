@@ -1,8 +1,10 @@
+// Importacion de React y componentes
 import React, { useState, useEffect }  from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
 import { darLikeVideo, obtenerEstadoLike } from '../../api/api';
 
+// Componente principal LikeIcon
 function LikeIcon ( {videoId, title} ) {
 
     // Estado para manejar si el video está marcado como 'me gusta'
@@ -59,5 +61,5 @@ function LikeIcon ( {videoId, title} ) {
         </>
     );
 }
-
+// Exporta componente LikeIcon
 export default LikeIcon;

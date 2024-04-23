@@ -25,7 +25,6 @@ function SwitchIsBanner ({ name }) {
                 checked={field.value} // Establece el estado del switch basado en el valor del campo de Formik
                 onChange={handleChange} // Maneja el cambio del switch
                 name={name}
-                disabled
                 size='large' // Tamaño del switch
             />
         </Box>

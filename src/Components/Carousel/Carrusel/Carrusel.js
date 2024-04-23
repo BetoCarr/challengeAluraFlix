@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import MySlider from '../Slider/Slider';
 import VideoCard from '../../VideoCard/VideoCard';
 import Banner from '../../Banner/Banner';
-import ContainerTitulo from '../../TituloCategoria/ContainerTitulo';
+import ContainerTitulo from '../../ContainerTitulo/ContainerTitulo';
 import './StylesCarrusel.css'
 
 // Funcion auxiliar para renderizar los videocards dentro del carrusel
@@ -28,12 +28,11 @@ function renderCarouselItems(videos, color, id) {
 }
 
 // Componente principal Carousel
-function Carousel({ categoria, isBanner, color }) {    
+function Carousel({ categoria, isBanner }) {    
     // Estado para determinar si se muestra el banner o el carrusel normal
     const [showBanner, setShowBanner] = useState(isBanner);
 
-    // Desestructurar las propiedades de la categoría
-    const { nombre, videos, id } = categoria;
+    const { nombre, videos, color, id } = categoria;
     
     // Retorna componente principal
     return (
@@ -45,6 +44,9 @@ function Carousel({ categoria, isBanner, color }) {
                         title={nombre}
                         video={videos[0]} 
                         color={color}
+                        categoryId={id} 
+                        categoryName={nombre} 
+                        isBanner={isBanner}
                     />
                     <div className='container-carousel'>
                         {/* Renderiza los VideoCards restantes en el carrusel */}

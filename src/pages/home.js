@@ -6,20 +6,28 @@ import { useCategorias } from '../CategoriaContext';
 
 // Función principal del componente Home
 function Home () {
-
     // Utiliza el hook useCategorias para obtener la lista de categorías
     const categorias = useCategorias();
+    // console.log(categorias);
 
-    // Retorna la estructura principal del componente
+    // Identifica la categoría marcada actualmente como Banner
+    const currentBannerCategory = categorias.find(categoria => categoria.isBanner);
+
+  // Ordena las categorías, colocando la categoría marcada como banner primero
+    const categoriasOrdenadas = [...categorias].sort((a, b) => {
+        if (a.isBanner) return -1; // La categoría a es marcada como banner
+        if (b.isBanner) return 1; // La categoría b es marcada como banner
+        return 0; // Ninguna de las categorías es marcada como banner
+    });
+
     return(
         <MainContainer>
             {/* Mapea cada categoría y renderiza un Carousel para cada una */}
-            {categorias.map((categoria, index) => (
+            {categoriasOrdenadas.map((categoria, index) => (
                 <Carousel
                     key={index} // Clave única para el mapeo de React
                     categoria={categoria} // Pasa la categoría al componente Carousel
-                    isBanner={categoria.isBanner} // Pasa la propiedad isBanner al componente Carousel
-                    color={categoria.color} // Pasa el color al componente Carousel
+                    isBanner={categoria === currentBannerCategory} // Pasa el estado de banner al componente Carousel
                 />
             ))}
         </MainContainer>

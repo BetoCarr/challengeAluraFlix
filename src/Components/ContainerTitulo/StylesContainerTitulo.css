@@ -1,0 +1,29 @@
+.paper,
+.paper-banner {
+    padding: 16px;
+    margin-bottom: 1rem;
+    width: 20%;
+    height: 3.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.typography,
+.typography-banner {
+    font-size: 2rem;
+    font-weight:400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-primary);
+}
+/* Estilos específicos para el contenedor y texto del banner */
+.paper-banner {
+    width: 35%; /* Cambiar el ancho para el banner */
+    height: 3.8rem; /* Cambiar la altura para el banner */
+}
+
+.typography-banner {
+    font-size: 2.5rem; /* Cambiar el tamaño de fuente para el banner */
+}
