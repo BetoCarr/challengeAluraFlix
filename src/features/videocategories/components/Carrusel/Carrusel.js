@@ -1,6 +1,6 @@
 // Importa React y los componentes necesarios
 import React, { useState } from 'react';
-import MySlider from '../../../../Components/Carousel/Slider/Slider';
+import MySlider from '../../../../Components/Slider/Slider';
 import VideoCard from '../../../../Components/VideoCard/VideoCard';
 import Banner from '../../../../Components/Banner/Banner';
 import ContainerTitulo from '../../../../Components/ContainerTitulo/ContainerTitulo';
