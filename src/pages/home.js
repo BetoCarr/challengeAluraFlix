@@ -4,44 +4,54 @@ import MainContainer from "../Components/MainContainer/MainContainer";
 import Carousel from "../Components/Carousel/Carrusel/Carrusel";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
-// import { useCategorias } from '../CategoriaContext';
 
 // Función principal del componente Home
 function Home () {
-    // // Utiliza el hook useCategorias para obtener la lista de categorías
-    // const categorias = useCategorias();
-    // // console.log(categorias);
-    const dispatch = useDispatch();
-    const categorias = useSelector(selectAllCategories);
+    // Obtiene el dispatch de Redux para enviar acciones
+    const dispatch = useDispatch()
+
+    // Obtiene las categorías del estado de Redux usando un selector
+    const categorias = useSelector(selectAllCategories)
+
+    // Obtiene el estado de las categorías y el posible error del estado de Redux
+    const categoriesStatus = useSelector(state => state.videoCategories.status)
+    const error = useSelector(state => state.videoCategories.error)
 
     // Llama al thunk para obtener las categorías cuando el componente se monta
     useEffect(() => {
-        dispatch(fetchCategories());
-    }, [dispatch]);
+        if (categoriesStatus === 'idle') {
+            dispatch(fetchCategories())
+        }
+    }, [categoriesStatus, dispatch])
 
     // Identifica la categoría marcada actualmente como Banner
-    const currentBannerCategory = categorias.find(categoria => categoria.isBanner);
+    const currentBannerCategory = categorias.find(categoria => categoria.isBanner)
 
-  // Ordena las categorías, colocando la categoría marcada como banner primero
-    const categoriasOrdenadas = [...categorias].sort((a, b) => {
-        if (a.isBanner) return -1; // La categoría a es marcada como banner
-        if (b.isBanner) return 1; // La categoría b es marcada como banner
-        return 0; // Ninguna de las categorías es marcada como banner
-    });
+    // Variable para almacenar el contenido a renderizar
+    let content
+
+    // Determina qué contenido mostrar basado en el estado de las categorías
+    if (categoriesStatus === 'loading') {
+        content = <p>Loading...</p>
+    } else if (categoriesStatus === 'succeeded') {
+        content = categorias.map((categoria, index) => (
+            <Carousel
+                key={index}
+                categoria={categoria}
+                isBanner={categoria === currentBannerCategory}
+            />
+        ))
+        console.log(categorias)
+    } else if (categoriesStatus === 'failed') {
+        content = <p>Error: {error}</p>
+    }
 
     return(
         <MainContainer>
-            {/* Mapea cada categoría y renderiza un Carousel para cada una */}
-            {categoriasOrdenadas.map((categoria, index) => (
-                <Carousel
-                    key={index} // Clave única para el mapeo de React
-                    categoria={categoria} // Pasa la categoría al componente Carousel
-                    isBanner={categoria === currentBannerCategory} // Pasa el estado de banner al componente Carousel
-                />
-            ))}
+            {content}
         </MainContainer>
-    );
+    )
 }
 
 // Exporta el componente Home
-export default Home;
+export default Home

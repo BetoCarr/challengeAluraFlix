@@ -6,9 +6,13 @@ export const api = axios.create({
 })
 
 // Función para buscar datos en la API y actualizar el estado de un componente
-export async function buscar (url, setData) {
-    const respuesta = await api.get(url) // Realiza una petición GET a la URL proporcionada
-    setData(respuesta.data) // Actualiza el estado del componente con los datos obtenidos
+export async function buscar(url) {
+    try {
+        const respuesta = await api.get(url); // Realiza una petición GET a la URL proporcionada
+        return respuesta.data; // Retorna los datos obtenidos de la API
+    } catch (error) {
+        throw new Error(`Error al buscar datos: ${error.message}`);
+    }
 }
 
 // Función para agregar un nuevo video a una categoría específica
