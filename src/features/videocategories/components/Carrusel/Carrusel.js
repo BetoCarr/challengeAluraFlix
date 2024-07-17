@@ -1,9 +1,9 @@
 // Importa React y los componentes necesarios
 import React, { useState } from 'react';
-import MySlider from '../Slider/Slider';
-import VideoCard from '../../VideoCard/VideoCard';
-import Banner from '../../Banner/Banner';
-import ContainerTitulo from '../../ContainerTitulo/ContainerTitulo';
+import MySlider from '../../../../Components/Carousel/Slider/Slider';
+import VideoCard from '../../../../Components/VideoCard/VideoCard';
+import Banner from '../../../../Components/Banner/Banner';
+import ContainerTitulo from '../../../../Components/ContainerTitulo/ContainerTitulo';
 import './StylesCarrusel.css'
 
 // Funcion auxiliar para renderizar los videocards dentro del carrusel

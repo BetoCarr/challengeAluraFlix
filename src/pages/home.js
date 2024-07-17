@@ -1,7 +1,7 @@
 // Importa React y los componentes necesarios
 import React, {useEffect} from 'react';
 import MainContainer from "../Components/MainContainer/MainContainer";
-import Carousel from "../Components/Carousel/Carrusel/Carrusel";
+import Carousel from "../features/videocategories/components/Carrusel/Carrusel";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
 
