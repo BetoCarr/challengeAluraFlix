@@ -1,14 +1,23 @@
 // Importa React y los componentes necesarios
-import React from 'react';
+import React, {useEffect} from 'react';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import Carousel from "../Components/Carousel/Carrusel/Carrusel";
-import { useCategorias } from '../CategoriaContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
+// import { useCategorias } from '../CategoriaContext';
 
 // Función principal del componente Home
 function Home () {
-    // Utiliza el hook useCategorias para obtener la lista de categorías
-    const categorias = useCategorias();
-    // console.log(categorias);
+    // // Utiliza el hook useCategorias para obtener la lista de categorías
+    // const categorias = useCategorias();
+    // // console.log(categorias);
+    const dispatch = useDispatch();
+    const categorias = useSelector(selectAllCategories);
+
+    // Llama al thunk para obtener las categorías cuando el componente se monta
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
 
     // Identifica la categoría marcada actualmente como Banner
     const currentBannerCategory = categorias.find(categoria => categoria.isBanner);
