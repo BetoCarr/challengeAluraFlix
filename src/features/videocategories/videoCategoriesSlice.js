@@ -4,7 +4,7 @@ import { buscar } from '../../api/api';
 
 // Crear un adaptador para manejar las categorías de videos
 const videoCategoriesAdapter = createEntityAdapter({
-    // selectId: (category) => category.id,
+    selectId: (category) => category.id,
     // Configurar un comparador de ordenación para colocar las categorías marcadas como banner al inicio
     sortComparer: (a, b) => {
         if (a.isBanner) return -1; // La categoría a es marcada como banner

@@ -3,18 +3,16 @@ import React, {useEffect} from 'react';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import Carousel from "../features/videocategories/components/Carrusel/Carrusel";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCategories, selectAllCategories, selectCategoryIds } from '../features/videocategories/videoCategoriesSlice';
+import { fetchCategories, selectCategoryIds } from '../features/videocategories/videoCategoriesSlice';
 
 // Función principal del componente Home
 function Home () {
     // Obtiene el dispatch de Redux para enviar acciones
     const dispatch = useDispatch()
 
-    // Obtiene las categorías del estado de Redux usando un selector
-    const categorias = useSelector(selectAllCategories)
-
+    // Obtiene los ids de las categorías del estado de Redux usando un selector
     const categoriasIds = useSelector(selectCategoryIds)
-    console.log(categoriasIds)
+
     // Obtiene el estado de las categorías y el posible error del estado de Redux
     const categoriesStatus = useSelector(state => state.videoCategories.status)
     const error = useSelector(state => state.videoCategories.error)
@@ -26,9 +24,6 @@ function Home () {
         }
     }, [categoriesStatus, dispatch])
 
-    // Identifica la categoría marcada actualmente como Banner
-    const currentBannerCategory = categorias.find(categoria => categoria.isBanner)
-
     // Variable para almacenar el contenido a renderizar
     let content
 
@@ -36,11 +31,10 @@ function Home () {
     if (categoriesStatus === 'loading') {
         content = <p>Loading...</p>
     } else if (categoriesStatus === 'succeeded') {
-        content = categorias.map((categoria, index) => (
+        content = categoriasIds.map((categoryId) => (
             <Carousel
-                key={index}
-                categoria={categoria}
-                isBanner={categoria === currentBannerCategory}
+                key={categoryId}
+                categoryId={categoryId}
             />
         ))
     } else if (categoriesStatus === 'failed') {

@@ -1,5 +1,7 @@
 // Importa React y los componentes necesarios
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectCategoryById } from '../../videoCategoriesSlice';
 import MySlider from '../../../../Components/Slider/Slider';
 import VideoCard from '../../../../Components/VideoCard/VideoCard';
 import Banner from '../../../../Components/Banner/Banner';
@@ -28,16 +30,19 @@ function renderCarouselItems(videos, color, id) {
 }
 
 // Componente principal Carousel
-function Carousel({ categoria, isBanner }) {    
+function Carousel({ categoryId }) {    
     // Estado para determinar si se muestra el banner o el carrusel normal
-    const [showBanner, setShowBanner] = useState(isBanner);
+    // const [showBanner, setShowBanner] = useState(isBanner);
 
-    const { nombre, videos, color, id } = categoria;
-    
+    const categoria = useSelector(state => selectCategoryById(state, categoryId));
+    const { nombre, videos, color, id, isBanner } = categoria;
+    console.log(categoria)
+
+
     // Retorna componente principal
     return (
         <>
-            {showBanner && ( // Renderiza el carrusel de banner sin ContainerTitulo
+            {isBanner && ( // Renderiza el carrusel de banner sin ContainerTitulo
                 <>
                     {/* Renderiza el Banner con el primer video de la categoría */}
                     <Banner
@@ -55,7 +60,7 @@ function Carousel({ categoria, isBanner }) {
                 </>
             )}
 
-            {!showBanner &&( // Renderiza el carrusel normal con ContainerTitulo
+            {!isBanner &&( // Renderiza el carrusel normal con ContainerTitulo
                 <div className='container-carousel'> 
                     {/* Renderiza el título de la categoría en un contenedor */}
                     <ContainerTitulo
