@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import Carousel from "../features/videocategories/components/Carrusel/Carrusel";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
+import { fetchCategories, selectAllCategories, selectCategoryIds } from '../features/videocategories/videoCategoriesSlice';
 
 // Función principal del componente Home
 function Home () {
@@ -13,6 +13,8 @@ function Home () {
     // Obtiene las categorías del estado de Redux usando un selector
     const categorias = useSelector(selectAllCategories)
 
+    const categoriasIds = useSelector(selectCategoryIds)
+    console.log(categoriasIds)
     // Obtiene el estado de las categorías y el posible error del estado de Redux
     const categoriesStatus = useSelector(state => state.videoCategories.status)
     const error = useSelector(state => state.videoCategories.error)
@@ -41,7 +43,6 @@ function Home () {
                 isBanner={categoria === currentBannerCategory}
             />
         ))
-        console.log(categorias)
     } else if (categoriesStatus === 'failed') {
         content = <p>Error: {error}</p>
     }

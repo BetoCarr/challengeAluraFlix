@@ -59,6 +59,6 @@ export default videoCategoriesSlice.reducer;
 // Exportar selectores del adaptador para obtener todas las categorías
 export const {
     selectAll: selectAllCategories,
-    // selectById: selectCategoryById,
-    // selectIds: selectCategoryIds,
+    selectById: selectCategoryById,
+    selectIds: selectCategoryIds,
 } = videoCategoriesAdapter.getSelectors(state => state.videoCategories);
