@@ -3,7 +3,7 @@ import './StylesBanner.css'
 import React from 'react';
 import Box from '@mui/material/Box';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
-import VideoCard from '../VideoCard/VideoCard';
+import VideoCard from '../../features/videocategories/components/VideoCard/VideoCard';
 import Typography from '@mui/material/Typography';
 import MessageBanner from './MessageBanner';
 import noVideoImage from '../../assets/img/no-video2.jpeg';
