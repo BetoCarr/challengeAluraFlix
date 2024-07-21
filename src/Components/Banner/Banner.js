@@ -3,7 +3,7 @@ import './StylesBanner.css'
 import React from 'react';
 import Box from '@mui/material/Box';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
-import VideoCard from '../../features/videocategories/components/VideoCard/VideoCard';
+import VideoList from '../../features/videocategories/components/VideoList/VideoList';
 import Typography from '@mui/material/Typography';
 import MessageBanner from './MessageBanner';
 import noVideoImage from '../../assets/img/no-video2.jpeg';
@@ -64,7 +64,7 @@ function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
                     <MessageBanner />
                 </Box>
                 {/* Componente de tarjeta de video */}
-                <VideoCard
+                <VideoList
                     imageUrl={video.imageUrl} 
                     videoUrl={video.videoUrl} 
                     id={video.id} 

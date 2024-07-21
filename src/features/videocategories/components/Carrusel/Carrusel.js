@@ -2,32 +2,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { selectCategoryById } from '../../videoCategoriesSlice';
-import MySlider from '../../../../Components/Slider/Slider';
-import VideoCard from '../VideoCard/VideoCard';
+import VideoList from '../VideoList/VideoList';
 import Banner from '../../../../Components/Banner/Banner';
 import ContainerTitulo from '../../../../Components/ContainerTitulo/ContainerTitulo';
 import './StylesCarrusel.css'
-
-// // Funcion auxiliar para renderizar los videocards dentro del carrusel
-// function renderCarouselItems(videos, color, id) {
-//     return (
-//         <MySlider>
-//             {videos.map(( video ) => (
-//                 <div key={video.id}>
-//                     {/* Renderiza cada VideoCard dentro del slider */}
-//                     <VideoCard 
-//                         imageUrl={video.imageUrl}
-//                         videoUrl={video.videoUrl}
-//                         title={video.title}
-//                         id={video.id}
-//                         categoryId={id}
-//                         categoryColor={color}
-//                     />
-//                 </div>
-//             ))}
-//         </MySlider>
-//     );
-// }
 
 // Componente principal Carousel
 function Carousel({ categoryId }) {    
@@ -55,7 +33,7 @@ function Carousel({ categoryId }) {
                     />
                     <div className='container-carousel'>
                         {/* Renderiza los VideoCards restantes en el carrusel */}
-                        <VideoCard categoryId={categoryId} />
+                        <VideoList categoryId={categoryId}/>
                     </div>
                 </>
             )}
@@ -70,9 +48,9 @@ function Carousel({ categoryId }) {
                         categoryName={nombre} 
                         isBanner={isBanner}
                     />
-                    {/* Renderiza los VideoCards en el carrusel */}
-                    <VideoCard categoryId={categoryId} />
-                </div>
+                    {/* Renderiza los VideoLists en el carrusel */}
+                    <VideoList categoryId={categoryId}/>
+                    </div>
             )}
         </>
     ); 
