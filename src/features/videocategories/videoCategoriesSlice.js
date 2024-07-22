@@ -63,8 +63,8 @@ export const {
     selectIds: selectCategoryIds,
 } = videoCategoriesAdapter.getSelectors(state => state.videoCategories);
 
-// Selector memoizado para obtener los videos de una categoría específica
-export const selectVideosByCategoryId = createSelector(
-    [selectCategoryById],
-    (category) => category?.videos || []
-);
+// // Selector memoizado para obtener los videos de una categoría específica
+// export const selectVideosByCategoryId = createSelector(
+//     [selectCategoryById],
+//     (category) => category?.videos || []
+// );

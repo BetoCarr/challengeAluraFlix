@@ -1,7 +1,7 @@
 // Importa React y los componentes necesarios
 import React, {useEffect} from 'react';
 import MainContainer from "../Components/MainContainer/MainContainer";
-import Carousel from "../features/videocategories/components/Carrusel/Carrusel";
+import VideoList from '../features/videocategories/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectCategoryIds } from '../features/videocategories/videoCategoriesSlice';
 
@@ -32,7 +32,7 @@ function Home () {
         content = <p>Loading...</p>
     } else if (categoriesStatus === 'succeeded') {
         content = categoriasIds.map((categoryId) => (
-            <Carousel
+            <VideoList
                 key={categoryId}
                 categoryId={categoryId}
             />
