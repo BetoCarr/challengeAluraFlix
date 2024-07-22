@@ -10,26 +10,26 @@ import VideoCard from './VideoCard';
 // Función para renderizar video-cards
 function VideoList({ categoryId }){
     const category = useSelector(state => selectCategoryById(state, categoryId));
-    const { nombre, videos, color, id, isBanner } = category;
-    console.log(isBanner)
+    // const { nombre, videos, color, id, isBanner } = category;
+    console.log(category.id)
     // const videos = useSelector(state => selectVideosByCategoryId(state, categoryId)) || [];
-    if(isBanner === true) {
+    if(category.isBanner === true) {
         // Renderiza el carrusel de banner sin ContainerTitulo
         return(
             <>
                 {/* Renderiza el Banner con el primer video de la categoría */}
                 <Banner
-                    title={nombre}
-                    video={videos[0]} 
-                    color={color}
-                    categoryId={id} 
-                    categoryName={nombre} 
-                    isBanner={isBanner}
+                    title={category.nombre}
+                    video={category.videos[0]} 
+                    color={category.color}
+                    categoryId={categoryId} 
+                    categoryName={category.nombre} 
+                    isBanner={category.isBanner}
                 />
-                {videos.map(video => (
+                {/* {videos.map(video => (
                         <VideoCard key={video.id} categoryId={categoryId} video={video} />
                     )
-                )}
+                )} */}
                 {/* <div className='container-carousel'> */}
                     {/* Renderiza los VideoCards restantes en el carrusel */}
                     {/* <VideoList categoryId={categoryId}/> */}
