@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import MySlider from '../../../../Components/Slider/Slider';
 import { selectCategoryById } from '../../videoCategoriesSlice';
 import Banner from '../../../../Components/Banner/Banner';
+import ContainerTitulo from '../../../../Components/ContainerTitulo/ContainerTitulo';
 import VideoCard from './VideoCard';
 
 // Función para renderizar video-cards
@@ -25,24 +26,22 @@ function VideoList({ categoryId }){
                         )
                     )}
                 </MySlider>
-                {/* <div className='container-carousel'> */}
-                    {/* Renderiza los VideoCards restantes en el carrusel */}
-                    {/* <VideoList categoryId={categoryId}/> */}
-                {/* </div> */}
-
             </>
         )
     } else {
         return(
-            <MySlider>
-                {category.videos.length > 0 ? (
-                    category.videos.map(video => (
-                        <VideoCard key={video.id} categoryId={categoryId} video={video} />
-                    ))
-                ) : (
-                    <p>No videos found.</p>
-                )}
-            </MySlider>
+            <>
+                <ContainerTitulo categoryId={categoryId} />
+                <MySlider>
+                    {category.videos.length > 0 ? (
+                        category.videos.map(video => (
+                            <VideoCard key={video.id} categoryId={categoryId} video={video} />
+                        ))
+                    ) : (
+                        <p>No videos found.</p>
+                    )}
+                </MySlider>
+            </>
         )
     }
     

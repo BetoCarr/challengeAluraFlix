@@ -15,8 +15,8 @@ function Banner ({ categoryId }) {
 
     // Obtén la categoría desde el store usando el selector
     const category = useSelector(state => selectCategoryById(state, categoryId));
-    const { nombre, color, isBanner, videos } = category;
-    console.log(isBanner)
+    const { videos } = category;
+    // console.log(isBanner)
     const video = videos.length > 0 ? videos[0] : null;
 
 
@@ -64,19 +64,13 @@ function Banner ({ categoryId }) {
                 {/* Contenedor del contenido del banner */}
                 <Box className='content-container'>
                     {/* Título de la categoría */}
-                    {/* <ContainerTitulo 
-                        title={title} 
-                        color={color} 
-                        categoryId={categoryId} 
-                        categoryName={categoryName} 
-                        isBanner={isBanner}
-                    /> */}
+                    <ContainerTitulo categoryId={categoryId} />
                     {/* Mensaje de invitación a explorar deportes */}
                     <MessageBanner />
                 </Box>
                 {/* Componente de tarjeta de video */}
                 <VideoCard
-                    categoryId={category}
+                    categoryId={categoryId}
                     video={video}
                 />
             </Box>
