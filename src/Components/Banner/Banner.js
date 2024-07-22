@@ -1,14 +1,25 @@
 // Importacion de estilos, React, componentes MUI, e imagenes
 import './StylesBanner.css'
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
-import VideoList from '../../features/videocategories/components/VideoList/VideoList';
+// import VideoList from '../../features/videocategories/components/VideoList/VideoList';
+import VideoCard from '../../features/videocategories/components/VideoList/VideoCard';
 import Typography from '@mui/material/Typography';
 import MessageBanner from './MessageBanner';
 import noVideoImage from '../../assets/img/no-video2.jpeg';
+import { selectCategoryById } from '../../features/videocategories/videoCategoriesSlice';
 
-function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
+function Banner ({ categoryId }) {
+
+    // Obtén la categoría desde el store usando el selector
+    const category = useSelector(state => selectCategoryById(state, categoryId));
+    const { nombre, color, isBanner, videos } = category;
+    console.log(isBanner)
+    const video = videos.length > 0 ? videos[0] : null;
+
+
     // Comprobación si no hay video asociado a la categoría
     if(!video) {
         return (
@@ -18,13 +29,13 @@ function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
                 <Box className='content-container-error'>
                     <Box className='not-found'>   
                         {/* Título de la categoría */}
-                        <ContainerTitulo 
+                        {/* <ContainerTitulo 
                             title={title} 
                             color={color} 
                             categoryId={categoryId} 
                             categoryName={categoryName} 
                             isBanner={isBanner}
-                        />
+                        /> */}
                         {/* Mensaje de invitación a explorar deportes */}
                         <MessageBanner />
                     </Box>
@@ -53,24 +64,20 @@ function Banner ({ title, video, color, categoryId, categoryName, isBanner }) {
                 {/* Contenedor del contenido del banner */}
                 <Box className='content-container'>
                     {/* Título de la categoría */}
-                    <ContainerTitulo 
+                    {/* <ContainerTitulo 
                         title={title} 
                         color={color} 
                         categoryId={categoryId} 
                         categoryName={categoryName} 
                         isBanner={isBanner}
-                    />
+                    /> */}
                     {/* Mensaje de invitación a explorar deportes */}
                     <MessageBanner />
                 </Box>
                 {/* Componente de tarjeta de video */}
-                <VideoList
-                    imageUrl={video.imageUrl} 
-                    videoUrl={video.videoUrl} 
-                    id={video.id} 
-                    title={video.title} 
-                    categoryColor={color} 
-                    isBanner={isBanner}
+                <VideoCard
+                    categoryId={category}
+                    video={video}
                 />
             </Box>
         );

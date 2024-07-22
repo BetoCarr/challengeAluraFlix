@@ -11,25 +11,20 @@ import VideoCard from './VideoCard';
 function VideoList({ categoryId }){
     const category = useSelector(state => selectCategoryById(state, categoryId));
     // const { nombre, videos, color, id, isBanner } = category;
-    console.log(category.id)
+    // console.log(category)
     // const videos = useSelector(state => selectVideosByCategoryId(state, categoryId)) || [];
     if(category.isBanner === true) {
         // Renderiza el carrusel de banner sin ContainerTitulo
         return(
             <>
                 {/* Renderiza el Banner con el primer video de la categoría */}
-                <Banner
-                    title={category.nombre}
-                    video={category.videos[0]} 
-                    color={category.color}
-                    categoryId={categoryId} 
-                    categoryName={category.nombre} 
-                    isBanner={category.isBanner}
-                />
-                {/* {videos.map(video => (
-                        <VideoCard key={video.id} categoryId={categoryId} video={video} />
-                    )
-                )} */}
+                <Banner categoryId={categoryId} />
+                <MySlider>
+                    {category.videos.map(video => (
+                            <VideoCard key={video.id} categoryId={categoryId} video={video} />
+                        )
+                    )}
+                </MySlider>
                 {/* <div className='container-carousel'> */}
                     {/* Renderiza los VideoCards restantes en el carrusel */}
                     {/* <VideoList categoryId={categoryId}/> */}
@@ -37,19 +32,20 @@ function VideoList({ categoryId }){
 
             </>
         )
+    } else {
+        return(
+            <MySlider>
+                {category.videos.length > 0 ? (
+                    category.videos.map(video => (
+                        <VideoCard key={video.id} categoryId={categoryId} video={video} />
+                    ))
+                ) : (
+                    <p>No videos found.</p>
+                )}
+            </MySlider>
+        )
     }
-    // return (
-    //     // <MySlider>
-    //     //     {videos.length > 0 ? (
-    //     //         videos.map(video => (
-    //     //             <VideoCard key={video.id} categoryId={categoryId} video={video} />
-    //     //         ))
-    //     //     ) : (
-    //     //         <p>No videos found.</p>
-    //     //     )}
-    //     // </MySlider>
-    // );
+    
 };
-
 // Exporta el componente VideoList para su uso en otras partes de la aplicación
 export default VideoList;
