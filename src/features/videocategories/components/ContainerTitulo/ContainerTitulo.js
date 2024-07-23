@@ -4,8 +4,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import MenuCategory from '../MenuCategory/MenuCategory';
-import { selectCategoryById } from '../../features/videocategories/videoCategoriesSlice';
+// import MenuCategory from '../MenuCategory/MenuCategory';
+import { selectCategoryById } from '../../videoCategoriesSlice';
 
 // Componente que representa un contenedor de título con un menú desplegable
 function ContainerTitulo({ categoryId }) {

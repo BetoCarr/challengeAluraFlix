@@ -4,21 +4,20 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
-// import VideoList from '../../features/videocategories/components/VideoList/VideoList';
-import VideoCard from '../../features/videocategories/components/VideoList/VideoCard';
+import VideoCard from '../VideoList/VideoCard';
 import Typography from '@mui/material/Typography';
 import MessageBanner from './MessageBanner';
-import noVideoImage from '../../assets/img/no-video2.jpeg';
-import { selectCategoryById } from '../../features/videocategories/videoCategoriesSlice';
+import noVideoImage from '../../../../assets/img/no-video2.jpeg';
+import { selectCategoryById } from '../../videoCategoriesSlice';
 
+// Componente Banner que recibe el ID de la categoría como prop
 function Banner ({ categoryId }) {
-
     // Obtén la categoría desde el store usando el selector
     const category = useSelector(state => selectCategoryById(state, categoryId));
     const { videos } = category;
-    // console.log(isBanner)
-    const video = videos.length > 0 ? videos[0] : null;
 
+    // Obtiene el primer video de la categoría si existe
+    const video = videos.length > 0 ? videos[0] : null;
 
     // Comprobación si no hay video asociado a la categoría
     if(!video) {
