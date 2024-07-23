@@ -1,5 +1,6 @@
 // Importa React y los componentes necesarios
 import React, {useEffect} from 'react';
+import { CircularProgress } from '@mui/material';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import VideoList from '../features/videocategories/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
@@ -29,7 +30,7 @@ function Home () {
 
     // Determina qué contenido mostrar basado en el estado de las categorías
     if (categoriesStatus === 'loading') {
-        content = <p>Loading...</p>
+        content = <CircularProgress />
     } else if (categoriesStatus === 'succeeded') {
         content = categoriasIds.map((categoryId) => (
             <VideoList
