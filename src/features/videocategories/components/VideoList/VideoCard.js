@@ -9,7 +9,7 @@ import LikeIcon from '../../../../Components/LikeIcon/LikeIcon';
 import Box from '@mui/material/Box';
 import { selectCategoryById } from '../../videoCategoriesSlice';
 
-const VideoCard = ({ categoryId, video }) => {
+const VideoCard = ({ categoryId, video, isFirstVideo }) => {
     const category = useSelector(state => selectCategoryById(state, categoryId));
     const categoryColor = category?.color || 'defaultColor';
 
@@ -18,9 +18,9 @@ const VideoCard = ({ categoryId, video }) => {
         borderRadius: '8px',
     };
 
-    const isBanner = category?.isBanner || false;
-    const cardClassName = isBanner ? 'card-banner' : 'card';
-    const imgClassName = isBanner ? 'image-card-banner' : 'image-card';
+    // const isBanner = category?.isBanner || false;
+    const cardClassName = isFirstVideo ? 'card-banner' : 'card';
+    const imgClassName = isFirstVideo ? 'image-card-banner' : 'image-card';
 
     const handleVideoDeleted = () => {
         window.location.reload();

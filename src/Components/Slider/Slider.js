@@ -18,11 +18,9 @@ function MySlider ({ children }) {
 
     // Retorna la estructura del componente
     return (
-        <div className="slider-container">
-            <Slider {...settings} className="custom-slider">
-                {children}
-            </Slider>
-        </div>
+        <Slider {...settings} className="custom-slider">
+            {children}
+        </Slider>
     );
 }
 

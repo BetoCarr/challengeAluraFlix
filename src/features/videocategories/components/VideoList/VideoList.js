@@ -10,27 +10,31 @@ import VideoCard from './VideoCard';
 
 // Función para renderizar video-cards
 function VideoList({ categoryId }){
+
     const category = useSelector(state => selectCategoryById(state, categoryId));
-    // const { nombre, videos, color, id, isBanner } = category;
-    // console.log(category)
-    // const videos = useSelector(state => selectVideosByCategoryId(state, categoryId)) || [];
+
     if(category.isBanner === true) {
+    // Omite el primer video si es un banner
+        const videosToRender = category.videos.slice(1); 
+
         // Renderiza el carrusel de banner sin ContainerTitulo
         return(
             <>
                 {/* Renderiza el Banner con el primer video de la categoría */}
                 <Banner categoryId={categoryId} />
-                <MySlider>
-                    {category.videos.map(video => (
-                            <VideoCard key={video.id} categoryId={categoryId} video={video} />
-                        )
-                    )}
-                </MySlider>
+                <div className='container-videolist'>
+                    <MySlider>
+                        {videosToRender.map(video => (
+                                <VideoCard key={video.id} categoryId={categoryId} video={video} />
+                            )
+                        )}
+                    </MySlider>
+                </div>
             </>
         )
     } else {
         return(
-            <>
+            <div className='container-videolist'>
                 <ContainerTitulo categoryId={categoryId} />
                 <MySlider>
                     {category.videos.length > 0 ? (
@@ -41,7 +45,7 @@ function VideoList({ categoryId }){
                         <p>No videos found.</p>
                     )}
                 </MySlider>
-            </>
+            </div>
         )
     }
     

@@ -52,3 +52,6 @@
     color: var(--text-secondary); /* Cambiar el color al pasar el cursor por encima */
     cursor: pointer;
 }
+.container-videolist {
+    padding: 1.5rem 3rem;
+}

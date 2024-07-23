@@ -29,13 +29,7 @@ function Banner ({ categoryId }) {
                 <Box className='content-container-error'>
                     <Box className='not-found'>   
                         {/* Título de la categoría */}
-                        {/* <ContainerTitulo 
-                            title={title} 
-                            color={color} 
-                            categoryId={categoryId} 
-                            categoryName={categoryName} 
-                            isBanner={isBanner}
-                        /> */}
+                        <ContainerTitulo categoryId={categoryId} />
                         {/* Mensaje de invitación a explorar deportes */}
                         <MessageBanner />
                     </Box>
@@ -72,6 +66,7 @@ function Banner ({ categoryId }) {
                 <VideoCard
                     categoryId={categoryId}
                     video={video}
+                    isFirstVideo={true}
                 />
             </Box>
         );
