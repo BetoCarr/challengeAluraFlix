@@ -48,7 +48,8 @@ const StyledMenu = styled((props) => (
 
 
 // Componente principal MenuCategory
-function MenuCategory ({ categoryId, categoryName, categoryColor, isBanner  }) {
+function MenuCategory ({ categoryId }) {
+    // console.log(categoryId)
     // Estado para gestionar la apertura y cierre del menú
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -86,25 +87,25 @@ function MenuCategory ({ categoryId, categoryName, categoryColor, isBanner  }) {
                 onClose={handleClose}
             >
                 {/* Elemento de menú para la opción "Eliminar" */}
-                <DeleteCategoryMenuItem 
+                {/* <DeleteCategoryMenuItem 
                     categoryId={categoryId} 
                     categoryName={categoryName} 
                     handleClose={handleClose}
-                />
+                /> */}
                 {/* Elemento de menú para la opción "Editar" */}
-                <EditCategroyMenuItem 
+                {/* <EditCategroyMenuItem 
                     categoryId={categoryId} 
                     categoryName={categoryName} 
                     categoryColor={categoryColor}
                     isBanner={isBanner}
                     handleClose={handleClose}
-                />
+                /> */}
                 {/* Elemento de menú para la opción "Agregar video" */}
-                <AddVideoMenuItem 
+                {/* <AddVideoMenuItem 
                     categoryId={categoryId} 
                     categoryName={categoryName}
                     handleClose={handleClose}
-                />
+                /> */}
             </StyledMenu>
         </>
     );

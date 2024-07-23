@@ -1,6 +1,7 @@
 // Importar los estilos y los componentes necesarios
 import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
 import React, { useState } from "react"; // Importa React y el hook useState
+import { useSelector } from 'react-redux';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
 import TextInput from "../TextInput/TextInput"; // Importa el componente TextInput
@@ -8,7 +9,8 @@ import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner'; // Importa el com
 import ColorSelector from '../ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../FormButtons/FormButtons'; // Importa el componente FormButtons
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
-import { useCategorias } from '../../CategoriaContext'; // Importa el hook useCategorias del contexto de categorías
+// import { useCategorias } from '../../CategoriaContext'; // Importa el hook useCategorias del contexto de categorías
+import { selectAllCategories } from '../../features/videocategories/videoCategoriesSlice';
 import { agregarCategoria, editarCategoria } from '../../api/api'; // Importa las funciones de agregar y editar categoría de la API
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
@@ -61,7 +63,8 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
     };
 
    // Obtener las categorías y sus colores
-    const categories = useCategorias();
+    const categories = useSelector(selectAllCategories);
+    console.log(categories)
     const categoriesColors = categories.map(category => category.color);
 
     // Valores iniciales del formulario
