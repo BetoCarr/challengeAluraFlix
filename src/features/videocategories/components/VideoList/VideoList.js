@@ -9,10 +9,10 @@ import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import VideoCard from './VideoCard';
 
 // Componente funcional para renderizar las listas de videos
-function VideoList({ categoryId }){
+function VideoList({ category }){
 
     // Obtiene la categoría del store usando el selector
-    const category = useSelector(state => selectCategoryById(state, categoryId));
+    // const category = useSelector(state => selectCategoryById(state, categoryId));
 
     // Verifica si la categoría es un banner
     if(category.isBanner === true) {
@@ -23,12 +23,12 @@ function VideoList({ categoryId }){
         return(
             <>
                 {/* Renderiza el Banner con el primer video de la categoría */}
-                <Banner categoryId={categoryId} />
+                <Banner categoryId={category.id} />
                 <div className='container-videolist'>
                     {/* Renderiza el slider con los videos restantes */}
                     <MySlider>
                         {videosToRender.map(video => (
-                                <VideoCard key={video.id} categoryId={categoryId} video={video} />
+                                <VideoCard key={video.id} categoryId={category.id} video={video} />
                             )
                         )}
                     </MySlider>
@@ -40,12 +40,12 @@ function VideoList({ categoryId }){
         return(
             <div className='container-videolist'>
                 {/* Renderiza el título de la categoría */}
-                <ContainerTitulo categoryId={categoryId} />
+                <ContainerTitulo categoryId={category.id} />
                 {/* Renderiza el slider con los videos de la categoría */}
                 <MySlider>
                     {category.videos.length > 0 ? (
                         category.videos.map(video => (
-                            <VideoCard key={video.id} categoryId={categoryId} video={video} />
+                            <VideoCard key={video.id} categoryId={category.id} video={video} />
                         ))
                     ) : (
                         <p>No videos found.</p>

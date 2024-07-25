@@ -4,7 +4,7 @@ import { CircularProgress } from '@mui/material';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import VideoList from '../features/videocategories/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCategories, selectCategoryIds } from '../features/videocategories/videoCategoriesSlice';
+import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
 
 // Función principal del componente Home
 function Home () {
@@ -12,7 +12,7 @@ function Home () {
     const dispatch = useDispatch()
 
     // Obtiene los ids de las categorías del estado de Redux usando un selector
-    const categoriasIds = useSelector(selectCategoryIds)
+    const categories = useSelector(selectAllCategories)
 
     // Obtiene el estado de las categorías y el posible error del estado de Redux
     const categoriesStatus = useSelector(state => state.videoCategories.status)
@@ -32,10 +32,10 @@ function Home () {
     if (categoriesStatus === 'loading') {
         content = <CircularProgress />
     } else if (categoriesStatus === 'succeeded') {
-        content = categoriasIds.map((categoryId) => (
+        content = categories.map((category) => (
             <VideoList
-                key={categoryId}
-                categoryId={categoryId}
+                key={category.id}
+                category={category}
             />
         ))
     } else if (categoriesStatus === 'failed') {

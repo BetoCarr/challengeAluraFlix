@@ -1,7 +1,7 @@
 // Importar los estilos y los componentes necesarios
 import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
 import React, { useState } from "react"; // Importa React y el hook useState
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
 import TextInput from "../TextInput/TextInput"; // Importa el componente TextInput
@@ -10,8 +10,8 @@ import ColorSelector from '../ColorSelector/ColorSelector'; // Importa el compon
 import FormButtons from '../FormButtons/FormButtons'; // Importa el componente FormButtons
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
 // import { useCategorias } from '../../CategoriaContext'; // Importa el hook useCategorias del contexto de categorías
-import { selectAllCategories } from '../../features/videocategories/videoCategoriesSlice';
-import { agregarCategoria, editarCategoria } from '../../api/api'; // Importa las funciones de agregar y editar categoría de la API
+import { selectAllCategories, addCategory } from '../../features/videocategories/videoCategoriesSlice';
+import { editarCategoria } from '../../api/api'; // Importa las funciones de agregar y editar categoría de la API
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
 // Función del componente principal FormNuevaCategoria
@@ -20,6 +20,7 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
     // Estado local para gestionar mensajes del formulario
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
     const navigate = useNavigate(); // Hook para navegar entre rutas
+    const dispatch = useDispatch(); // Hook para despachar acciones de Redux
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
@@ -83,14 +84,13 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
             {/* Formulario con Formik */}
             <Formik
                 initialValues={initialValues}
-
                 validateOnChange={true} // Activar la validación en cada cambio del campo
 
                 // Validación del formulario
                 validate={values => {
                     const { nombre, color, isBanner } = values;
                     const errors = {};
-
+                    
                     //Validación del nombre de la categoria
                     if(!nombre) {
                         errors.nombre = 'El nombre de la categoria es requerido';
@@ -151,22 +151,18 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                             resetForm();
                         });
                     } else {
-                        // Crear un objeto con los datos de la nueva categoría
-                        const newCategory = { ...values };
-                        // Llamar a la función para agregar la categoría a la API
-                        agregarCategoria(newCategory)
-                        // Manejar la respuesta exitosa
+                        dispatch(addCategory(values))
+                        .unwrap()
                         .then((responseData) => {
                             console.log("Categoria agregada exitosamente!", responseData);
-                            // Mostrar un mensaje de éxito y recargar la página
                             setFeedback({
                                 isOpen: true,
                                 message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
                                 onConfirm: () => {
-                                    navigate('/', { replace: true });
-                                    window.location.reload();
+                                    // window.location.reload();
                                     resetForm();
                                     setFeedback({ isOpen: false });
+                                    navigate('/', { replace: true });
                                 }
                             });
                         })

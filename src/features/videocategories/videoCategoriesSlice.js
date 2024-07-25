@@ -1,6 +1,6 @@
 // Importación de redux y funcion axios
-import { createSlice, createEntityAdapter, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import { buscar } from '../../api/api';
+import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import { buscar, agregarCategoria, editarCategoria } from '../../api/api';
 
 // Crear un adaptador para manejar las categorías de videos
 const videoCategoriesAdapter = createEntityAdapter({
@@ -28,6 +28,31 @@ export const fetchCategories = createAsyncThunk(
     }
 );
 
+// Thunk para agregar categoria
+export const addCategory = createAsyncThunk(
+    'categories/addCategory',
+    async (newCategory, { rejectWithValue }) => {
+        try {
+            const response = await agregarCategoria(newCategory);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+// Thunk para editar categoria
+export const updateCategory = createAsyncThunk(
+    'categories/updateCategory',
+    async ({ categoryId, updatedCategory }, { rejectWithValue }) => {
+        try {
+            const response = await editarCategoria(categoryId, updatedCategory);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
 // Crear un slice para manejar las categorías de videos
 const videoCategoriesSlice = createSlice({
     name: 'videoCategories',
@@ -47,6 +72,15 @@ const videoCategoriesSlice = createSlice({
             })
             // Estado de error si la obtención falla
             .addCase(fetchCategories.rejected, (state, action) => {
+                state.status = 'failed'
+                state.error = action.error.message;
+            })
+            // AGREGAR CATEGORIA
+            .addCase(addCategory.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(addCategory.fulfilled, videoCategoriesAdapter.videoCategoriesAdapter)
+            .addCase(addCategory.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message;
             })
