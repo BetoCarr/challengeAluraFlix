@@ -1,9 +1,7 @@
 // Importa React y los componentes necesariosy hooks de Redux
 import './StyleVideoCard.css'
 import React from 'react';
-import { useSelector } from 'react-redux';
 import MySlider from '../../../../Components/Slider/Slider';
-import { selectCategoryById } from '../../videoCategoriesSlice';
 import Banner from '../Banner/Banner';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import VideoCard from './VideoCard';

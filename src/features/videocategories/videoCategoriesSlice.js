@@ -34,8 +34,10 @@ export const addCategory = createAsyncThunk(
     async (newCategory, { rejectWithValue }) => {
         try {
             const response = await agregarCategoria(newCategory);
+            console.log(response.data)
             return response.data;
         } catch (error) {
+            console.error('Error adding category:', error);
             return rejectWithValue(error.response.data);
         }
     }
@@ -79,7 +81,10 @@ const videoCategoriesSlice = createSlice({
             .addCase(addCategory.pending, (state) => {
                 state.status = 'loading'
             })
-            .addCase(addCategory.fulfilled, videoCategoriesAdapter.videoCategoriesAdapter)
+            .addCase(addCategory.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                videoCategoriesAdapter.addOne(state, action.payload);
+            })
             .addCase(addCategory.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message;

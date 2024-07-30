@@ -9,7 +9,6 @@ import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner'; // Importa el com
 import ColorSelector from '../ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../FormButtons/FormButtons'; // Importa el componente FormButtons
 import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
-// import { useCategorias } from '../../CategoriaContext'; // Importa el hook useCategorias del contexto de categorías
 import { selectAllCategories, addCategory } from '../../features/videocategories/videoCategoriesSlice';
 import { editarCategoria } from '../../api/api'; // Importa las funciones de agregar y editar categoría de la API
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
@@ -159,7 +158,6 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                                 isOpen: true,
                                 message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
                                 onConfirm: () => {
-                                    // window.location.reload();
                                     resetForm();
                                     setFeedback({ isOpen: false });
                                     navigate('/', { replace: true });
