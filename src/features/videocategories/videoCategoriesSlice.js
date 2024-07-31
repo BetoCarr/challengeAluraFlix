@@ -1,6 +1,6 @@
 // Importación de redux y funcion axios
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
-import { buscar, agregarCategoria, editarCategoria } from '../../api/api';
+import { buscar, agregarCategoria, editarCategoria, eliminarCategoria } from '../../api/api';
 
 // Crear un adaptador para manejar las categorías de videos
 const videoCategoriesAdapter = createEntityAdapter({
@@ -55,6 +55,24 @@ export const updateCategory = createAsyncThunk(
         }
     }
 );
+
+// Thunk para eliminar categoria
+export const deleteCategory = createAsyncThunk(
+    'categories/deleteCategory',
+    async ( categoryId, { rejectWithValue } ) => {
+        try {
+            const response = await eliminarCategoria(categoryId);
+            if (response.status === 200) {
+                return categoryId; // Retorna solo el ID ya que no hay contenido en la respuesta
+            } else {
+                return rejectWithValue('Unexpected response status');
+            }
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 // Crear un slice para manejar las categorías de videos
 const videoCategoriesSlice = createSlice({
     name: 'videoCategories',
@@ -63,29 +81,35 @@ const videoCategoriesSlice = createSlice({
     extraReducers: (builder) => {
         builder
             // OBTENER CATEGORIAS
-            // Estado de carga mientras se obtienen las categorías
-            .addCase(fetchCategories.pending, (state) => {
+            .addCase(fetchCategories.pending, (state) => { // Estado de carga mientras se obtienen las categorías
                 state.status = 'loading'
             })
-            // Estado de éxito cuando se obtienen las categorías, e inserta categorias al estado
-            .addCase(fetchCategories.fulfilled, (state, action) => {
+            .addCase(fetchCategories.fulfilled, (state, action) => { // Estado de éxito cuando se obtienen las categorías, e inserta categorias al estado
                 state.status = 'succeeded'
                 videoCategoriesAdapter.upsertMany(state, action.payload);
             })
-            // Estado de error si la obtención falla
-            .addCase(fetchCategories.rejected, (state, action) => {
+            .addCase(fetchCategories.rejected, (state, action) => { // Estado de error si la obtención falla
                 state.status = 'failed'
                 state.error = action.error.message;
             })
             // AGREGAR CATEGORIA
-            .addCase(addCategory.pending, (state) => {
+            .addCase(addCategory.pending, (state) => { // Estado de carga mientras se agrega la categoria
                 state.status = 'loading'
             })
-            .addCase(addCategory.fulfilled, (state, action) => {
+            .addCase(addCategory.fulfilled, (state, action) => { // Estado de exito mientras se agrega la categoria
                 state.status = 'succeeded';
                 videoCategoriesAdapter.addOne(state, action.payload);
             })
-            .addCase(addCategory.rejected, (state, action) => {
+            .addCase(addCategory.rejected, (state, action) => { // Estado de error
+                state.status = 'failed'
+                state.error = action.error.message;
+            })
+            // ELIMINAR CATEGORIA
+            .addCase(deleteCategory.fulfilled, (state, action) => { // Estado de exito mientras se elimina la categoria
+                state.status = 'succeeded';
+                videoCategoriesAdapter.removeOne(state, action.payload);
+            })
+            .addCase(deleteCategory.rejected, (state, action) => { // Estado de error
                 state.status = 'failed'
                 state.error = action.error.message;
             })

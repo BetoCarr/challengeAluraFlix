@@ -39,21 +39,6 @@ export function eliminarCategoria(categoryId) {
     return api.delete(rutaEliminarCategoria);  // Realiza una petición DELETE para eliminar la categoría
 }
 
-// Función para obtener la lista de videos de una categoría específica
-export function obtenerListaVideos(categoryId) {
-    const rutaObtenerListaVideos = `/videos/${categoryId}/obtener`; // Ruta para obtener la lista de videos
-    return new Promise((resolve, reject) => {
-        api
-        .get(rutaObtenerListaVideos)
-        .then((response) => {
-            resolve(response.data) // Resuelve la promesa con los datos obtenidos
-        })
-        .catch((error) => {
-            reject(error.response ? error.response.data : error.message); // Rechaza la promesa con el mensaje de error
-        })
-    });
-}
-
 // Función para eliminar un video de una categoría específica
 export function eliminarVideo(categoryId, id) {
     const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`; // Ruta para eliminar un video
