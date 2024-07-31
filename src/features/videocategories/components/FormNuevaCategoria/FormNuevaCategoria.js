@@ -4,13 +4,14 @@ import React, { useState } from "react"; // Importa React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
-import TextInput from "../TextInput/TextInput"; // Importa el componente TextInput
-import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
-import ColorSelector from '../ColorSelector/ColorSelector'; // Importa el componente ColorSelector
-import FormButtons from '../FormButtons/FormButtons'; // Importa el componente FormButtons
-import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
-import { selectAllCategories, addCategory } from '../../features/videocategories/videoCategoriesSlice';
-import { editarCategoria } from '../../api/api'; // Importa las funciones de agregar y editar categoría de la API
+import TextInput from "../../../../Components/TextInput/TextInput"; // Importa el componente TextInput
+import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
+import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
+import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
+import FeedbackDialog from '../../../../Components/FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
+// import { selectAllCategories, addCategory } from './videocategori';
+import { selectAllCategories, addCategory } from '../../videoCategoriesSlice'
+import { editarCategoria } from '../../../../api/api'; // Importa las funciones de agregar y editar categoría de la API
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
 // Función del componente principal FormNuevaCategoria

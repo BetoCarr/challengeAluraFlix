@@ -4,7 +4,8 @@ import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import ConfirmationDialogWithForm from '../ConfirmationDialogWithForm/ConfirmationDialogWithForm';
-import FormEditarCategoria from '../FormEditarCategoria/FormEditarCategoria';
+// import FormEditarCategoria from '../FormEditarCategoria/FormEditarCategoria';
+import FormEditarCategoria from '../../features/videocategories/components/FormEditarCategoria/FormEditarCategoria'
 import { useTheme } from '@mui/material/styles'; 
 
 function EditCategroyMenuItem({ categoryId, categoryName, categoryColor, isBanner, handleClose }) {
