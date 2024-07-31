@@ -65,7 +65,6 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
 
    // Obtener las categorías y sus colores
     const categories = useSelector(selectAllCategories);
-    console.log(categories)
     const categoriesColors = categories.map(category => category.color);
 
     // Valores iniciales del formulario

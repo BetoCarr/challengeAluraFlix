@@ -6,9 +6,9 @@ import { styled, alpha } from '@mui/material/styles';
 import Menu  from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import DeleteCategoryMenuItem from '../DeleteCategoryMenuItem/DeleteCategoryMenuItem';
-import EditCategroyMenuItem from '../EditCategoryMenuItem/EditCategoryMenuItem';
-import AddVideoMenuItem from '../AddVideoMenuItem/AddVideoMenuItem';
+import DeleteCategoryMenuItem from './DeleteCategoryMenuItem';
+// import EditCategroyMenuItem from '../../../../Components/EditCategoryMenuItem/EditCategoryMenuItem';
+// import AddVideoMenuItem from '../../../../Components/AddVideoMenuItem/AddVideoMenuItem';
 
 const StyledMenu = styled((props) => (
     // Estiliza el componente Menu de Material-UI y hereda las props
@@ -49,7 +49,7 @@ const StyledMenu = styled((props) => (
 
 // Componente principal MenuCategory
 function MenuCategory ({ categoryId }) {
-    // console.log(categoryId)
+
     // Estado para gestionar la apertura y cierre del menú
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -87,11 +87,10 @@ function MenuCategory ({ categoryId }) {
                 onClose={handleClose}
             >
                 {/* Elemento de menú para la opción "Eliminar" */}
-                {/* <DeleteCategoryMenuItem 
+                <DeleteCategoryMenuItem 
                     categoryId={categoryId} 
-                    categoryName={categoryName} 
                     handleClose={handleClose}
-                /> */}
+                />
                 {/* Elemento de menú para la opción "Editar" */}
                 {/* <EditCategroyMenuItem 
                     categoryId={categoryId} 

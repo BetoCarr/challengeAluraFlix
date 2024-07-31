@@ -1,15 +1,21 @@
 // Importación de React y componentes
 import React, { useState }  from 'react';
-import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
+import { useSelector } from 'react-redux';
+import { selectCategoryById } from '../../videoCategoriesSlice';
+import FeedbackDialog from '../../../../Components/FeedbackDialog/FeedbackDialog';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { obtenerListaVideos, eliminarCategoria } from '../../api/api';
+import { obtenerListaVideos, eliminarCategoria } from '../../../../api/api';
 import { useTheme } from '@mui/material/styles'; 
 
-function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
+function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     // Estado para controlar la apertura y cierre del cuadro de diálogo de eliminación
     const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
+
+    const category = useSelector(state => selectCategoryById(state, categoryId));
+    const { nombre } = category
+    // console.log(category)
     
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
@@ -39,7 +45,7 @@ function DeleteCategoryMenuItem({ categoryId, categoryName, handleClose }) {
     const handleDeleteConfirmationDialogOpen = () => {
         setFeedback({
             isOpen: true,
-            message: `¿Quieres eliminar la categoría '${categoryName}'?`, // Mensaje de confirmación con el nombre de la categoría
+            message: `¿Quieres eliminar la categoría '${nombre}'?`, // Mensaje de confirmación con el nombre de la categoría
             onCancel: () => handleDeleteDialogClose(handleClose), // Maneja el cierre del diálogo de confirmación
             onConfirm: handleDeleteCategory, // Maneja la eliminación de la categoría
             cancelLabel: 'Cancelar',
