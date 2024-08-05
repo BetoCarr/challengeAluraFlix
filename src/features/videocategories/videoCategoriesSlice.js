@@ -63,7 +63,7 @@ export const deleteCategory = createAsyncThunk(
         try {
             const response = await eliminarCategoria(categoryId);
             if (response.status === 200) {
-                return categoryId; // Retorna solo el ID ya que no hay contenido en la respuesta
+                return response, categoryId
             } else {
                 return rejectWithValue('Unexpected response status');
             }

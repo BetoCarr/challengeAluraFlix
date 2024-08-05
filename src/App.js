@@ -5,7 +5,6 @@ import NewCategory from "./pages/new-category";
 import { ThemeProvider } from '@mui/material/styles';
 import tema from "./Components/Temas/tema";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import { CategoriaProvider } from "./CategoriaContext";
 
 function App() {
     return(
