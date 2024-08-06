@@ -64,27 +64,36 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
             });
         } else {
             dispatch(deleteCategory(categoryId))
-            .then((response) => {
-                console.log("Categoria agregada exitosamente!", response);
-                setFeedback({
-                    isOpen: true,
-                    message: 'Categoría eliminada exitosamente! Haz clic en Aceptar para recargar la página.',
-                    onConfirm: () => {
-                        setFeedback({ isOpen: false });
-                        navigate('/', { replace: true });
-                    },
-                    confirmLabel: 'Aceptar',
+                .then((action) => {
+                    if (deleteCategory.fulfilled.match(action)) {
+                        console.log("Categoría eliminada exitosamente!", action.payload.response);
+                        setFeedback({
+                            isOpen: true,
+                            message: 'Categoría eliminada exitosamente! Haz clic en Aceptar para recargar la página.',
+                            onConfirm: () => {
+                                setFeedback({ isOpen: false });
+                                navigate('/', { replace: true });
+                            },
+                            confirmLabel: 'Aceptar',
+                        });
+                    } else {
+                        setFeedback({
+                            isOpen: true,
+                            message: `Categoría NO eliminada. Error`,
+                            onConfirm: () => setFeedback({ isOpen: false }),
+                            confirmLabel: 'Aceptar',
+                        });
+                    }
+                })
+                .catch((error) => {
+                    setFeedback({
+                        isOpen: true,
+                        message: `Error al eliminar la categoría. Error: ${error.message}`,
+                        onConfirm: () => setFeedback({ isOpen: false }),
+                        confirmLabel: 'Aceptar',
+                    });
                 });
-            })
-            .catch((error) => {
-                setFeedback({
-                    isOpen: true,
-                    message: `Categoria NO agregada. Error: ${error}`,
-                    onConfirm: () => setFeedback({ isOpen: false }),
-                    confirmLabel: 'Aceptar',
-                });
-            });
-        }
+        }  
     };
 
     return (
