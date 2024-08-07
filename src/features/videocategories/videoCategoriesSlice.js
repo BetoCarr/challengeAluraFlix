@@ -63,7 +63,7 @@ export const deleteCategory = createAsyncThunk(
         try {
             const response = await eliminarCategoria(categoryId);
             if (response.status === 200) {
-                return { categoryId, response };
+                return categoryId
             } else {
                 return rejectWithValue('Unexpected response status');
             }

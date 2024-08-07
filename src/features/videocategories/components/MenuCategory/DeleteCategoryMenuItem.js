@@ -8,7 +8,6 @@ import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { deleteCategory } from '../../videoCategoriesSlice';
 import { useTheme } from '@mui/material/styles'; 
-import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
 function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     // Estado para controlar la apertura y cierre del cuadro de diálogo de eliminación
@@ -19,8 +18,6 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
-
-    const navigate = useNavigate(); // Hook para navegar entre rutas
 
     const dispatch = useDispatch();
 
@@ -63,36 +60,28 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
                 confirmLabel: 'Aceptar',
             });
         } else {
-            dispatch(deleteCategory(categoryId))
-                .then((action) => {
-                    if (deleteCategory.fulfilled.match(action)) {
-                        console.log("Categoría eliminada exitosamente!", action.payload.response);
-                        setFeedback({
-                            isOpen: true,
-                            message: 'Categoría eliminada exitosamente! Haz clic en Aceptar para recargar la página.',
-                            onConfirm: () => {
-                                setFeedback({ isOpen: false });
-                                navigate('/', { replace: true });
-                            },
-                            confirmLabel: 'Aceptar',
-                        });
-                    } else {
-                        setFeedback({
-                            isOpen: true,
-                            message: `Categoría NO eliminada. Error`,
-                            onConfirm: () => setFeedback({ isOpen: false }),
-                            confirmLabel: 'Aceptar',
-                        });
-                    }
-                })
-                .catch((error) => {
-                    setFeedback({
-                        isOpen: true,
-                        message: `Error al eliminar la categoría. Error: ${error.message}`,
-                        onConfirm: () => setFeedback({ isOpen: false }),
-                        confirmLabel: 'Aceptar',
-                    });
+            setTimeout(() => {
+                setFeedback({
+                    isOpen: true,
+                    message: 'Categoría eliminada exitosamente! Haz clic en Aceptar para recargar la página.',
+                    // confirmLabel: 'Aceptar',
                 });
+            }, 5000); // Esperar 1 segundo antes de cerrar el feedback
+            dispatch(deleteCategory(categoryId))
+                // .then(() => {
+                //     console.log("Categoría eliminada exitosamente!");
+            
+
+                //     setFeedback({ isOpen: false });
+                // })
+                // .catch((error) => {
+                //     setFeedback({
+                //         isOpen: true,
+                //         message: `Error al eliminar la categoría. Error: ${error.message}`,
+                //         onConfirm: () => setFeedback({ isOpen: false }),
+                //         confirmLabel: 'Aceptar',
+                //     });
+                // });
         }  
     };
 
