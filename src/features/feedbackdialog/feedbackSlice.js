@@ -6,20 +6,23 @@ const feedbackSlice = createSlice({
     initialState: {
         isOpen: false,
         message: '',
+        cancelLabel: 'Cancelar',
+        confirmLabel: 'Aceptar',
     },
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(showFeedbackToUser, (state, action) => {
             state.isOpen = true;
             state.message = action.payload.message;
-            state.onConfirm = action.payload.onConfirm || null;
-            state.confirmLabel = action.payload.confirmLabel || 'Aceptar';
+            state.confirmLabel = action.payload.confirmLabel || null;
+            state.cancelLabel = action.payload.cancelLabel || 'Aceptar';
         })
         .addCase(closeFeedback, (state) => {
             state.isOpen = false;
             state.message = '';
-            state.onConfirm = null;
-            state.confirmLabel = 'Aceptar';
+            // state.onConfirm = null;
+            // state.confirmLabel = 'Aceptar';
+            // state.cancelLabel = 'Cancelar';
         });
     },
 });

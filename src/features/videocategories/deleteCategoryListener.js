@@ -1,6 +1,6 @@
 import { createListenerMiddleware } from "@reduxjs/toolkit";
 import { deleteCategory } from "./videoCategoriesSlice";
-import { showFeedbackToUser, closeFeedback } from "../feedbackdialog/feedbackActions";
+import { showFeedbackToUser } from "../feedbackdialog/feedbackActions";
 
 // Crea el middleware de listener
 const listenerMiddleware = createListenerMiddleware();
