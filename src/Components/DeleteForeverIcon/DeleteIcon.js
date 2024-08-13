@@ -1,7 +1,8 @@
 // Importación de React y componentes
 import React, { useState } from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
+// import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
+import FeedbackDialog from '../../features/feedbackdialog/FeedbackDialog/FeedbackDialog'
 import { eliminarVideo } from '../../api/api';
 
 function DeleteVideoButton({ categoryId, videoId, title, onVideoDeleted }) {

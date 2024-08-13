@@ -1,7 +1,7 @@
 // Importacion de React y componentes
 import React, { useState, useEffect }  from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
+import FeedbackDialog from '../../features/feedbackdialog/FeedbackDialog/FeedbackDialog';
 import { darLikeVideo, obtenerEstadoLike } from '../../api/api';
 
 // Componente principal LikeIcon

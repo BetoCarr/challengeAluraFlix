@@ -1,15 +1,22 @@
 import './FeedbackDialog.css'
+import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { closeFeedback } from '../feedbackActions';
+function FeedbackDialog() {
 
-function FeedbackDialog({ isOpen, onClose, message, onCancel, onConfirm, cancelLabel, confirmLabel }) {
-    
+    const dispatch = useDispatch();
+    const { isOpen, message, onConfirm, confirmLabel, onClose, onCancel, cancelLabel } = useSelector((state) => state.feedback);
+
     // Función para manejar el cierre del cuadro de diálogo
     function handleClose() {
-        onClose();
+        if (onConfirm) {
+            onConfirm();
+        }
+        dispatch(closeFeedback());
     }
 
     return (
