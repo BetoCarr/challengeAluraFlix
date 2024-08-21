@@ -6,16 +6,16 @@ const feedbackSlice = createSlice({
     initialState: {
         isOpen: false,
         message: '',
-        cancelLabel: 'Cancelar',
-        confirmLabel: 'Aceptar',
+        cancelLabel: '',
+        confirmLabel: '',
     },
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(showFeedbackToUser, (state, action) => {
             state.isOpen = true;
             state.message = action.payload.message;
-            state.confirmLabel = action.payload.confirmLabel || null;
-            state.cancelLabel = action.payload.cancelLabel || 'Aceptar';
+            // state.confirmLabel = action.payload.confirmLabel || null;
+            // state.cancelLabel = action.payload.cancelLabel || 'Aceptar';
         })
         .addCase(closeFeedback, (state) => {
             state.isOpen = false;

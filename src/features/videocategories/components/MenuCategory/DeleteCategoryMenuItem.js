@@ -1,6 +1,6 @@
 // Importación de React y componentes
 import React from 'react';
-import {useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectCategoryById } from '../../videoCategoriesSlice';
 import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
 import { showFeedbackToUser, closeFeedback} from '../../../feedbackdialog/feedbackActions'
