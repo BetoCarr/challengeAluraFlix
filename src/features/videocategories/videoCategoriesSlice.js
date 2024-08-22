@@ -66,7 +66,7 @@ export const deleteCategory = createAsyncThunk(
             const response = await eliminarCategoria(categoryId);
             if (response.status === 200) {
                 console.log(response)
-                dispatch(showFeedbackToUser({ message: `Categoría eliminada correctamente.`,}));
+                dispatch(showFeedbackToUser({ message: `Categoría eliminada correctamente.`}))
                 // Retrasar el retorno del categoryId para permitir que el mensaje se muestre
                 return new Promise((resolve) => {
                     setTimeout(() => {

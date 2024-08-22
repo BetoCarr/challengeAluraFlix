@@ -14,20 +14,21 @@ function FeedbackDialog({ isOpen, onClose, message, onCancel, onConfirm, cancelL
                 {message}  {/* Muestra el mensaje proporcionado */}
             </DialogContent>
             {/* Acciones del cuadro de diálogo */}
-            <DialogActions>
-                {/* Botón de cancelación, si la función onCancel está definida */}
-                {onCancel && (
-                    <Button onClick={onCancel} color="primary">
-                        {cancelLabel || 'Cancelar'}
-                    </Button>
-                )}
-                {/* Botón de confirmación, si la función onConfirm está definida */}
-                {onConfirm && (
-                    <Button onClick={onConfirm} color="primary">
-                        {confirmLabel || 'Aceptar'}
-                    </Button>
-                )}
-            </DialogActions>
+            {/* Solo muestra DialogActions si onCancel o onConfirm están definidos */}
+            {(onCancel || onConfirm) && (
+                <DialogActions>
+                    {onCancel && (
+                        <Button onClick={onCancel} color="primary">
+                            {cancelLabel || 'Cancelar'}
+                        </Button>
+                    )}
+                    {onConfirm && (
+                        <Button onClick={onConfirm} color="primary">
+                            {confirmLabel || 'Aceptar'}
+                        </Button>
+                    )}
+                </DialogActions>
+            )}
         </Dialog>
     );
 }
