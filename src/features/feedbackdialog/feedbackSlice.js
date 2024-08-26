@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { showFeedbackToUser, closeFeedback } from './feedbackActions';
+import { showSimpleMessage, showMessageWithActions, closeFeedback } from './feedbackActions';
 
 const feedbackSlice = createSlice({
     name: 'feedback',
@@ -8,21 +8,31 @@ const feedbackSlice = createSlice({
         message: '',
         cancelLabel: '',
         confirmLabel: '',
+        showActions: false, // Estado para controlar si se muestran los botones
     },
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(showFeedbackToUser, (state, action) => {
+        builder
+        .addCase(showSimpleMessage, (state, action) => {
             state.isOpen = true;
             state.message = action.payload.message;
-            // state.confirmLabel = action.payload.confirmLabel || null;
-            // state.cancelLabel = action.payload.cancelLabel || 'Aceptar';
+            state.showActions = false; // No mostrar botones
+            state.cancelLabel = '';
+            state.confirmLabel = '';
+        })
+        .addCase(showMessageWithActions, (state, action) => {
+            state.isOpen = true;
+            state.message = action.payload.message;
+            state.showActions = true; // Mostrar botones
+            state.cancelLabel = action.payload.cancelLabel || 'Cancelar';
+            state.confirmLabel = action.payload.confirmLabel || 'Aceptar';
         })
         .addCase(closeFeedback, (state) => {
             state.isOpen = false;
             state.message = '';
-            // state.onConfirm = null;
-            // state.confirmLabel = 'Aceptar';
-            // state.cancelLabel = 'Cancelar';
+            state.showActions = false;
+            state.cancelLabel = '';
+            state.confirmLabel = '';
         });
     },
 });

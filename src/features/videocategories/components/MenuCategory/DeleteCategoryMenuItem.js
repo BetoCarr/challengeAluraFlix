@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCategoryById } from '../../videoCategoriesSlice';
 import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
-import { showFeedbackToUser, closeFeedback} from '../../../feedbackdialog/feedbackActions'
+import { showMessageWithActions, closeFeedback} from '../../../feedbackdialog/feedbackActions'
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -28,10 +28,10 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
 
     // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
     const handleDeleteConfirmationDialogOpen = () => {
-        dispatch(showFeedbackToUser({
-            message: `¿Quieres eliminar la categoría '${nombre}'?`, // Mensaje de confirmación con el nombre de la categoría
+        dispatch(showMessageWithActions({
+            message: '¿Estás seguro de que quieres eliminar esta categoría?',
             cancelLabel: 'Cancelar',
-            confirmLabel: 'Aceptar',
+            confirmLabel: 'Confirmar',
         }));
     }
 
@@ -47,7 +47,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
         const hayVideosAsociados = checkIfVideosExistForCategory();
         // Si hay videos asociados, mostrar un mensaje de error en el feedback
         if (hayVideosAsociados) {
-            dispatch(showFeedbackToUser({
+            dispatch(showMessageWithActions({
                 message: 'No se puede eliminar la categoría porque hay videos asociados.',
                 confirmLabel: 'Aceptar',
             }));
@@ -75,7 +75,8 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
                 onConfirm={handleConfirm}
                 confirmLabel={feedback.confirmLabel}
                 onCancel={handleCancel}
-                cancelLabel={feedback.cancelLabel}          
+                cancelLabel={feedback.cancelLabel}  
+                showActions={feedback.showActions} // Asegúrate de pasar el estado de showActions               
             />
         </>
     );

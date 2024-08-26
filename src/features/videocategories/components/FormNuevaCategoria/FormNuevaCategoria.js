@@ -2,6 +2,7 @@
 import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
 import React, { useState } from "react"; // Importa React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
+import { showSimpleMessage, showMessageWithActions, closeFeedback } from '../../../feedbackdialog/feedbackActions';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
 import TextInput from "../../../../Components/TextInput/TextInput"; // Importa el componente TextInput
@@ -9,7 +10,6 @@ import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner
 import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
 import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
-// import { selectAllCategories, addCategory } from './videocategori';
 import { selectAllCategories, addCategory } from '../../videoCategoriesSlice'
 import { editarCategoria } from '../../../../api/api'; // Importa las funciones de agregar y editar categoría de la API
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
@@ -18,8 +18,8 @@ import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate d
 function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
 
     // Estado local para gestionar mensajes del formulario
-    const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
     const navigate = useNavigate(); // Hook para navegar entre rutas
+    const feedbackState = useSelector((state) => state.feedback);
     const dispatch = useDispatch(); // Hook para despachar acciones de Redux
 
     // Función para verificar la similitud de colores
@@ -111,76 +111,37 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                     return errors;
                 }}
 
-                // Enviar el formulario
                 onSubmit={async (values, { resetForm }) => {
-                    // Verificar si se está editando una categoría existente
-                    if(isEditing) {
-                        // Crear un objeto con los datos actualizados de la categoría
-                        const updatedVideoData = { ...values };
-                        // Llamar a la función para editar la categoría en la API
-                        editarCategoria(categoryId, updatedVideoData)
-                        // Manejar la respuesta exitosa
-                        .then((responseData) => {
-                            console.log("Categoria editada exitosamente!", responseData);
-                            // Mostrar un mensaje de éxito y recargar la página
-                            setFeedback({
-                                isOpen: true,
-                                message: "Categoria editada exitosamente! La página se recargará para mostrar los cambios.",
-                                onConfirm: () => {
-                                    navigate('/', { replace: true });
-                                    window.location.reload();
+                    if (isEditing) {
+                        editarCategoria(categoryId, values)
+                            .then((responseData) => {
+                                dispatch(showSimpleMessage({ message: "Categoría editada exitosamente!" }));
+                                setTimeout(() => {
+                                    dispatch(closeFeedback());
                                     resetForm();
-                                    setFeedback({ isOpen: false });
-                                }
+                                    navigate('/', { replace: true });
+                                }, 2000);
+                            })
+                            .catch((error) => {
+                                dispatch(showSimpleMessage({ message: `Categoría NO editada. Error: ${error}` }));
                             });
-                        })
-                        // Manejar cualquier error que ocurra
-                        .catch((error) => {
-                            console.error("Error al editar la categoria:", error);
-                            // Mostrar un mensaje de error
-                            setFeedback({
-                                isOpen: true,
-                                message: `Categoria NO editada. Error: ${error}`,
-                                onConfirm: () => setFeedback({ isOpen: false })
-                            });
-                        })
-                        // Ejecutar acciones adicionales independientemente de si la solicitud fue exitosa o no
-                        .finally(() => {
-                            console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
-                            resetForm();
-                        });
                     } else {
                         dispatch(addCategory(values))
-                        .unwrap()
-                        .then((responseData) => {
-                            console.log("Categoria agregada exitosamente!", responseData);
-                            setFeedback({
-                                isOpen: true,
-                                message: "Categoria agregada exitosamente! La página se recargará para mostrar y que agregues videos a la categoria.",
-                                onConfirm: () => {
+                            .unwrap()
+                            .then((responseData) => {
+                                dispatch(showSimpleMessage({ message: "Categoría agregada exitosamente!" }));
+                                setTimeout(() => {
+                                    dispatch(closeFeedback());
                                     resetForm();
-                                    setFeedback({ isOpen: false });
                                     navigate('/', { replace: true });
-                                }
+                                }, 2000);
+                            })
+                            .catch((error) => {
+                                dispatch(showSimpleMessage({ message: `Categoría NO agregada. Error: ${error}` }));
                             });
-                        })
-                        // Manejar cualquier error que ocurra
-                        .catch((error) => {
-                            console.error("Error al agregar la categoria:", error);
-                            // Mostrar un mensaje de error
-                            setFeedback({
-                                isOpen: true,
-                                message: `Categoria NO agregada. Error: ${error}`,
-                                onConfirm: () => setFeedback({ isOpen: false })
-                            });
-                        })
-                        // Ejecutar acciones adicionales independientemente de si la solicitud fue exitosa o no
-                        .finally(() => {
-                            console.log('La solicitud ha finalizado, ejecutando acciones adicionales...');
-                            resetForm();
-                        });
                     }
                 }}
+                
             >
                 {({isSubmitting, resetForm, values, errors}) => (
                     <Form className='form-container'>
@@ -218,11 +179,13 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
             </Formik>
             {/* Componente FeedbackDialog */}
             <FeedbackDialog
-                isOpen={feedback.isOpen}
-                onClose={() => setFeedback({ isOpen: false })}
-                message={feedback.message}
-                onConfirm={feedback.onConfirm}
-                confirmLabel="Aceptar"
+                isOpen={feedbackState.isOpen}
+                onClose={() => dispatch(closeFeedback())}
+                message={feedbackState.message}
+                onCancel={feedbackState.showActions ? feedbackState.onCancel : null}
+                onConfirm={feedbackState.showActions ? feedbackState.onConfirm : null}
+                cancelLabel={feedbackState.cancelLabel}
+                confirmLabel={feedbackState.confirmLabel}
             />
         </>
     );
