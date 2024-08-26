@@ -1,8 +1,8 @@
 // Importar los estilos y los componentes necesarios
 import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
-import React, { useState } from "react"; // Importa React y el hook useState
+import React from "react"; // Importa React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
-import { showSimpleMessage, showMessageWithActions, closeFeedback } from '../../../feedbackdialog/feedbackActions';
+import { showSimpleMessage, closeFeedback } from '../../../feedbackdialog/feedbackActions';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
 import TextInput from "../../../../Components/TextInput/TextInput"; // Importa el componente TextInput
