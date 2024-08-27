@@ -7,7 +7,7 @@ import Menu  from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteCategoryMenuItem from './DeleteCategoryMenuItem';
-// import EditCategroyMenuItem from '../../../../Components/EditCategoryMenuItem/EditCategoryMenuItem';
+import EditCategroyMenuItem from './EditCategoryMenuItem';
 // import AddVideoMenuItem from '../../../../Components/AddVideoMenuItem/AddVideoMenuItem';
 
 const StyledMenu = styled((props) => (
@@ -92,13 +92,13 @@ function MenuCategory ({ categoryId }) {
                     handleClose={handleClose}
                 />
                 {/* Elemento de menú para la opción "Editar" */}
-                {/* <EditCategroyMenuItem 
+                <EditCategroyMenuItem 
                     categoryId={categoryId} 
-                    categoryName={categoryName} 
-                    categoryColor={categoryColor}
-                    isBanner={isBanner}
+                    // categoryName={categoryName} 
+                    // categoryColor={categoryColor}
+                    // isBanner={isBanner}
                     handleClose={handleClose}
-                /> */}
+                />
                 {/* Elemento de menú para la opción "Agregar video" */}
                 {/* <AddVideoMenuItem 
                     categoryId={categoryId} 

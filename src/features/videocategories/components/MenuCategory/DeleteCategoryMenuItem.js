@@ -29,7 +29,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
     const handleDeleteConfirmationDialogOpen = () => {
         dispatch(showMessageWithActions({
-            message: '¿Estás seguro de que quieres eliminar esta categoría?',
+            message: `¿Estás seguro de que quieres eliminar la categoria ${nombre} ?`,
             cancelLabel: 'Cancelar',
             confirmLabel: 'Confirmar',
         }));
