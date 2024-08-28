@@ -114,6 +114,21 @@ const videoCategoriesSlice = createSlice({
                 state.status = 'failed'
                 state.error = action.error.message;
             })
+            // EDITAR CATEGORIA
+            .addCase(updateCategory.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updateCategory.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                videoCategoriesAdapter.updateOne(state, {
+                    id: action.payload.id,
+                    changes: action.payload,
+                });
+            })
+            .addCase(updateCategory.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+                        })
             // ELIMINAR CATEGORIA
             .addCase(deleteCategory.fulfilled, (state, action) => { // Estado de exito mientras se elimina la categoria
                 state.status = 'succeeded';

@@ -10,13 +10,12 @@ import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner
 import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
 import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
-import { selectAllCategories, addCategory } from '../../videoCategoriesSlice'
-import { editarCategoria } from '../../../../api/api'; // Importa las funciones de agregar y editar categoría de la API
+import { selectAllCategories, addCategory, updateCategory } from '../../videoCategoriesSlice'
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
 // Función del componente principal FormNuevaCategoria
 function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
-
+    // console.log(categoryId)
     // Estado local para gestionar mensajes del formulario
     const navigate = useNavigate(); // Hook para navegar entre rutas
     const feedbackState = useSelector((state) => state.feedback);
@@ -111,9 +110,9 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                     return errors;
                 }}
 
-                onSubmit={async (values, { resetForm }) => {
+                onSubmit={async (values, categoryId, { resetForm }) => {
                     if (isEditing) {
-                        editarCategoria(categoryId, values)
+                        dispatch(updateCategory(categoryId, values))
                             .then((responseData) => {
                                 dispatch(showSimpleMessage({ message: "Categoría editada exitosamente!" }));
                                 setTimeout(() => {

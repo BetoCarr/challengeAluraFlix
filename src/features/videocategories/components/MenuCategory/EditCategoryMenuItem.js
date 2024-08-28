@@ -17,7 +17,7 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
 
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre, color, isBanner } = category
-    console.log(category)
+    // console.log(category)
 
     // Estado para controlar la apertura del formulario de editar categoria
     const [isOpen, setIsOpen] = useState(false);
@@ -27,20 +27,18 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
 
     const handleConfirmation = () => {
         dispatch(closeFeedback())
-        handleClose(); // Cierra el menú
         console.log("Abriendo formulario")
         setIsOpen(true); // Abre el formulario después de la confirmación
     };
-
-    // // Función para abrir el formulario de edición
-    // const handleEditFormOpen = () => {
-    //     setIsOpen(true);
-    // };
 
     const handleCancel = () => {
         dispatch(closeFeedback())
         handleClose(); // Cierra el menú
     };
+    const handleCloseForm = () => {
+        handleClose(); // Cierra el menú
+        setIsOpen(false)
+    }
    // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
     const handleEditConfirmationDialogOpen = () => {
         dispatch(showMessageWithActions({
@@ -79,7 +77,7 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
                         color: color,
                         isBanner: isBanner
                     }}
-                    handleClose={() => setIsOpen(false)} // Cierra el formulario
+                    handleClose={handleCloseForm} // Cierra el formulario
                     categoryId={categoryId}
                 />
             )}
