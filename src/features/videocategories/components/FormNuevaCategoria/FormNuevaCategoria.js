@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate d
 
 // Función del componente principal FormNuevaCategoria
 function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
-    // console.log(categoryId)
+
     // Estado local para gestionar mensajes del formulario
     const navigate = useNavigate(); // Hook para navegar entre rutas
     const feedbackState = useSelector((state) => state.feedback);
@@ -110,20 +110,21 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                     return errors;
                 }}
 
-                onSubmit={async (values, categoryId, { resetForm }) => {
+                onSubmit={async (values, { resetForm }) => {
                     if (isEditing) {
-                        dispatch(updateCategory(categoryId, values))
-                            .then((responseData) => {
-                                dispatch(showSimpleMessage({ message: "Categoría editada exitosamente!" }));
-                                setTimeout(() => {
-                                    dispatch(closeFeedback());
-                                    resetForm();
-                                    navigate('/', { replace: true });
-                                }, 2000);
-                            })
-                            .catch((error) => {
-                                dispatch(showSimpleMessage({ message: `Categoría NO editada. Error: ${error}` }));
-                            });
+                        dispatch(updateCategory({ categoryId, updatedCategory: values }))
+                        // .unwrap()
+                        // .then((response) => {
+                        //     dispatch(showSimpleMessage({ message: "Categoría editada exitosamente!" }));
+                        //     setTimeout(() => {
+                        //         dispatch(closeFeedback());
+                        //         resetForm();
+                        //         // navigate('/', { replace: true });
+                        //         }, 2000);
+                        //     })
+                        //     .catch((error) => {
+                        //         dispatch(showSimpleMessage({ message: `Categoría NO editada. Error: ${error}` }));
+                        //     });
                     } else {
                         dispatch(addCategory(values))
                             .unwrap()

@@ -72,13 +72,13 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
             />
             {isOpen && (
                 <FormEditarCategoria
+                    categoryId={categoryId}
                     initialValuesForEdit={{
                         nombre: nombre,
                         color: color,
                         isBanner: isBanner
                     }}
                     handleClose={handleCloseForm} // Cierra el formulario
-                    categoryId={categoryId}
                 />
             )}
         </>

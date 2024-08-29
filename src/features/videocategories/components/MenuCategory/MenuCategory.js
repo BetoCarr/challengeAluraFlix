@@ -94,9 +94,6 @@ function MenuCategory ({ categoryId }) {
                 {/* Elemento de menú para la opción "Editar" */}
                 <EditCategroyMenuItem 
                     categoryId={categoryId} 
-                    // categoryName={categoryName} 
-                    // categoryColor={categoryColor}
-                    // isBanner={isBanner}
                     handleClose={handleClose}
                 />
                 {/* Elemento de menú para la opción "Agregar video" */}

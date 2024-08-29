@@ -47,16 +47,28 @@ export const addCategory = createAsyncThunk(
 // Thunk para editar categoria
 export const updateCategory = createAsyncThunk(
     'categories/updateCategory',
-    async ({ categoryId, updatedCategory }, { rejectWithValue }) => {
+    async ({ categoryId, updatedCategory }, { dispatch ,rejectWithValue }) => {
         try {
             const response = await editarCategoria(categoryId, updatedCategory);
-            return response.data;
+            console.log(response)
+            if (response.status === 200) {
+                dispatch(showSimpleMessage({ message: `Categoría editada correctamente.`}))
+                // Retrasar el retorno del categoryId para permitir que el mensaje se muestre
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        dispatch(closeFeedback())
+                        resolve(response.data);
+                    }, 3000); // Retraso de 3 segundos
+                });
+            } else {
+                // Manejar otros casos o errores si es necesario
+                return rejectWithValue("Unexpected response structure");
+            }
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
     }
 );
-
 
 // Thunk para eliminar categoria
 export const deleteCategory = createAsyncThunk(
@@ -118,17 +130,24 @@ const videoCategoriesSlice = createSlice({
             .addCase(updateCategory.pending, (state) => {
                 state.status = 'loading';
             })
+            // Caso fulfilled: cuando la categoría se ha editado correctamente
             .addCase(updateCategory.fulfilled, (state, action) => {
                 state.status = 'succeeded';
+                const { id, nombre, color, isBanner } = action.payload.categoria;
+                // Actualiza la categoría en el estado usando `updateOne`
                 videoCategoriesAdapter.updateOne(state, {
-                    id: action.payload.id,
-                    changes: action.payload,
+                    id,
+                    changes: {
+                        nombre,
+                        color,
+                        isBanner,
+                    }
                 });
             })
             .addCase(updateCategory.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
-                        })
+            })
             // ELIMINAR CATEGORIA
             .addCase(deleteCategory.fulfilled, (state, action) => { // Estado de exito mientras se elimina la categoria
                 state.status = 'succeeded';
