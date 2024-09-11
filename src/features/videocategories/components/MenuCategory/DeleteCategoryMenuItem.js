@@ -8,9 +8,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { deleteCategory } from '../../videoCategoriesSlice';
+import { useHandleConfirm } from '../../useHandleConfirm';
 import { useTheme } from '@mui/material/styles'; 
 
 function DeleteCategoryMenuItem({ categoryId, handleClose }) {
+
+    // const handleConfirm = useHandleConfirm();
 
     const feedback = useSelector(state => state.feedback); // Asegúrate de seleccionar el estado adecuado
     const category = useSelector(state => selectCategoryById(state, categoryId));
@@ -26,14 +29,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
         return videos && videos.length > 0;
     };
 
-    // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
-    const handleDeleteConfirmationDialogOpen = () => {
-        dispatch(showMessageWithActions({
-            message: `¿Estás seguro de que quieres eliminar la categoria ${nombre} ?`,
-            cancelLabel: 'Cancelar',
-            confirmLabel: 'Confirmar',
-        }));
-    }
+
 
     // Funcion para cerrar cuadro de dialogo de confirmación de eliminación de la categoria
     const handleCancel = () => {
@@ -41,20 +37,36 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
         dispatch(closeFeedback()) // Cierra el diálogo de confirmación
     }
 
-    // Función que maneja la confirmación de eliminación de la categoría
-    const handleConfirm = () => {
-        // Verificar si hay videos asociados a la categoría
-        const hayVideosAsociados = checkIfVideosExistForCategory();
-        // Si hay videos asociados, mostrar un mensaje de error en el feedback
-        if (hayVideosAsociados) {
-            dispatch(showMessageWithActions({
-                message: 'No se puede eliminar la categoría porque hay videos asociados.',
-                confirmLabel: 'Aceptar',
-            }));
-        } else {
-            dispatch(deleteCategory(categoryId))
-        }  
-    };
+    // // Función que maneja la confirmación de eliminación de la categoría
+    // const handleConfirm = () => {
+    //     // Verificar si hay videos asociados a la categoría
+    //     const hayVideosAsociados = checkIfVideosExistForCategory();
+    //     // Si hay videos asociados, mostrar un mensaje de error en el feedback
+    //     if (hayVideosAsociados) {
+    //         dispatch(showMessageWithActions({
+    //             message: 'No se puede eliminar la categoría porque hay videos asociados.',
+    //             confirmLabel: 'Aceptar',
+    //         }));
+    //     } else {
+    //         dispatch(deleteCategory(categoryId))
+    //     }  
+    // };
+
+    // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
+    const handleDeleteConfirmationDialogOpen = () => {
+        dispatch(showMessageWithActions({
+            message: `¿Estás seguro de que quieres eliminar la categoria ${nombre} ?`,
+            cancelLabel: 'Cancelar',
+            confirmLabel: 'Aceptar',
+            // onConfirm: handleConfirm,
+            showActions: true, // Asegúrate de que haya acciones (Cancelar, Confirmar)
+            actionType: 'delete', // Identifica la acción como eliminación
+        }));
+    }
+
+    // const onDelete = () => {
+    //     handleConfirm('delete', categoryId);
+    // };
 
     return (
         <>
@@ -72,11 +84,12 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
                 isOpen={feedback.isOpen}
                 onClose={handleCancel} 
                 message={feedback.message}
-                onConfirm={handleConfirm}
+                // onConfirm={onDelete}
                 confirmLabel={feedback.confirmLabel}
                 onCancel={handleCancel}
                 cancelLabel={feedback.cancelLabel}  
-                showActions={feedback.showActions} // Asegúrate de pasar el estado de showActions               
+                showActions={feedback.showActions} // Asegúrate de pasar el estado de showActions       
+                actionType={feedback.actionType}        
             />
         </>
     );

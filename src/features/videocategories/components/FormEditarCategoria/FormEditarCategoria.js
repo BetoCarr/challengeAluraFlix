@@ -6,17 +6,17 @@ import DialogContent from '@mui/material/DialogContent';
 import FormNuevaCategoria from "../FormNuevaCategoria/FormNuevaCategoria";
 
 // Definición del componente FormEditarCategoria
-function FormEditarCategoria({ initialValuesForEdit, handleClose, setShowEditForm, categoryId }) {
+function FormEditarCategoria({ initialValuesForEdit, onClose, categoryId }) {
 
-    const handleEditFormOpen = () => {
-        setShowEditForm(true); // Actualiza el estado en EditCategoryMenuItem para mostrar el formulario
-        handleClose(); // Cierra el cuadro de diálogo después de abrir el formulario
-    };
-    
+   // Manejar el cierre del formulario de edición
+    const handleDialogClose = () => {
+        onClose(); // Cierra el formulario de edición
+    }
+
     // Retorna el componente FormNuevaCategoria con los valores iniciales para la edición dentro de un dialogo
     return (
         <>
-            <Dialog open={true} onClose={handleClose}>
+            <Dialog open={true} onClose={handleDialogClose}>
                 <DialogContent className='dialog-form'>
                     <FormNuevaCategoria
                         initialValuesForEdit={initialValuesForEdit} 

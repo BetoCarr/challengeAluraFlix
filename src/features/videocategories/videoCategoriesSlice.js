@@ -44,26 +44,40 @@ export const addCategory = createAsyncThunk(
     }
 );
 
+// // Thunk para editar categoria
+// export const updateCategory = createAsyncThunk(
+//     'categories/updateCategory',
+//     async ({ categoryId, updatedCategory }, { dispatch ,rejectWithValue }) => {
+//         try {
+//             const response = await editarCategoria(categoryId, updatedCategory);
+//             console.log(response)
+//             if (response.status === 200) {
+//                 dispatch(showSimpleMessage({ message: `Categoría editada correctamente.`}))
+//                 // Retrasar el retorno del categoryId para permitir que el mensaje se muestre
+//                 return new Promise((resolve) => {
+//                     setTimeout(() => {
+//                         dispatch(closeFeedback())
+//                         resolve(response.data);
+//                     }, 3000); // Retraso de 3 segundos
+//                 });
+//             } else {
+//                 // Manejar otros casos o errores si es necesario
+//                 return rejectWithValue("Unexpected response structure");
+//             }
+//         } catch (error) {
+//             return rejectWithValue(error.response.data);
+//         }
+//     }
+// );
+
 // Thunk para editar categoria
 export const updateCategory = createAsyncThunk(
     'categories/updateCategory',
-    async ({ categoryId, updatedCategory }, { dispatch ,rejectWithValue }) => {
+    async ({ categoryId, updatedCategory }, {rejectWithValue }) => {
         try {
             const response = await editarCategoria(categoryId, updatedCategory);
             console.log(response)
-            if (response.status === 200) {
-                dispatch(showSimpleMessage({ message: `Categoría editada correctamente.`}))
-                // Retrasar el retorno del categoryId para permitir que el mensaje se muestre
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        dispatch(closeFeedback())
-                        resolve(response.data);
-                    }, 3000); // Retraso de 3 segundos
-                });
-            } else {
-                // Manejar otros casos o errores si es necesario
-                return rejectWithValue("Unexpected response structure");
-            }
+            return response
         } catch (error) {
             return rejectWithValue(error.response.data);
         }

@@ -113,18 +113,18 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                 onSubmit={async (values, { resetForm }) => {
                     if (isEditing) {
                         dispatch(updateCategory({ categoryId, updatedCategory: values }))
-                        // .unwrap()
-                        // .then((response) => {
-                        //     dispatch(showSimpleMessage({ message: "Categoría editada exitosamente!" }));
-                        //     setTimeout(() => {
-                        //         dispatch(closeFeedback());
-                        //         resetForm();
-                        //         // navigate('/', { replace: true });
-                        //         }, 2000);
-                        //     })
-                        //     .catch((error) => {
-                        //         dispatch(showSimpleMessage({ message: `Categoría NO editada. Error: ${error}` }));
-                        //     });
+                            .unwrap()
+                            .then((response) => {
+                                dispatch(showSimpleMessage({ message: "Categoría editada exitosamente!" }))
+                                setTimeout(() => {
+                                    dispatch(closeFeedback());
+                                    resetForm();
+                                    // navigate('/', { replace: true });
+                                }, 2000);
+                            })
+                            .catch((error) => {
+                                dispatch(showSimpleMessage({ message: `Categoría NO editada. Error: ${error}` }));
+                            });
                     } else {
                         dispatch(addCategory(values))
                             .unwrap()

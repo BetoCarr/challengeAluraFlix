@@ -8,6 +8,7 @@ const feedbackSlice = createSlice({
         message: '',
         cancelLabel: '',
         confirmLabel: '',
+        actionType: null, // Nuevo campo para identificar la acción (por ejemplo: 'delete' o 'edit')
         showActions: false, // Estado para controlar si se muestran los botones
     },
     reducers: {},
@@ -19,6 +20,7 @@ const feedbackSlice = createSlice({
             state.showActions = false; // No mostrar botones
             state.cancelLabel = '';
             state.confirmLabel = '';
+            state.actionType = null; // Reinicia el tipo de acción
         })
         .addCase(showMessageWithActions, (state, action) => {
             state.isOpen = true;
@@ -26,6 +28,7 @@ const feedbackSlice = createSlice({
             state.showActions = true; // Mostrar botones
             state.cancelLabel = action.payload.cancelLabel || 'Cancelar';
             state.confirmLabel = action.payload.confirmLabel || 'Aceptar';
+            state.actionType = action.payload.actionType; // Identifica qué acción está ocurriendo
         })
         .addCase(closeFeedback, (state) => {
             state.isOpen = false;
@@ -33,6 +36,7 @@ const feedbackSlice = createSlice({
             state.showActions = false;
             state.cancelLabel = '';
             state.confirmLabel = '';
+            state.actionType = null; // Reinicia el tipo de acción
         });
     },
 });
