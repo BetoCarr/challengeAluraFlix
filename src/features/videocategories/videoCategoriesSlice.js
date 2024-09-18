@@ -73,11 +73,21 @@ export const addCategory = createAsyncThunk(
 // Thunk para editar categoria
 export const updateCategory = createAsyncThunk(
     'categories/updateCategory',
-    async ({ categoryId, updatedCategory }, {rejectWithValue }) => {
+    async ({ categoryId, updatedCategory }, { dispatch, rejectWithValue }) => {
         try {
-            const response = await editarCategoria(categoryId, updatedCategory);
-            console.log(response)
-            return response
+            const response = await editarCategoria(categoryId, updatedCategory)
+            if(response.status === 200) {
+                console.log(response)
+                dispatch(showSimpleMessage({ message: `Categoría eliminada correctamente.`}))
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        dispatch(closeFeedback())
+                        resolve(response.data);
+                    }, 3000); // Retraso de 3 segundos
+                });
+            } else {
+                return rejectWithValue('Unexpected response status')
+            }
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
