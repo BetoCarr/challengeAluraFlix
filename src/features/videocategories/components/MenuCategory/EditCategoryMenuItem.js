@@ -15,7 +15,7 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
     const { nombre, color, isBanner } = category
 
     // Estado para controlar la apertura del formulario de editar categoria
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [showEditForm, setShowEditForm] = useState(false);
 
     const handleOpenDialog = () => setIsOpen(true);

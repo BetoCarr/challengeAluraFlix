@@ -2,7 +2,7 @@ import './FeedbackDialog.css';
 import React from 'react';
 import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { deleteCategory, updateCategory } from '../../videocategories/videoCategoriesSlice';
+import { deleteCategory } from '../../videocategories/videoCategoriesSlice';
 
 function FeedbackDialog({ isOpen, onClose, message, onCancel, onConfirm, cancelLabel, confirmLabel, showActions, actionType, onOpenForm }) {
 

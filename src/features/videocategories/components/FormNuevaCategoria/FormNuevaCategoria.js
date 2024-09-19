@@ -1,8 +1,8 @@
 // Importar los estilos y los componentes necesarios
 import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
-import React from "react"; // Importa React y el hook useState
+import React, { useState } from "react"; // Importa React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
-import { showSimpleMessage, closeFeedback } from '../../../feedbackdialog/feedbackActions';
+// import { showSimpleMessage, closeFeedback } from '../../../feedbackdialog/feedbackActions';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
 import TextInput from "../../../../Components/TextInput/TextInput"; // Importa el componente TextInput
@@ -16,10 +16,28 @@ import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate d
 // Función del componente principal FormNuevaCategoria
 function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
 
-    // Estado local para gestionar mensajes del formulario
     const navigate = useNavigate(); // Hook para navegar entre rutas
-    const feedbackState = useSelector((state) => state.feedback);
     const dispatch = useDispatch(); // Hook para despachar acciones de Redux
+
+    // Obtener las categorías y sus colores
+    const categories = useSelector(selectAllCategories);
+    const categoriesColors = categories.map(category => category.color);
+
+    // Estado local para FeedbackDialog
+    const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false); // Controla la visibilidad del diálogo
+    const [feedbackMessage, setFeedbackMessage] = useState(""); // Controla el mensaje mostrado en el diálogo
+
+    // Función para abrir el FeedbackDialog
+    const openFeedbackDialog = (message) => {
+        setFeedbackMessage(message);
+        setFeedbackDialogOpen(true);
+    };
+
+    // Función para cerrar el FeedbackDialog
+    const closeFeedbackDialog = () => {
+        setFeedbackDialogOpen(false);
+        setFeedbackMessage("");
+    };
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
@@ -62,9 +80,6 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
         return { r, g, b };
     };
 
-   // Obtener las categorías y sus colores
-    const categories = useSelector(selectAllCategories);
-    const categoriesColors = categories.map(category => category.color);
 
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
@@ -113,31 +128,33 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                 onSubmit={async (values, { resetForm }) => {
                     if (isEditing) {
                         dispatch(updateCategory({ categoryId, updatedCategory: values }))
-                            // .unwrap()
-                            // .then((response) => {
-                            //     dispatch(showSimpleMessage({ message: "Categoría editada exitosamente!" }))
-                            //     setTimeout(() => {
-                            //         dispatch(closeFeedback());
-                            //         // resetForm();
-                            //         // navigate('/', { replace: true });
-                            //     }, 2000);
-                            // })
-                            // .catch((error) => {
-                            //     dispatch(showSimpleMessage({ message: `Categoría NO editada. Error: ${error}` }));
-                            // });
+                        .unwrap()
+                        .then(() => {
+                            console.log('Edición exitosa, abriendo FeedbackDialog...');
+                            openFeedbackDialog("Categoría editada exitosamente!");
+                            setTimeout(() => {
+                                closeFeedbackDialog();
+                                resetForm();
+                                // Cierra el modal después de que se muestre el feedback
+                                // setShowEditForm(false); // Suponiendo que esta es la función para cerrar el modal
+                            }, 2000);
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        });
                     } else {
                         dispatch(addCategory(values))
                             .unwrap()
-                            .then((responseData) => {
-                                dispatch(showSimpleMessage({ message: "Categoría agregada exitosamente!" }));
+                            .then(() => {
+                                openFeedbackDialog("Categoría agregada exitosamente!");
                                 setTimeout(() => {
-                                    dispatch(closeFeedback());
+                                    closeFeedbackDialog();
                                     resetForm();
                                     navigate('/', { replace: true });
                                 }, 2000);
                             })
                             .catch((error) => {
-                                dispatch(showSimpleMessage({ message: `Categoría NO agregada. Error: ${error}` }));
+                                console.log(error)
                             });
                     }
                 }}
@@ -179,13 +196,9 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
             </Formik>
             {/* Componente FeedbackDialog */}
             <FeedbackDialog
-                isOpen={feedbackState.isOpen}
-                onClose={() => dispatch(closeFeedback())}
-                message={feedbackState.message}
-                onCancel={feedbackState.showActions ? feedbackState.onCancel : null}
-                onConfirm={feedbackState.showActions ? feedbackState.onConfirm : null}
-                cancelLabel={feedbackState.cancelLabel}
-                confirmLabel={feedbackState.confirmLabel}
+                isOpen={feedbackDialogOpen}
+                onClose={closeFeedbackDialog}
+                message={feedbackMessage}
             />
         </>
     );
