@@ -3,8 +3,11 @@ import React from 'react';
 import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { deleteCategory } from '../../videocategories/videoCategoriesSlice';
+import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
 function FeedbackDialog({ isOpen, onClose, message, onCancel, onConfirm, cancelLabel, confirmLabel, showActions, actionType, onOpenForm }) {
+
+    const navigate = useNavigate(); // Hook para navegar entre rutas
 
     const dispatch = useDispatch();
 
@@ -13,7 +16,7 @@ function FeedbackDialog({ isOpen, onClose, message, onCancel, onConfirm, cancelL
             dispatch(deleteCategory())
             console.log("delet")
         } else if (actionType === 'edit') {
-            onOpenForm(); // Abrir el formulario para editar o agregar videos
+            navigate('/editar-categoria', { replace: true });
             console.log("open form");
         }
     };

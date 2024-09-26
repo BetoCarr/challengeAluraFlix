@@ -131,7 +131,7 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                         .unwrap()
                         .then(() => {
                             console.log('Edición exitosa, abriendo FeedbackDialog...');
-                            openFeedbackDialog("Categoría editada exitosamente!");
+                            openFeedbackDialog("Categoría editada exitosamente!")
                             setTimeout(() => {
                                 closeFeedbackDialog();
                                 resetForm();
