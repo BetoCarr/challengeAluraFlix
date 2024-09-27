@@ -1,5 +1,5 @@
 // Importación de React y componentes
-import React from 'react';
+import React,  {useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCategoryById } from '../../videoCategoriesSlice';
 import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
@@ -8,7 +8,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { deleteCategory } from '../../videoCategoriesSlice';
-import { useHandleConfirm } from '../../useHandleConfirm';
 import { useTheme } from '@mui/material/styles'; 
 
 function DeleteCategoryMenuItem({ categoryId, handleClose }) {

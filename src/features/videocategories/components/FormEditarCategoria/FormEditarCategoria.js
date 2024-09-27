@@ -1,17 +1,24 @@
 // Importa React y el componente FormNuevaCategoria
-import './FormEditarCategoria.css';
 import React from "react";
-// import Dialog from '@mui/material/Dialog';
-// import DialogContent from '@mui/material/DialogContent';
+import { useSelector } from 'react-redux';
+import { selectCategoryById } from '../../videoCategoriesSlice';
 import FormNuevaCategoria from "../FormNuevaCategoria/FormNuevaCategoria";
 
 // Definición del componente FormEditarCategoria
-function FormEditarCategoria({ initialValuesForEdit, categoryId }) {
+function FormEditarCategoria({ categoryId }) {
 
-//    // Manejar el cierre del formulario de edición
-//     const handleDialogClose = () => {
-//         onClose(); // Cierra el formulario de edición
-//     }
+    const category = useSelector(state => selectCategoryById(state, categoryId))
+
+    const { nombre, color, isBanner } = category
+
+    // Crea los valores iniciales para el formulario de edición
+    const initialValuesForEdit = {
+        nombre,
+        color,
+        isBanner
+    };
+
+    console.log(initialValuesForEdit);
 
     // Retorna el componente FormNuevaCategoria con los valores iniciales para la edición dentro de un dialogo
     return (

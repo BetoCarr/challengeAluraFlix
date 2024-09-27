@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { deleteCategory } from '../../videocategories/videoCategoriesSlice';
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
-function FeedbackDialog({ isOpen, onClose, message, onCancel, onConfirm, cancelLabel, confirmLabel, showActions, actionType, onOpenForm }) {
+function FeedbackDialog({ isOpen, onClose, message, onCancel, cancelLabel, confirmLabel, showActions, actionType, categoryId }) {
 
     const navigate = useNavigate(); // Hook para navegar entre rutas
 
@@ -16,7 +16,7 @@ function FeedbackDialog({ isOpen, onClose, message, onCancel, onConfirm, cancelL
             dispatch(deleteCategory())
             console.log("delet")
         } else if (actionType === 'edit') {
-            navigate('/editar-categoria', { replace: true });
+            navigate(`/editar-categoria/${categoryId}`, { replace: true });
             console.log("open form");
         }
     };

@@ -6,28 +6,21 @@ import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
 import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
-import FormEditarCategoria from '../../components/FormEditarCategoria/FormEditarCategoria'
 import { useTheme } from '@mui/material/styles'; 
 
 function EditCategroyMenuItem({ categoryId, handleClose }) {
 
     const category = useSelector(state => selectCategoryById(state, categoryId))
-    const { nombre, color, isBanner } = category
+    const { nombre } = category
 
-    // Estado para controlar la apertura del formulario de editar categoria
     const [isOpen, setIsOpen] = useState(false);
-    const [showEditForm, setShowEditForm] = useState(false);
 
     const handleOpenDialog = () => setIsOpen(true);
     const handleCloseDialog = () => setIsOpen(false);
-    
-    const handleOpenForm = () => setShowEditForm(true); // Abre el formulario
-    const handleCloseForm = () => setShowEditForm(false);
 
     const onCancel = () => {
         handleCloseDialog()
         handleClose()
-        handleCloseForm()
     }
 
     // Variable para acceder a ThemeProvider
@@ -54,16 +47,8 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
                 confirmLabel = 'Aceptar'
                 actionType="edit"
                 showActions={true}
-                onOpenForm={handleOpenForm} // Pasa la lógica para abrir el formulario
+                categoryId={categoryId}
             />
-            {showEditForm && (
-                <FormEditarCategoria 
-                    categoryId={categoryId}
-                    initialValuesForEdit={{nombre, color, isBanner}}
-                    isOpen={showEditForm} 
-                    onClose={onCancel} 
-                />
-            )}
         </>
     );
 }

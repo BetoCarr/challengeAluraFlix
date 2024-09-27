@@ -135,8 +135,7 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                             setTimeout(() => {
                                 closeFeedbackDialog();
                                 resetForm();
-                                // Cierra el modal después de que se muestre el feedback
-                                // setShowEditForm(false); // Suponiendo que esta es la función para cerrar el modal
+                                navigate('/', { replace: true });
                             }, 2000);
                         })
                         .catch((error) => {

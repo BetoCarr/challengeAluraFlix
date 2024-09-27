@@ -51,13 +51,7 @@ export const updateCategory = createAsyncThunk(
         try {
             const response = await editarCategoria(categoryId, updatedCategory)
             console.log(response.data)
-           // Crear un retraso de 2 segundos antes de devolver la respuesta
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve(response.data);  // Después de 2 segundos, resuelve la promesa con los datos
-                }, 4000);  // 2000 milisegundos = 2 segundos
-            });    
-        
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
