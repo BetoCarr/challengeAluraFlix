@@ -1,7 +1,6 @@
 // Importación de redux y funcion axios
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import { buscar, agregarCategoria, editarCategoria, eliminarCategoria } from '../../api/api';
-import { showSimpleMessage, closeFeedback } from '../feedbackdialog/feedbackActions';
 
 // Crear un adaptador para manejar las categorías de videos
 const videoCategoriesAdapter = createEntityAdapter({
@@ -61,19 +60,13 @@ export const updateCategory = createAsyncThunk(
 // Thunk para eliminar categoria
 export const deleteCategory = createAsyncThunk(
     'categories/deleteCategory',
-    async ( categoryId, { dispatch, rejectWithValue } ) => {
+    async ( categoryId, { rejectWithValue } ) => {
         try {
             const response = await eliminarCategoria(categoryId);
             if (response.status === 200) {
                 console.log(response)
-                dispatch(showSimpleMessage({ message: `Categoría eliminada correctamente.`}))
-                // Retrasar el retorno del categoryId para permitir que el mensaje se muestre
-                return new Promise((resolve) => {
-                    setTimeout(() => {
-                        dispatch(closeFeedback())
-                        resolve(categoryId);
-                    }, 3000); // Retraso de 3 segundos
-                });
+                return categoryId
+                // return new Promise((resolve) => setTimeout(() => resolve(categoryId), 2000));
             } else {
                 return rejectWithValue('Unexpected response status');
             }

@@ -1,19 +1,19 @@
 import './FeedbackDialog.css';
 import React from 'react';
 import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { deleteCategory } from '../../videocategories/videoCategoriesSlice';
+// import { useDispatch } from 'react-redux';
+// import { deleteCategory } from '../../videocategories/videoCategoriesSlice';
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
-function FeedbackDialog({ isOpen, onClose, message, onCancel, cancelLabel, confirmLabel, showActions, actionType, categoryId }) {
+function FeedbackDialog({ isOpen, onClose, message, onCancel, cancelLabel, onConfirm, confirmLabel, showActions, actionType, categoryId }) {
 
     const navigate = useNavigate(); // Hook para navegar entre rutas
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const handleConfirm = () => {
         if (actionType === 'delete') {
-            dispatch(deleteCategory())
+            onConfirm()
             console.log("delet")
         } else if (actionType === 'edit') {
             navigate(`/editar-categoria/${categoryId}`, { replace: true });
