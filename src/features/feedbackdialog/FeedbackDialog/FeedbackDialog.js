@@ -1,8 +1,6 @@
 import './FeedbackDialog.css';
 import React from 'react';
 import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/material';
-// import { useDispatch } from 'react-redux';
-// import { deleteCategory } from '../../videocategories/videoCategoriesSlice';
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
 function FeedbackDialog({ isOpen, onClose, message, onCancel, cancelLabel, onConfirm, confirmLabel, showActions, actionType, categoryId }) {

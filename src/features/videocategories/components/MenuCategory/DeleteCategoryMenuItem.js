@@ -1,5 +1,5 @@
 // Importación de React y componentes
-import React,  {useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCategoryById, deleteCategory } from '../../videoCategoriesSlice';
 import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
@@ -15,6 +15,17 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     const category = useSelector(state => selectCategoryById(state, categoryId));
     const { nombre, videos } = category
 
+    const deleteStatus = useSelector((state) => state.videoCategories.deleteStatus);
+    console.log(deleteStatus)
+
+    useEffect(() => {
+        if (deleteStatus === 'succeeded') {
+            openFeedbackDialog("¡Categoría eliminada exitosamente!");
+        } else if (deleteStatus === 'failed') {
+            openFeedbackDialog("Error eliminando la categoría.");
+        }
+    }, [deleteStatus]);
+
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
 
@@ -25,8 +36,8 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
 
     // Función para abrir el FeedbackDialog
     const openFeedbackDialog = (message) => {
-        setFeedbackMessage(message);
         setFeedbackDialogOpen(true);
+        setFeedbackMessage(message);
     };
 
     // Función para cerrar el FeedbackDialog
@@ -55,7 +66,8 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
             // Si hay videos, muestra el mensaje de error
             openFeedbackDialog("No se puede eliminar la categoria por que tiene videos")
             setTimeout(() => {
-                onCancel()// Cierra el dialogo
+                closeFeedbackDialog()
+                // onCancel()// Cierra el dialogo
             }, 3000);
         } else {
             // Si no hay videos, muestra el diálogo de confirmación
@@ -68,19 +80,21 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
         console.log("Eliminando categoria")
         handleConfirmCloseDialog()
         dispatch(deleteCategory(categoryId))
-        .unwrap()
-        .then(() => {
-            console.log('Elimincion exitosa, abriendo FeedbackDialog...');
-            openFeedbackDialog("Categoría eliminada exitosamente!")
-            setTimeout(() => {
-                closeFeedbackDialog();
-                // resetForm();
-                // navigate('/', { replace: true });
-            }, 3000);
-        })
-        .catch((error) => {
-            console.log(error)
-        });
+        // .unwrap()
+        // .then((response) => {
+        //     // console.log('Elimincion exitosa, abriendo FeedbackDialog...');
+        //     console.log(response);
+        //     if(response.status = 200) {
+        //         openFeedbackDialog('Categoría eliminada exitosamente!')
+        //         setTimeout(() => {
+        //             closeFeedbackDialog();
+        //         }, 3000);
+        //     }
+    
+        // })
+        // .catch((error) => {
+        //     console.log(error)
+        // });
     };
 
     return (
@@ -109,7 +123,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
             {/* Cuadro de diálogo de error o mensaje de éxito */}
             <FeedbackDialog
                 isOpen={feedbackDialogOpen}
-                onClose={onCancel}
+                onClose={closeFeedbackDialog}
                 message={feedbackMessage}
             />
         </>

@@ -16,6 +16,7 @@ const videoCategoriesAdapter = createEntityAdapter({
 // Estado inicial utilizando el adaptador, con estado de carga y error
 const initialState = videoCategoriesAdapter.getInitialState({
     status: 'idle',
+    deleteStatus: 'idle', // Estado específico para la eliminación de categorías
     error: null,
 });
 
@@ -64,9 +65,9 @@ export const deleteCategory = createAsyncThunk(
         try {
             const response = await eliminarCategoria(categoryId);
             if (response.status === 200) {
-                console.log(response)
-                return categoryId
-                // return new Promise((resolve) => setTimeout(() => resolve(categoryId), 2000));
+                // console.log(response)
+                // return { response, categoryId }
+                return new Promise((resolve) => setTimeout(() => resolve({ response, categoryId }), 4000));
             } else {
                 return rejectWithValue('Unexpected response status');
             }
@@ -130,14 +131,18 @@ const videoCategoriesSlice = createSlice({
                 state.error = action.error.message;
             })
             // ELIMINAR CATEGORIA
-            .addCase(deleteCategory.fulfilled, (state, action) => { // Estado de exito mientras se elimina la categoria
-                state.status = 'succeeded';
-                videoCategoriesAdapter.removeOne(state, action.payload);
+            .addCase(deleteCategory.pending, (state) => {
+                state.deleteStatus = 'loading';
             })
-            .addCase(deleteCategory.rejected, (state, action) => { // Estado de error
-                state.status = 'failed'
+            .addCase(deleteCategory.fulfilled, (state, action) => {
+                const { categoryId } = action.payload; // Desestructura el categoryId del payload
+                state.deleteStatus = 'succeeded';
+                videoCategoriesAdapter.removeOne(state, categoryId);
+            })
+            .addCase(deleteCategory.rejected, (state, action) => {
+                state.deleteStatus = 'failed';
                 state.error = action.error.message;
-            })
+            });
     },
 });
 
