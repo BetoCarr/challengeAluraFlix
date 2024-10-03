@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import FormNuevoVideo from "../features/videocategories/components/FormNuevoVideo/FormNuevoVideo";
 import MainContainer from "../Components/MainContainer/MainContainer";
 
-function UpdateCategory () {
+function AddVideo () {
 
     const { categoryId } = useParams(); // Extrae el categoryId de la URL
-
+    // console.log(categoryId)
     return(
         <MainContainer className={"main-container-form"}>
             <FormNuevoVideo 
@@ -16,4 +16,4 @@ function UpdateCategory () {
     );
 }
 
-export default UpdateCategory;
+export default AddVideo;

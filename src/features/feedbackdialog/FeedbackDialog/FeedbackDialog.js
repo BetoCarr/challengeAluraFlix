@@ -16,6 +16,9 @@ function FeedbackDialog({ isOpen, onClose, message, onCancel, cancelLabel, onCon
         } else if (actionType === 'edit') {
             navigate(`/editar-categoria/${categoryId}`, { replace: true });
             console.log("open form");
+        } else if(actionType === 'addvideo') {
+            navigate(`/agregar-video/${categoryId}`, { replace: true });
+            console.log("Abriendo Formulario agregar video")
         }
     };
 

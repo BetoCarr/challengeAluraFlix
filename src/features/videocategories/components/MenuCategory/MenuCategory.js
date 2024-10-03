@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteCategoryMenuItem from './DeleteCategoryMenuItem';
 import EditCategroyMenuItem from './EditCategoryMenuItem';
-// import AddVideoMenuItem from '../../../../Components/AddVideoMenuItem/AddVideoMenuItem';
+import AddVideoMenuItem from './AddVideoMenuItem';
 
 const StyledMenu = styled((props) => (
     // Estiliza el componente Menu de Material-UI y hereda las props
@@ -97,11 +97,11 @@ function MenuCategory ({ categoryId }) {
                     handleClose={handleClose}
                 />
                 {/* Elemento de menú para la opción "Agregar video" */}
-                {/* <AddVideoMenuItem 
+                <AddVideoMenuItem 
                     categoryId={categoryId} 
-                    categoryName={categoryName}
+                    // categoryName={categoryName}
                     handleClose={handleClose}
-                /> */}
+                />
             </StyledMenu>
         </>
     );
