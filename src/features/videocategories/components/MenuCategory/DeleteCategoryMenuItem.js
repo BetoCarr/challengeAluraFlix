@@ -16,7 +16,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     const { nombre, videos } = category
 
     const deleteStatus = useSelector((state) => state.videoCategories.deleteStatus);
-    console.log(deleteStatus)
+    // console.log(deleteStatus)
 
     useEffect(() => {
         if (deleteStatus === 'succeeded') {

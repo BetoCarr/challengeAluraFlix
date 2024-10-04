@@ -21,10 +21,6 @@ function AddVideoMenuItem ({ categoryId, handleClose }) {
 
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
-    // // Función para confirmar la acción de agregar video
-    // const handleConfirmation = () => {
-    //     setIsOpen(false); // Cierra el diálogo de confirmación
-    // };
 
     // Función para cancelar la acción de agregar video
     const onCancel = () => {

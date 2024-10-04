@@ -103,7 +103,7 @@ function FormNuevoVideo ({ handleClose, categoryId }) {
                     <Form className='form-container'>
                         {/* Sección para mostrar la categoría seleccionada */}
                         <div className='input-container-category '>
-                            <Typography >Categoria seleccionada: </Typography>
+                            <Typography >Categoria seleccionada: {nombre} </Typography>
                         </div>
                         {/* Componentes TextInput para los campos del formulario */}
                         <TextInput 
