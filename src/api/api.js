@@ -15,8 +15,6 @@ export async function buscar(url) {
     }
 }
 
-
-
 // Función para agregar una nueva categoría
 export function agregarCategoria(newCategory) {
     const rutaAgregarCategoria = `/categorias/agregar`; // Ruta para agregar una nueva categoría
@@ -34,21 +32,25 @@ export function eliminarCategoria(categoryId) {
     const rutaEliminarCategoria = `/categoria/${categoryId}/eliminar`; // Ruta para eliminar una categoría
     return api.delete(rutaEliminarCategoria);  // Realiza una petición DELETE para eliminar la categoría
 }
+
 // Funcion para obtner videos por categoryId
 export function obtnerVideosCategoryId(categoryId) {
     const rutaObtenerVideosCategory = `/categoria/${categoryId}/videos`
     return api.get(rutaObtenerVideosCategory)
 }
+
 // Función para agregar un nuevo video a una categoría específica
 export function agregarNuevoVideo(categoryId, newVideo) {
     const rutaParaAgregarVideo = `/categoria/${categoryId}/agregar_video`; // Ruta para agregar un nuevo video
     return api.post(rutaParaAgregarVideo, newVideo); // Realiza una petición POST para agregar el nuevo video
 }
+
 // Función para eliminar un video de una categoría específica
 export function eliminarVideo(categoryId, id) {
     const rutaEliminarVid = `/categoria/${categoryId}/eliminar_video/${id}`; // Ruta para eliminar un video
     return api.delete(rutaEliminarVid); // Realiza una petición DELETE para eliminar el video
 }
+
 // Función para obtener el estado de "like" de un video
 export function obtenerEstadoLike(videoId) {
     const rutaEstadoLike = `/video/${videoId}/liked`; // Ruta para obtener el estado de "like" de un video

@@ -1,33 +1,47 @@
 // Importa React y los componentes necesariosy hooks de Redux
 import './StyleVideoCard.css'
-import React from 'react';
+import React, { useEffect } from 'react';
 import MySlider from '../../../../Components/Slider/Slider';
 import Banner from '../Banner/Banner';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import VideoCard from './VideoCard';
-import { obtnerVideosCategoryId } from '../../../../api/api';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchVideosByCategory, selectVideosByCategory } from '../../../videos/videosSlice';
+
 // Componente funcional para renderizar las listas de videos
 function VideoList({ category }){
 
+    const dispatch = useDispatch();
+
+
+    const videoStatus = useSelector(state => state.videos.status)
+    const videos = useSelector((state) => selectVideosByCategory(state, category.id));
+
     // Obtiene la categoría del store usando el selector
     // const category = useSelector(state => selectCategoryById(state, categoryId));
-    console.log(category.id)
+    // console.log(category.id)
 
-    const fetchVideos = async (id) => {
-        // setLoading(true); // Muestra indicador de carga
-        const videosData = await obtnerVideosCategoryId(id);
-        console.log(videosData.data)
-        // setVideos(videosData); // Actualiza el estado con los videos obtenidos
-        // setLoading(false); // Oculta indicador de carga
-    };   
+    useEffect(() => {
+        if(videoStatus === 'idle') {
+            dispatch(fetchVideosByCategory({ categoryId: category.id }));
+        }
+    }, [videoStatus, category.id, dispatch])
 
-    fetchVideos(category.id)
-    // console.log(videos)
+    // console.log(videoStatus)
+    console.log(videos)
+    
+    // if(videoStatus === 'loading') {
+    //     console.log("CARgando")
+    // } else if( videoStatus === 'succeeded') {
+    //     // console.log(videos)
 
-    // // Verifica si la categoría es un banner
+    // } else if (videoStatus === 'failed') {
+    //     console.log("Fallo")
+    // }
+    // Verifica si la categoría es un banner
     // if(category.isBanner === true) {
     //     // Omite el primer video si es un banner
-    //     const videosToRender = category.videos.slice(1); 
+    //     const videosToRender = videos.videos.slice(1); 
 
     //     // Renderiza el carrusel de banner sin ContainerTitulo
     //     return(
@@ -53,8 +67,8 @@ function VideoList({ category }){
     //             <ContainerTitulo categoryId={category.id} />
     //             {/* Renderiza el slider con los videos de la categoría */}
     //             <MySlider>
-    //                 {category.videos.length > 0 ? (
-    //                     category.videos.map(video => (
+    //                 {videos.videos.length > 0 ? (
+    //                     videos.videos.map(video => (
     //                         <VideoCard key={video.id} categoryId={category.id} video={video} />
     //                     ))
     //                 ) : (
