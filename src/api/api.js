@@ -34,9 +34,8 @@ export function eliminarCategoria(categoryId) {
 }
 
 // Funcion para obtner videos por categoryId
-export function obtnerVideosCategoryId(categoryId) {
-    const rutaObtenerVideosCategory = `/categoria/${categoryId}/videos`
-    return api.get(rutaObtenerVideosCategory)
+export function obtnerVideos() {
+    return api.get('/videos')
 }
 
 // Función para agregar un nuevo video a una categoría específica

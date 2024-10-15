@@ -5,6 +5,8 @@ import MainContainer from "../Components/MainContainer/MainContainer";
 import VideoList from '../features/videocategories/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
+import { fetchVideos } from '../features/videos/videosSlice';
+
 
 // Función principal del componente Home
 function Home () {
@@ -13,7 +15,9 @@ function Home () {
 
     // Obtiene los ids de las categorías del estado de Redux usando un selector
     const categories = useSelector(selectAllCategories)
+    const videos = useSelector((state) => state.videos);
     // console.log(categories)
+
     // Obtiene el estado de las categorías y el posible error del estado de Redux
     const categoriesStatus = useSelector(state => state.videoCategories.status)
     const error = useSelector(state => state.videoCategories.error)
@@ -22,8 +26,10 @@ function Home () {
     useEffect(() => {
         if (categoriesStatus === 'idle') {
             dispatch(fetchCategories())
+            dispatch(fetchVideos());
         }
     }, [categoriesStatus, dispatch])
+
 
     // Variable para almacenar el contenido a renderizar
     let content
@@ -32,6 +38,7 @@ function Home () {
     if (categoriesStatus === 'loading') {
         content = <CircularProgress />
     } else if (categoriesStatus === 'succeeded') {
+        console.log(videos)
         content = categories.map((category) => (
             <VideoList
                 key={category.id}

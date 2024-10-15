@@ -6,34 +6,34 @@ import Banner from '../Banner/Banner';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import VideoCard from './VideoCard';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchVideosByCategory, selectVideosByCategory } from '../../../videos/videosSlice';
+import { fetchVideos  } from '../../../videos/videosSlice';
 
 // Componente funcional para renderizar las listas de videos
 function VideoList({ category }){
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
 
-    const videoStatus = useSelector(state => state.videos.status)
-    const videos = useSelector((state) => selectVideosByCategory(state, category.id));
+    // const videoStatus = useSelector(state => state.videos.status)
+    // const videos = useSelector((state) => state.videos);
 
     // Obtiene la categoría del store usando el selector
     // const category = useSelector(state => selectCategoryById(state, categoryId));
     // console.log(category.id)
 
-    useEffect(() => {
-        if(videoStatus === 'idle') {
-            dispatch(fetchVideosByCategory({ categoryId: category.id }));
-        }
-    }, [videoStatus, category.id, dispatch])
+    // useEffect(() => {
+    //     if(videoStatus === 'idle') {
+    //         dispatch(fetchVideos());
+    //     }
+    // }, [videoStatus, dispatch])
 
     // console.log(videoStatus)
-    console.log(videos)
+    // console.log(videos)
     
     // if(videoStatus === 'loading') {
     //     console.log("CARgando")
     // } else if( videoStatus === 'succeeded') {
-    //     // console.log(videos)
+    //     console.log(videos)
 
     // } else if (videoStatus === 'failed') {
     //     console.log("Fallo")
