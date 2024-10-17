@@ -1,24 +1,15 @@
 // Importacion de estilos, React, componentes MUI, e imagenes
 import './StylesBanner.css'
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import VideoCard from '../VideoList/VideoCard';
 import Typography from '@mui/material/Typography';
 import MessageBanner from './MessageBanner';
 import noVideoImage from '../../../../assets/img/no-video2.jpeg';
-import { selectCategoryById } from '../../videoCategoriesSlice';
 
 // Componente Banner que recibe el ID de la categoría como prop
-function Banner ({ categoryId }) {
-    // Obtén la categoría desde el store usando el selector
-    const category = useSelector(state => selectCategoryById(state, categoryId));
-    const { videos } = category;
-
-    // Obtiene el primer video de la categoría si existe
-    const video = videos.length > 0 ? videos[0] : null;
-
+function Banner ({ categoryId, video}) {
     // Comprobación si no hay video asociado a la categoría
     if(!video) {
         return (

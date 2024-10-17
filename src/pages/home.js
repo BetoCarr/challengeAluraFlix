@@ -15,8 +15,7 @@ function Home () {
 
     // Obtiene los ids de las categorías del estado de Redux usando un selector
     const categories = useSelector(selectAllCategories)
-    const videos = useSelector((state) => state.videos);
-    // console.log(categories)
+    const videos = useSelector((state) => state.videos.entities);
 
     // Obtiene el estado de las categorías y el posible error del estado de Redux
     const categoriesStatus = useSelector(state => state.videoCategories.status)
@@ -38,13 +37,18 @@ function Home () {
     if (categoriesStatus === 'loading') {
         content = <CircularProgress />
     } else if (categoriesStatus === 'succeeded') {
-        console.log(videos)
-        content = categories.map((category) => (
-            <VideoList
-                key={category.id}
-                category={category}
-            />
-        ))
+        content = categories.map((category) => {
+            const categoryVideos = Object.values(videos).filter(
+                video => video.categoria_id === category.id
+            );
+            return (
+                <VideoList
+                    key={category.id}
+                    category={category}
+                    videos={categoryVideos}
+                />
+            );
+        });
     } else if (categoriesStatus === 'failed') {
         content = <p>Error: {error}</p>
     }

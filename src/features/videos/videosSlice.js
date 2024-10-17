@@ -3,7 +3,7 @@ import { obtnerVideos } from '../../api/api';
 
 const videosAdapter = createEntityAdapter({
     selectId: (video) => video.id, // define que el 'id' es el campo identificador único de cada video
-    sortComparer: (a, b) => a.title.localeCompare(b.title), // opcional: define cómo ordenar los videos
+    sortComparer: (a, b) => a.id - b.id
 });
 
 const initialState = videosAdapter.getInitialState({
@@ -58,13 +58,18 @@ const videosSlice = createSlice({
     }
 });
 
-// Selecciona el estado de los videos dentro del estado global
-// const selectVideosState = (state) => state.videos;
+// Asumiendo que tienes un videosAdapter en tu videosSlice
+export const {
+    selectAll: selectAllVideos,
+    selectById: selectVideoById,
+    selectIds: selectVideoIds
+} = videosAdapter.getSelectors(state => state.videos);
 
-// Selecciona el objeto de videos por categoría
-// export const selectVideosByCategory = createSelector(
-//   [selectVideosState, (state, categoryId) => categoryId],  // Input selectors
-//   (videosState, categoryId) => videosState.videosByCategory[categoryId] || []  // Output selector que retorna un array de videos
-// );
+
+// Selector memoizado para obtener los videos de una categoría específica
+export const selectVideosByCategory = createSelector(
+    [selectAllVideos, (state, categoryId) => categoryId],
+    (videos, categoryId) => videos.filter(video => video.categoria_id === categoryId)
+);
 
 export default videosSlice.reducer;
