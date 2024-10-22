@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react';
 import { CircularProgress } from '@mui/material';
 import MainContainer from "../Components/MainContainer/MainContainer";
-import VideoList from '../features/videocategories/components/VideoList/VideoList';
+import VideoList from '../features/videos/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
 import { fetchVideos } from '../features/videos/videosSlice';

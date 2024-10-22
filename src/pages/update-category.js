@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import FormNuevoVideo from "../features/videocategories/components/FormNuevoVideo/FormNuevoVideo";
+import FormEditarCategoria from "../features/videocategories/components/FormEditarCategoria/FormEditarCategoria";
 import MainContainer from "../Components/MainContainer/MainContainer";
 
 function UpdateCategory () {
@@ -9,7 +9,7 @@ function UpdateCategory () {
 
     return(
         <MainContainer className={"main-container-form"}>
-            <FormNuevoVideo 
+            <FormEditarCategoria 
                 categoryId={categoryId} 
             />
         </MainContainer>

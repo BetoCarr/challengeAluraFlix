@@ -1,7 +1,7 @@
 import './StylesFormNuevoVideo.css'; // Importación de estilos CSS específicos para el formulario
 import React, { useState } from 'react'; // Importación de React y el hook useState
 import { useSelector } from 'react-redux';
-import { selectCategoryById } from '../../videoCategoriesSlice';
+import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
 import { Formik, Form } from 'formik'; // Importación de componentes de Formik para manejar formularios
 import { Typography } from '@mui/material'; // Importación de componente Typography de Material-UI
 import TextInput from '../../../../Components/TextInput/TextInput'; // Importación de componente personalizado de entrada de texto

@@ -7,18 +7,13 @@ function FeedbackDialog({ isOpen, onClose, message, onCancel, cancelLabel, onCon
 
     const navigate = useNavigate(); // Hook para navegar entre rutas
 
-    // const dispatch = useDispatch();
-
     const handleConfirm = () => {
         if (actionType === 'delete') {
             onConfirm()
-            console.log("delet")
         } else if (actionType === 'edit') {
             navigate(`/editar-categoria/${categoryId}`, { replace: true });
-            console.log("open form");
         } else if(actionType === 'addvideo') {
             navigate(`/agregar-video/${categoryId}`, { replace: true });
-            console.log("Abriendo Formulario agregar video")
         }
     };
 

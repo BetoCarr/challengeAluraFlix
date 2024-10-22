@@ -1,11 +1,11 @@
 // Importa React y los componentes necesariosy hooks de Redux
 import './StyleVideoCard.css'
-import { selectVideosByCategory } from '../../../videos/videosSlice';
+import { selectVideosByCategory } from '../../videosSlice';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import MySlider from '../../../../Components/Slider/Slider';
-import Banner from '../Banner/Banner';
-import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
+import Banner from '../../../videocategories/components/Banner/Banner';
+import ContainerTitulo from '../../../videocategories/components/ContainerTitulo/ContainerTitulo';
 import VideoCard from './VideoCard';
 
 // Componente funcional para renderizar las listas de videos

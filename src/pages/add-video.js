@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import FormNuevoVideo from "../features/videocategories/components/FormNuevoVideo/FormNuevoVideo";
+import FormNuevoVideo from "../features/videos/components/FormNuevoVideo/FormNuevoVideo";
 import MainContainer from "../Components/MainContainer/MainContainer";
 
 function AddVideo () {
