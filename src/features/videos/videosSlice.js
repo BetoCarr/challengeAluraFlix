@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from '@reduxjs/toolkit';
-import { obtnerVideos } from '../../api/api';
+import { obtnerVideos, agregarNuevoVideo } from '../../api/api';
 
 const videosAdapter = createEntityAdapter({
     selectId: (video) => video.id, // define que el 'id' es el campo identificador único de cada video
@@ -8,6 +8,7 @@ const videosAdapter = createEntityAdapter({
 
 const initialState = videosAdapter.getInitialState({
     status: 'idle',
+    addVideoStatus: 'idle', // Estado específico para la eliminación de categorías
     error: null,
 });
 
@@ -23,17 +24,17 @@ export const fetchVideos = createAsyncThunk(
     }
 );
 
-// export const addNewVideo = createAsyncThunk(
-//     'videos/agregarNuevoVideo',
-//     async ({ categoryId, newVideo }, { rejectWithValue }) => {
-//         try {
-//             const response = await agregarNuevoVideo(categoryId, newVideo); // Llama a la API para agregar el video
-//             return response.data; // Retorna los datos del video agregado
-//         } catch (error) {
-//             return rejectWithValue(error.message);
-//         }
-//     }
-// );
+export const addNewVideo = createAsyncThunk(
+    'videos/agregarNuevoVideo',
+    async ({ categoryId, newVideo }, { rejectWithValue }) => {
+        try {
+            const response = await agregarNuevoVideo(categoryId, newVideo); // Llama a la API para agregar el video
+            return response.data; // Retorna los datos del video agregado
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 const videosSlice = createSlice({
     name: 'videos',
@@ -43,6 +44,7 @@ const videosSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // OBTENER VIDEOS
             .addCase(fetchVideos.pending, (state) => {
                 state.status = 'loading';
             })
@@ -53,6 +55,19 @@ const videosSlice = createSlice({
             })
             .addCase(fetchVideos.rejected, (state, action) => {
                 state.status = 'failed';
+                state.error = action.payload;
+            })
+            // AGREGAR VIDEO
+            .addCase(addNewVideo.pending, (state) => {
+                state.addVideoStatus = 'loading';
+            })
+            .addCase(addNewVideo.fulfilled, (state, action) => {
+                const newVideo = action.payload;
+                videosAdapter.addOne(state, newVideo)
+                state.addVideoStatus = 'succeeded';
+            })
+            .addCase(addNewVideo.rejected, (state, action) => {
+                state.addVideoStatus = 'failed';
                 state.error = action.payload;
             });
     }

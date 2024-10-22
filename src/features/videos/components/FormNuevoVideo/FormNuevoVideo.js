@@ -1,24 +1,40 @@
 import './StylesFormNuevoVideo.css'; // Importación de estilos CSS específicos para el formulario
 import React, { useState } from 'react'; // Importación de React y el hook useState
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
 import { Formik, Form } from 'formik'; // Importación de componentes de Formik para manejar formularios
 import { Typography } from '@mui/material'; // Importación de componente Typography de Material-UI
 import TextInput from '../../../../Components/TextInput/TextInput'; // Importación de componente personalizado de entrada de texto
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importación de componente personalizado para botones de formulario
 // import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importación de componente de cuadro de diálogo de retroalimentación
-// import { agregarNuevoVideo } from '../../api/api'; // Importación de función para agregar un nuevo video desde la API
+import { addNewVideo } from '../../videosSlice';
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
 function FormNuevoVideo ({ handleClose, categoryId }) {
 
+    const dispatch = useDispatch(); // Hook para despachar acciones de Redux
+    const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
+
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
 
-    console.log(nombre)
+    // console.log(nombre)
 
-    const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null }); // Estado para manejar el cuadro de diálogo de retroalimentación
-    const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
+    // Estado local para FeedbackDialog
+    const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false); // Controla la visibilidad del diálogo
+    const [feedbackMessage, setFeedbackMessage] = useState(""); // Controla el mensaje mostrado en el diálogo
+
+    // Función para abrir el FeedbackDialog
+    const openFeedbackDialog = (message) => {
+        setFeedbackMessage(message);
+        setFeedbackDialogOpen(true);
+    };
+
+    // Función para cerrar el FeedbackDialog
+    const closeFeedbackDialog = () => {
+        setFeedbackDialogOpen(false);
+        setFeedbackMessage("");
+    };
 
     return (
         <>
@@ -69,6 +85,20 @@ function FormNuevoVideo ({ handleClose, categoryId }) {
                         linkImagen: values.linkImagen,
                     }   
 
+                    dispatch(addNewVideo({ categoryId, newVideo }))
+                    .unwrap()
+                    .then(() => {
+                        console.log('Video agregado exitosamente');
+                        // openFeedbackDialog("Categoría editada exitosamente!")
+                        // setTimeout(() => {
+                        //     closeFeedbackDialog();
+                        //     resetForm();
+                        //     navigate('/', { replace: true });
+                        // }, 2000);
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
                     // Llamada a la función para agregar un nuevo video a través de la API
                     // agregarNuevoVideo(categoryId, newVideo)
                     // .then((responseData) => {
