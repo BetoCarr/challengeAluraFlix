@@ -49,7 +49,7 @@ const videosSlice = createSlice({
             .addCase(fetchVideos.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 // Utilizas el adaptador para insertar los videos en el estado
-                videosAdapter.setAll(state, action.payload);
+                videosAdapter.upsertMany(state, action.payload);
             })
             .addCase(fetchVideos.rejected, (state, action) => {
                 state.status = 'failed';
@@ -69,7 +69,10 @@ export const {
 // Selector memoizado para obtener los videos de una categoría específica
 export const selectVideosByCategory = createSelector(
     [selectAllVideos, (state, categoryId) => categoryId],
-    (videos, categoryId) => videos.filter(video => video.categoria_id === categoryId)
-);
+    (videos, categoryId) => {
+        // Si videos es un objeto, conviértelo a array y filtra por categoría
+        return Object.values(videos).filter(video => video.categoria_id === categoryId);
+    }
+)
 
 export default videosSlice.reducer;

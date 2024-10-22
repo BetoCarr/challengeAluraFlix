@@ -1,5 +1,7 @@
 // Importa React y los componentes necesariosy hooks de Redux
 import './StyleVideoCard.css'
+import { selectVideosByCategory } from '../../../videos/videosSlice';
+import { useSelector } from 'react-redux';
 import React from 'react';
 import MySlider from '../../../../Components/Slider/Slider';
 import Banner from '../Banner/Banner';
@@ -7,13 +9,14 @@ import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
 import VideoCard from './VideoCard';
 
 // Componente funcional para renderizar las listas de videos
-function VideoList({ category, videos }){
-    console.log(videos)
+function VideoList({ category }){
+
+    const categoryVideos = useSelector(state => selectVideosByCategory(state, category.id));
 
     // Verifica si la categoría es un banner
     if(category.isBanner === true) {
         // Omite el primer video si es un banner
-        const firstVideo = videos.length > 0 ? videos[0] : null;
+        const firstVideo = categoryVideos.length > 0 ? categoryVideos[0] : null;
         // Renderiza el carrusel de banner sin ContainerTitulo
         return(
             <>
@@ -23,9 +26,9 @@ function VideoList({ category, videos }){
                     video={firstVideo} // Pasa el primer video a Banner 
                 />
                 <div className='container-videolist'>
-                    {/* Renderiza el slider con los videos restantes */}
+                    {/* Renderiza el slider con los categoryVideos restantes */}
                     <MySlider>
-                        {videos.slice(1).map(video => (
+                        {categoryVideos.slice(1).map(video => (
                                 <VideoCard 
                                     key={video.id} 
                                     categoryId={category.id} 
@@ -47,8 +50,8 @@ function VideoList({ category, videos }){
                 />
                 {/* Renderiza el slider con los videos de la categoría */}
                 <MySlider>
-                    {videos.length > 0 ? (
-                        videos.map(video => (
+                    {categoryVideos.length > 0 ? (
+                        categoryVideos.map(video => (
                             <VideoCard 
                                 key={video.id} 
                                 categoryId={category.id} 
