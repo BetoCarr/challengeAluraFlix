@@ -6,7 +6,7 @@ import { Formik, Form } from 'formik'; // Importación de componentes de Formik 
 import { Typography } from '@mui/material'; // Importación de componente Typography de Material-UI
 import TextInput from '../../../../Components/TextInput/TextInput'; // Importación de componente personalizado de entrada de texto
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importación de componente personalizado para botones de formulario
-// import FeedbackDialog from '../FeedbackDialog/FeedbackDialog'; // Importación de componente de cuadro de diálogo de retroalimentación
+import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
 import { addNewVideo } from '../../videosSlice';
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
@@ -89,44 +89,16 @@ function FormNuevoVideo ({ handleClose, categoryId }) {
                     .unwrap()
                     .then(() => {
                         console.log('Video agregado exitosamente');
-                        // openFeedbackDialog("Categoría editada exitosamente!")
-                        // setTimeout(() => {
-                        //     closeFeedbackDialog();
-                        //     resetForm();
-                        //     navigate('/', { replace: true });
-                        // }, 2000);
+                        openFeedbackDialog("Video agregado exitosamente!")
+                        setTimeout(() => {
+                            closeFeedbackDialog();
+                            resetForm();
+                            navigate('/', { replace: true });
+                        }, 2000);
                     })
                     .catch((error) => {
                         console.log(error)
                     });
-                    // Llamada a la función para agregar un nuevo video a través de la API
-                    // agregarNuevoVideo(categoryId, newVideo)
-                    // .then((responseData) => {
-                    //     console.log("¡Video agregado exitosamente!", responseData);
-                    //     resetForm();// Reinicia el formulario después de agregar el video
-                    //     // Configura el feedback para mostrar un mensaje de éxito
-                    //     setFeedback({
-                    //         isOpen: true,
-                    //         message: "¡Video agregado exitosamente! La página se recargará para mostrar el nuevo video.",
-                    //         onConfirm: () => {
-                    //             setFeedback({ isOpen: false });  // Cierra el feedback
-                    //             navigate('/', { replace: true }); // Navega a la página principal
-                    //             window.location.reload(); // Recarga la página para mostrar los cambios
-                    //         }
-                    //     });
-                    // })
-                    // .catch((error) => {
-                    //     console.error("Error al agregar el video:", error);
-                    //     // Configura el feedback para mostrar un mensaje de error
-                    //     setFeedback({
-                    //         isOpen: true,
-                    //         message: `Video NO agregado. Error: ${error}`,
-                    //         onConfirm: () => setFeedback({ isOpen: false })  // Cierra el feedback
-                    //     });
-                    // })
-                    // .finally(() => {
-                    //     setSubmitting(false); // Establece el estado de envío del formulario a falso
-                    // });
                 }}
             >
                 {({ isSubmitting, resetForm }) => (
@@ -165,14 +137,14 @@ function FormNuevoVideo ({ handleClose, categoryId }) {
                 )}
             </Formik>
             {/* Componente FeedbackDialog que se muestra según el estado del feedback */}
-            {/* <FeedbackDialog
-                isOpen={feedback.isOpen}
-                onClose={() => setFeedback({ isOpen: false })}
-                message={feedback.message}
-                onConfirm={feedback.onConfirm} */}
-            {/* /> */}
+            <FeedbackDialog
+                isOpen={feedbackDialogOpen}
+                onClose={closeFeedbackDialog}
+                message={feedbackMessage}
+            />
         </>
     );
 }
+
 // Exporta formulario
 export default FormNuevoVideo;

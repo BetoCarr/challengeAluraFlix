@@ -29,7 +29,8 @@ export const addNewVideo = createAsyncThunk(
     async ({ categoryId, newVideo }, { rejectWithValue }) => {
         try {
             const response = await agregarNuevoVideo(categoryId, newVideo); // Llama a la API para agregar el video
-            return response.data; // Retorna los datos del video agregado
+            // console.log(response)
+            return response.data.video; // Retorna los datos del video agregado
         } catch (error) {
             return rejectWithValue(error.message);
         }
