@@ -5,14 +5,13 @@ import { useSelector } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import DeleteVideoButton from '../../../../Components/DeleteForeverIcon/DeleteIcon';
+import DeleteVideoIcon from '../DeleteVideoIcon/DeleteVideoIcon';
 import LikeIcon from '../../../../Components/LikeIcon/LikeIcon';
 import Box from '@mui/material/Box';
 import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
 
 // Componente VideoCard que recibe el ID de la categoría, el video y si es el primer video como props
 const VideoCard = ({ categoryId, video, isFirstVideo }) => {
-
     // Selecciona la categoría del store usando el selector
     const category = useSelector(state => selectCategoryById(state, categoryId));
     const categoryColor = category?.color || 'defaultColor';
@@ -27,10 +26,10 @@ const VideoCard = ({ categoryId, video, isFirstVideo }) => {
     const cardClassName = isFirstVideo ? 'card-banner' : 'card';
     const imgClassName = isFirstVideo ? 'image-card-banner' : 'image-card';
 
-    // Función para manejar la eliminación del video
-    const handleVideoDeleted = () => {
-        window.location.reload();
-    };
+    // // Función para manejar la eliminación del video
+    // const handleVideoDeleted = () => {
+    //     window.location.reload();
+    // };
 
     return (
     // Componente de tarjeta de MUI con los estilos definidos
@@ -53,10 +52,10 @@ const VideoCard = ({ categoryId, video, isFirstVideo }) => {
                         title={video.title}
                     />
                     {/* Botón de eliminar video */}
-                    <DeleteVideoButton
+                    <DeleteVideoIcon
                         categoryId={categoryId}
                         videoId={video.id}
-                        onVideoDeleted={handleVideoDeleted}
+                        // onVideoDeleted={handleVideoDeleted}
                         title={video.title}
                     />
                 </div>

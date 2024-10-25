@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from '@reduxjs/toolkit';
-import { obtnerVideos, agregarNuevoVideo } from '../../api/api';
+import { obtnerVideos, agregarNuevoVideo, eliminarVideo } from '../../api/api';
 
 const videosAdapter = createEntityAdapter({
     selectId: (video) => video.id, // define que el 'id' es el campo identificador único de cada video
@@ -8,7 +8,8 @@ const videosAdapter = createEntityAdapter({
 
 const initialState = videosAdapter.getInitialState({
     status: 'idle',
-    addVideoStatus: 'idle', // Estado específico para la eliminación de categorías
+    addVideoStatus: 'idle',
+    deleteVideoStatus: 'idle',
     error: null,
 });
 
@@ -31,6 +32,24 @@ export const addNewVideo = createAsyncThunk(
             const response = await agregarNuevoVideo(categoryId, newVideo); // Llama a la API para agregar el video
             // console.log(response)
             return response.data.video; // Retorna los datos del video agregado
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+export const deleteVideo = createAsyncThunk(
+    'videos/eliminarVideo',
+    async ({ categoryId, videoid }, { rejectWithValue }) => {
+        try {
+            const response = await eliminarVideo(categoryId, videoid); // Llama a la API para agregar el video
+            if (response.status === 200) {
+                console.log(response)
+                // return { response, categoryId }
+                return new Promise((resolve) => setTimeout(() => resolve({ response, videoid }), 4000));
+            } else {
+                return rejectWithValue('Unexpected response status');
+            }
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -70,6 +89,19 @@ const videosSlice = createSlice({
             .addCase(addNewVideo.rejected, (state, action) => {
                 state.addVideoStatus = 'failed';
                 state.error = action.payload;
+            })
+            // ELIMINAR VIDEO
+            .addCase(deleteVideo.pending, (state) => {
+                state.deleteVideoStatus = 'loading';
+            })
+            .addCase(deleteVideo.fulfilled, (state, action) => {
+                const { videoid } = action.payload; // Desestructura el categoryId del payload
+                state.deleteVideoStatus = 'succeeded';
+                videosAdapter.removeOne(state, videoid);
+            })
+            .addCase(deleteVideo.rejected, (state, action) => {
+                state.deleteVideoStatus = 'failed';
+                state.error = action.error.message;
             });
     }
 });
