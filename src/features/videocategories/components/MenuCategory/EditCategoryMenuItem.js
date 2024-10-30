@@ -5,7 +5,7 @@ import { selectCategoryById } from '../../videoCategoriesSlice';
 import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import Divider from '@mui/material/Divider';
-import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
+// import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
 import { useTheme } from '@mui/material/styles'; 
 
 function EditCategroyMenuItem({ categoryId, handleClose }) {
@@ -38,7 +38,7 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
             </MenuItem>
             <Divider />
             {/* Cuadro de diálogo de confirmación de edicion */}
-            <FeedbackDialog
+            {/* <FeedbackDialog
                 isOpen={isOpen}
                 onClose={handleCloseDialog}
                 message={`¿Quieres editar la categoría ${nombre}?`}  // Usamos la interpolación dentro de {}
@@ -48,7 +48,7 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
                 actionType="edit"
                 showActions={true}
                 categoryId={categoryId}
-            />
+            /> */}
         </>
     );
 }

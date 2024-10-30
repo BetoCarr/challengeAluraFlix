@@ -1,32 +1,26 @@
 // Importación de React y componentes
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { deleteVideo } from '../../videosSlice';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-// import FeedbackDialog from '../FeedbackDialog/FeedbackDialog';
-// import FeedbackDialog from '../../features/feedbackdialog/FeedbackDialog/FeedbackDialog'
-// import { eliminarVideo } from '../../api/api';
+import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
+
 
 function DeleteVideoIcon({ categoryId, videoId, title, onVideoDeleted }) {
 
-    // Estado para gestionar la información del cuadro de diálogo de retroalimentación
-    const [feedback, setFeedback] = useState({ isOpen: false, message: '', onConfirm: null });
-
-    // Función para cerrar el cuadro de diálogo
-    const handleDialogClose = () => {
-        setFeedback({ isOpen: false });
-    };
+    const { openDialog } = useFeedback();
 
     // Maneja el clic en el icono de eliminar para abrir el cuadro de diálogo
     const handleDeleteClick = () => {
-        console.log(videoId)
-        // // Configura el cuadro de diálogo con el mensaje y la función de confirmación
-        // setFeedback({
-        //     isOpen: true,
-        //     message: `¿Estás seguro de eliminar permanentemente el video "${title}"?`,
-        //     onCancel: handleDialogClose,
-        //     // onConfirm: handleVideoDelete,
-        //     cancelLabel: 'Cancelar',
-        //     confirmLabel: 'Aceptar',
-        // });    
+        openDialog({
+            message: '¿Estás seguro de que deseas eliminar esta categoría?',
+            showActions: true,
+            confirmLabel: 'Eliminar',
+            onConfirm: () => {
+                // Lógica de eliminación aquí
+            },
+            actionType: 'delete',
+        });
     };
 
     // // Maneja la lógica de eliminación del video
@@ -59,16 +53,6 @@ function DeleteVideoIcon({ categoryId, videoId, title, onVideoDeleted }) {
         <>
             {/* Icono de eliminar que activa la función handleDeleteClick al hacer clic */}
             <DeleteForeverIcon className='icon' onClick={handleDeleteClick} />
-            {/* Componente de cuadro de diálogo de retroalimentación */}
-            {/* <FeedbackDialog
-                isOpen={feedback.isOpen}
-                onClose={() => setFeedback({ isOpen: false })}
-                message={feedback.message}
-                onCancel={feedback.onCancel}
-                onConfirm={feedback.onConfirm}
-                cancelLabel={feedback.cancelLabel}
-                confirmLabel="Aceptar"
-            /> */}
         </>
     );
 }

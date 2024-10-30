@@ -8,7 +8,7 @@ import TextInput from "../../../../Components/TextInput/TextInput"; // Importa e
 import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
 import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
-import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
+// import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
 import { selectAllCategories, addCategory, updateCategory } from '../../videoCategoriesSlice'
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 
@@ -193,11 +193,11 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                 )}
             </Formik>
             {/* Componente FeedbackDialog */}
-            <FeedbackDialog
+            {/* <FeedbackDialog
                 isOpen={feedbackDialogOpen}
                 onClose={closeFeedbackDialog}
                 message={feedbackMessage}
-            />
+            /> */}
         </>
     );
 }

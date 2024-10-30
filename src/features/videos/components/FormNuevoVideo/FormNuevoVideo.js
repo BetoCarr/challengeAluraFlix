@@ -6,7 +6,7 @@ import { Formik, Form } from 'formik'; // Importación de componentes de Formik 
 import { Typography } from '@mui/material'; // Importación de componente Typography de Material-UI
 import TextInput from '../../../../Components/TextInput/TextInput'; // Importación de componente personalizado de entrada de texto
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importación de componente personalizado para botones de formulario
-import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
+// import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
 import { addNewVideo } from '../../videosSlice';
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
@@ -137,11 +137,11 @@ function FormNuevoVideo ({ handleClose, categoryId }) {
                 )}
             </Formik>
             {/* Componente FeedbackDialog que se muestra según el estado del feedback */}
-            <FeedbackDialog
+            {/* <FeedbackDialog
                 isOpen={feedbackDialogOpen}
                 onClose={closeFeedbackDialog}
                 message={feedbackMessage}
-            />
+            /> */}
         </>
     );
 }

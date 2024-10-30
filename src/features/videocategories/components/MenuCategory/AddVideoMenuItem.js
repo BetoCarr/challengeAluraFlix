@@ -2,7 +2,7 @@
 import React, { useState }  from 'react';
 import { useSelector } from 'react-redux';
 import { selectCategoryById } from '../../videoCategoriesSlice';
-import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
+// import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
 import MenuItem from '@mui/material/MenuItem';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useTheme } from '@mui/material/styles'; 
@@ -41,7 +41,7 @@ function AddVideoMenuItem ({ categoryId, handleClose }) {
                 video
             </MenuItem>
             {/* Diálogo de confirmación para agregar un nuevo video */}
-            <FeedbackDialog
+            {/* <FeedbackDialog
                 isOpen={isOpen}
                 onClose={handleCloseDialog}
                 message={`¿Quieres agregar videos a la categoría ${nombre}?`}
@@ -51,7 +51,7 @@ function AddVideoMenuItem ({ categoryId, handleClose }) {
                 actionType='addvideo'
                 showActions={true}
                 categoryId={categoryId}
-            />
+            /> */}
         </>
     );
 }

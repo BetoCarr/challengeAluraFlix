@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCategoryById, deleteCategory } from '../../videoCategoriesSlice';
-import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
+// import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -13,6 +13,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     const dispatch = useDispatch();
 
     const category = useSelector(state => selectCategoryById(state, categoryId));
+    console.log(category)
     const { nombre, videos } = category
 
     const deleteStatus = useSelector((state) => state.videoCategories.deleteStatus);
@@ -109,7 +110,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
             </MenuItem>
             <Divider />
             {  /* Cuadro de diálogo de confirmación de eliminación */}
-            <FeedbackDialog
+            {/* <FeedbackDialog
                 isOpen={isConfirmDialogOpen}
                 onClose={handleConfirmCloseDialog}
                 message={`¿Quieres eliminar la categoría ${nombre}?`}  // Usamos la interpolación dentro de {}
@@ -119,13 +120,13 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
                 onCancel={onCancel}
                 actionType="delete"
                 showActions={true} // Muestra los botones Aceptar y Cancelar
-            />
+            /> */}
             {/* Cuadro de diálogo de error o mensaje de éxito */}
-            <FeedbackDialog
+            {/* <FeedbackDialog
                 isOpen={feedbackDialogOpen}
                 onClose={closeFeedbackDialog}
                 message={feedbackMessage}
-            />
+            /> */}
         </>
     );
 }
