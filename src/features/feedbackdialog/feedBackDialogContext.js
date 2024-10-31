@@ -5,36 +5,15 @@ import React, { createContext, useContext, useMemo, useState, useCallback } from
 const FeedbackContext = createContext();
 
 // 2. Crear el proveedor del contexto
-    export const FeedbackProvider = ({ children }) => {
-        const [dialogState, setDialogState] = useState({
-            isOpen: false,
-            message: '',
-            onConfirm: null,
-            onCancel: null,
-            confirmLabel: '',
-            cancelLabel: '',
-            showActions: false,
-            actionType: '',
-            categoryId: null,
-    });
+export const FeedbackProvider = ({ children }) => {
+    const [feedback, setFeedback] = useState("")
 
-     // Memoiza las funciones para evitar recrearlas en cada render
-    const openDialog = useCallback((dialogProps) => {
-        setDialogState(prevState => ({ ...prevState, ...dialogProps, isOpen: true }));
-    }, []);
-
-    const closeDialog = useCallback(() => {
-        setDialogState(prevState => ({ ...prevState, isOpen: false }));
-    }, []);
-
-    // Memoize the context value
-    const contextValue = useMemo(
-        () => ({ dialogState, openDialog, closeDialog }),
-        [dialogState, openDialog, closeDialog]
-    );
+    const openFeedback = name => {
+        setFeedback(name)
+    }
 
     return (
-        <FeedbackContext.Provider value={contextValue}>
+        <FeedbackContext.Provider value={{ feedback, openFeedback }}>
             {children}
         </FeedbackContext.Provider>
     );

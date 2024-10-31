@@ -3,25 +3,25 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteVideo } from '../../videosSlice';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
+// import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 
 
 function DeleteVideoIcon({ categoryId, videoId, title, onVideoDeleted }) {
 
-    const { openDialog } = useFeedback();
+    // const { openDialog } = useFeedback();
 
     // Maneja el clic en el icono de eliminar para abrir el cuadro de diálogo
-    const handleDeleteClick = () => {
-        openDialog({
-            message: '¿Estás seguro de que deseas eliminar esta categoría?',
-            showActions: true,
-            confirmLabel: 'Eliminar',
-            onConfirm: () => {
-                // Lógica de eliminación aquí
-            },
-            actionType: 'delete',
-        });
-    };
+    // const handleDeleteClick = () => {
+    //     openDialog({
+    //         message: '¿Estás seguro de que deseas eliminar esta categoría?',
+    //         showActions: true,
+    //         confirmLabel: 'Eliminar',
+    //         onConfirm: () => {
+    //             // Lógica de eliminación aquí
+    //         },
+    //         actionType: 'delete',
+    //     });
+    // };
 
     // // Maneja la lógica de eliminación del video
     // const handleVideoDelete = () => {
@@ -52,7 +52,7 @@ function DeleteVideoIcon({ categoryId, videoId, title, onVideoDeleted }) {
     return (
         <>
             {/* Icono de eliminar que activa la función handleDeleteClick al hacer clic */}
-            <DeleteForeverIcon className='icon' onClick={handleDeleteClick} />
+            {/* <DeleteForeverIcon className='icon' onClick={handleDeleteClick} /> */}
         </>
     );
 }

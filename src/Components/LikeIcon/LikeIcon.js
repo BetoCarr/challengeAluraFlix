@@ -1,7 +1,7 @@
 // Importacion de React y componentes
 import React, { useState, useEffect }  from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import FeedbackDialog from '../../features/feedbackdialog/FeedbackDialog/FeedbackDialog';
+// import FeedbackDialog from '../../features/feedbackdialog/FeedbackDialog/FeedbackDialog';
 import { darLikeVideo, obtenerEstadoLike } from '../../api/api';
 
 // Componente principal LikeIcon
@@ -14,15 +14,15 @@ function LikeIcon ( {videoId, title} ) {
     const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false);
     
     // Efecto para obtener y establecer el estado inicial de 'me gusta' al cargar el componente
-    useEffect(() => {
-        obtenerEstadoLike(videoId)
-            .then((data) => {
-                setLiked(data.data.liked); // Establece el estado actual de "liked" al cargar el componente
-            })
-            .catch((error) => {
-                console.error("Error al obtener estado de 'me gusta':", error);
-            });
-    }, [videoId]);
+    // useEffect(() => {
+    //     obtenerEstadoLike(videoId)
+    //         .then((data) => {
+    //             setLiked(data.data.liked); // Establece el estado actual de "liked" al cargar el componente
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error al obtener estado de 'me gusta':", error);
+    //         });
+    // }, [videoId]);
 
     // Función para manejar el clic en el ícono de 'me gusta'
     function handleLikeClick() {
@@ -52,12 +52,12 @@ function LikeIcon ( {videoId, title} ) {
                 onClick={handleLikeClick}
             />
             {/* Cuadro de diálogo de feedback para mostrar el resultado de dar/quitar 'me gusta' */}
-            <FeedbackDialog
+            {/* <FeedbackDialog
                 isOpen={feedbackDialogOpen}
                 onClose={handleFeedbackDialogClose}
                 message={liked ? `¡"${title}" añadido a tus favoritos!` : `¡"${title}" eliminado de tus favoritos!`}
                 onConfirm={handleFeedbackDialogClose}
-            />
+            /> */}
         </>
     );
 }

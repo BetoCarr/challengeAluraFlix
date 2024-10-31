@@ -7,15 +7,16 @@ import UpdateCategory from "./pages/update-category";
 import AddVideo from "./pages/add-video";
 import { ThemeProvider } from '@mui/material/styles';
 import tema from "./Components/Temas/tema";
-import FeedbackDialog from "./features/feedbackdialog/FeedbackDialog/FeedbackDialog";
+import FeedbackDialogManager from "./features/feedbackdialog/FeedbackDialog/FeedbackDialogManager";
 import { FeedbackProvider } from "./features/feedbackdialog/feedBackDialogContext";
 
 function App() {
     return(
-        <ThemeProvider theme={tema}>
+        <FeedbackProvider>
+            <FeedbackDialogManager />
             <Router>
-                <DefaultPage>
-                    <FeedbackProvider>
+                <ThemeProvider theme={tema}>
+                    <DefaultPage>
                         <Routes>
                             <Route exact path="/" element={<Home />} />
                             <Route exact path="/nueva-categoria" element={<NewCategory />} />
@@ -23,11 +24,11 @@ function App() {
                             <Route exact path="/agregar-video/:categoryId" element={<AddVideo />} />
                             <Route exact path="*" element={<h1>No existe :C</h1>} />
                         </Routes>
-                        <FeedbackDialog />
-                    </FeedbackProvider>
-                </DefaultPage>
+                        {/* <FeedbackDialog /> */}
+                    </DefaultPage>
+                </ThemeProvider>
             </Router>
-        </ThemeProvider>
+        </FeedbackProvider>
     );
 }
 

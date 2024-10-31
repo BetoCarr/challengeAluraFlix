@@ -6,16 +6,22 @@ import VideoList from '../features/videos/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
 import { fetchVideos } from '../features/videos/videosSlice';
+import { useFeedback } from '../features/feedbackdialog/feedBackDialogContext';
 
 
 // Función principal del componente Home
 function Home () {
+
+
+    const { feedback, openFeedback } = useFeedback()
+    console .log({ feedback, openFeedback })
+
+
     // Obtiene el dispatch de Redux para enviar acciones
     const dispatch = useDispatch()
 
     // Obtiene los ids de las categorías del estado de Redux usando un selector
     const categories = useSelector(selectAllCategories)
-    // console.log(categories)
 
     // Obtiene el estado de las categorías y el posible error del estado de Redux
     const categoriesStatus = useSelector(state => state.videoCategories.status)
@@ -51,7 +57,8 @@ function Home () {
     }
 
     return(
-        <MainContainer>
+        <MainContainer> 
+            <button onClick={() => openFeedback("feedback")}>Oprime</button>
             {content}
         </MainContainer>
     )
