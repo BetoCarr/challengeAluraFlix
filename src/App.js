@@ -12,10 +12,10 @@ import { FeedbackProvider } from "./features/feedbackdialog/feedBackDialogContex
 
 function App() {
     return(
-        <FeedbackProvider>
-            <FeedbackDialogManager />
-            <Router>
-                <ThemeProvider theme={tema}>
+        <ThemeProvider theme={tema}>
+            <FeedbackProvider>
+                <FeedbackDialogManager />
+                <Router>
                     <DefaultPage>
                         <Routes>
                             <Route exact path="/" element={<Home />} />
@@ -25,9 +25,10 @@ function App() {
                             <Route exact path="*" element={<h1>No existe :C</h1>} />
                         </Routes>
                     </DefaultPage>
-                </ThemeProvider>
-            </Router>
-        </FeedbackProvider>
+                </Router>
+            </FeedbackProvider>
+        </ThemeProvider>
+
     );
 }
 

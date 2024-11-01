@@ -13,8 +13,8 @@ import { useFeedback } from '../features/feedbackdialog/feedBackDialogContext';
 function Home () {
 
 
-    const { feedback, openFeedback } = useFeedback()
-    console .log({ feedback, openFeedback })
+    // const { feedback, openFeedback } = useFeedback()
+    // console .log({ feedback, openFeedback })
 
 
     // Obtiene el dispatch de Redux para enviar acciones
@@ -58,11 +58,11 @@ function Home () {
 
     return(
         <MainContainer> 
-            <button 
-                onClick={() => openFeedback("FeedbackDialog", { message: "Quieres eliminar el video", showActions: true})}
+            {/* <button 
+                onClick={() => openFeedback("FeedbackDialog", { message: "Quieres eliminar el video", showActions: true, onConfirm: () => {console.log("Confirmandoo!")}})}
             >
                 Oprime
-            </button>
+            </button> */}
             {content}
         </MainContainer>
     )
