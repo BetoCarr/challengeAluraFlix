@@ -6,14 +6,15 @@ const FeedbackContext = createContext();
 
 // 2. Crear el proveedor del contexto
 export const FeedbackProvider = ({ children }) => {
-    const [feedback, setFeedback] = useState("")
+    const [feedback, setFeedback] = useState(null)
 
-    const openFeedback = name => {
-        setFeedback(name)
+    const openFeedback = (name, props = {}) => {
+        setFeedback({ name, props })
     }
+    const closeFeedback = () => setFeedback(null)
 
     return (
-        <FeedbackContext.Provider value={{ feedback, openFeedback }}>
+        <FeedbackContext.Provider value={{ feedback, openFeedback, closeFeedback }}>
             {children}
         </FeedbackContext.Provider>
     );

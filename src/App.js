@@ -24,7 +24,6 @@ function App() {
                             <Route exact path="/agregar-video/:categoryId" element={<AddVideo />} />
                             <Route exact path="*" element={<h1>No existe :C</h1>} />
                         </Routes>
-                        {/* <FeedbackDialog /> */}
                     </DefaultPage>
                 </ThemeProvider>
             </Router>

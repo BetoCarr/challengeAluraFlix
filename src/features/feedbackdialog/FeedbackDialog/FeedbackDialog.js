@@ -1,16 +1,14 @@
-// import './FeedbackDialog.css';
+import './FeedbackDialog.css';
 import React from 'react';
-// import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/material';
-import { Dialog, Stack, Typography } from '@mui/material';
+import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/material'
+// import { Dialog, Stack, Typography } from '@mui/material';
 
 // import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 // // import { useFeedback } from '../feedBackDialogContext';
-function FeedbackDialog() {
+function FeedbackDialog({ onClose, message, showActions }) {
 
 //     const navigate = useNavigate(); // Hook para navegar entre rutas
 
-//     const { dialogState, closeDialog } = useFeedback();
-//     const { isOpen, message, onCancel, cancelLabel, onConfirm, confirmLabel, showActions, actionType, categoryId } = dialogState;
 
 //     const handleConfirm = () => {
 //         if (actionType === 'delete' && onConfirm) {
@@ -43,10 +41,22 @@ function FeedbackDialog() {
 //         </Dialog>
 //     );
     return(
-        <Dialog open fullWidth>
-            <Stack p={3}>
-                <Typography>Mesagge</Typography>
-            </Stack>
+        <Dialog open fullWidth onClose={onClose}>
+            <DialogContent className='box-dialog'>
+                <Typography variant="body1" style={{ paddingBottom: showActions ? 0 : '20px' }}>
+                    {message}
+                </Typography>
+            </DialogContent>
+            {showActions && (
+                <DialogActions>
+                    <Button onClick={onClose} color="primary">
+                        {'Cancelar'}
+                    </Button>
+                    <Button color="primary">
+                        {'Aceptar'}
+                    </Button>
+                </DialogActions>
+            )}
         </Dialog>
     )
 }

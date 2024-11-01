@@ -58,7 +58,11 @@ function Home () {
 
     return(
         <MainContainer> 
-            <button onClick={() => openFeedback("feedback")}>Oprime</button>
+            <button 
+                onClick={() => openFeedback("FeedbackDialog", { message: "Quieres eliminar el video", showActions: true})}
+            >
+                Oprime
+            </button>
             {content}
         </MainContainer>
     )
