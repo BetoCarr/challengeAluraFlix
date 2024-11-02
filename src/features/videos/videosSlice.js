@@ -40,13 +40,12 @@ export const addNewVideo = createAsyncThunk(
 
 export const deleteVideo = createAsyncThunk(
     'videos/eliminarVideo',
-    async ({ categoryId, videoid }, { rejectWithValue }) => {
+    async ({ categoryId, videoId }, { rejectWithValue }) => {
         try {
-            const response = await eliminarVideo(categoryId, videoid); // Llama a la API para agregar el video
+            const response = await eliminarVideo(categoryId, videoId); // Llama a la API para agregar el video
             if (response.status === 200) {
                 console.log(response)
-                // return { response, categoryId }
-                return new Promise((resolve) => setTimeout(() => resolve({ response, videoid }), 4000));
+                return { videoId }
             } else {
                 return rejectWithValue('Unexpected response status');
             }
@@ -95,9 +94,9 @@ const videosSlice = createSlice({
                 state.deleteVideoStatus = 'loading';
             })
             .addCase(deleteVideo.fulfilled, (state, action) => {
-                const { videoid } = action.payload; // Desestructura el categoryId del payload
+                const { videoId } = action.payload; // Desestructura el categoryId del payload
                 state.deleteVideoStatus = 'succeeded';
-                videosAdapter.removeOne(state, videoid);
+                videosAdapter.removeOne(state, videoId);
             })
             .addCase(deleteVideo.rejected, (state, action) => {
                 state.deleteVideoStatus = 'failed';

@@ -26,10 +26,6 @@ const VideoCard = ({ categoryId, video, isFirstVideo }) => {
     const cardClassName = isFirstVideo ? 'card-banner' : 'card';
     const imgClassName = isFirstVideo ? 'image-card-banner' : 'image-card';
 
-    // // Función para manejar la eliminación del video
-    // const handleVideoDeleted = () => {
-    //     window.location.reload();
-    // };
 
     return (
     // Componente de tarjeta de MUI con los estilos definidos
@@ -55,7 +51,6 @@ const VideoCard = ({ categoryId, video, isFirstVideo }) => {
                     <DeleteVideoIcon
                         categoryId={categoryId}
                         videoId={video.id}
-                        // onVideoDeleted={handleVideoDeleted}
                         title={video.title}
                     />
                 </div>
