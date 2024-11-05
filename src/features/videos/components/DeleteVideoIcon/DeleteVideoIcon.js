@@ -5,17 +5,16 @@ import { deleteVideo } from '../../videosSlice';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 
-function DeleteVideoIcon({ categoryId, videoId, title, onVideoDeleted }) {
+function DeleteVideoIcon({ categoryId, videoId, title }) {
 
     const dispatch = useDispatch()
 
     const { openFeedback, closeFeedback } = useFeedback()
-    // console.log(categoryId, videoId)
 
     // Maneja el clic en el icono de eliminar para abrir el cuadro de diálogo
     const handleDeleteClick = () => {
         openFeedback("FeedbackDialog", {
-            message: "Quieres eliminar el video?",
+            message: `¿Quieres eliminar el video "${title}"?`,
             showActions: true,
             onConfirm: () => {
                 closeFeedback()
@@ -26,14 +25,15 @@ function DeleteVideoIcon({ categoryId, videoId, title, onVideoDeleted }) {
 
     // Maneja la lógica de eliminación del video
     const handleVideoDelete = (categoryId, videoId) => {
-        console.log("Llamando a dispatch eliminar video")   
-        console.log(categoryId, videoId)
         dispatch(deleteVideo({ categoryId, videoId }))
             .then((response) => {
                 console.log("¡Video eliminado exitosamente!", response);
                 openFeedback("FeedbackDialog", {
                     message: "Video eliminado exitosamente!",
                 })
+                setTimeout(() => {
+                    closeFeedback();
+                }, 3000);
             })
             .catch((error) => {
                 console.error("Error al eliminar el video:", error);
@@ -41,6 +41,9 @@ function DeleteVideoIcon({ categoryId, videoId, title, onVideoDeleted }) {
                 openFeedback("FeedbackDialog", {
                     message: "Video NO eliminado!",
                 })
+                setTimeout(() => {
+                    closeFeedback();
+                }, 3000);
             })
     };  
 
