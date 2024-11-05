@@ -1,40 +1,24 @@
 import './StylesFormNuevoVideo.css'; // Importación de estilos CSS específicos para el formulario
-import React, { useState } from 'react'; // Importación de React y el hook useState
+import React from 'react'; // Importación de React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
 import { Formik, Form } from 'formik'; // Importación de componentes de Formik para manejar formularios
 import { Typography } from '@mui/material'; // Importación de componente Typography de Material-UI
 import TextInput from '../../../../Components/TextInput/TextInput'; // Importación de componente personalizado de entrada de texto
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importación de componente personalizado para botones de formulario
-// import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog';
 import { addNewVideo } from '../../videosSlice';
+import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
-function FormNuevoVideo ({ handleClose, categoryId }) {
+function FormNuevoVideo ({ categoryId }) {
 
     const dispatch = useDispatch(); // Hook para despachar acciones de Redux
     const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
 
+    const { openFeedback, closeFeedback } = useFeedback()
+
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
-
-    // console.log(nombre)
-
-    // Estado local para FeedbackDialog
-    const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false); // Controla la visibilidad del diálogo
-    const [feedbackMessage, setFeedbackMessage] = useState(""); // Controla el mensaje mostrado en el diálogo
-
-    // Función para abrir el FeedbackDialog
-    const openFeedbackDialog = (message) => {
-        setFeedbackMessage(message);
-        setFeedbackDialogOpen(true);
-    };
-
-    // Función para cerrar el FeedbackDialog
-    const closeFeedbackDialog = () => {
-        setFeedbackDialogOpen(false);
-        setFeedbackMessage("");
-    };
 
     return (
         <>
@@ -89,12 +73,14 @@ function FormNuevoVideo ({ handleClose, categoryId }) {
                     .unwrap()
                     .then(() => {
                         console.log('Video agregado exitosamente');
-                        openFeedbackDialog("Video agregado exitosamente!")
+                        openFeedback("FeedbackDialog", {
+                            message: "VIdeo agregado exitosamente!",
+                        })                           
                         setTimeout(() => {
-                            closeFeedbackDialog();
+                            closeFeedback();
                             resetForm();
                             navigate('/', { replace: true });
-                        }, 2000);
+                        }, 3000);
                     })
                     .catch((error) => {
                         console.log(error)
@@ -136,12 +122,6 @@ function FormNuevoVideo ({ handleClose, categoryId }) {
                     </Form>
                 )}
             </Formik>
-            {/* Componente FeedbackDialog que se muestra según el estado del feedback */}
-            {/* <FeedbackDialog
-                isOpen={feedbackDialogOpen}
-                onClose={closeFeedbackDialog}
-                message={feedbackMessage}
-            /> */}
         </>
     );
 }

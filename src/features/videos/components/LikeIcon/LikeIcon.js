@@ -2,7 +2,7 @@
 import React, { useState, useEffect }  from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 // import FeedbackDialog from '../../features/feedbackdialog/FeedbackDialog/FeedbackDialog';
-import { darLikeVideo, obtenerEstadoLike } from '../../api/api';
+import { darLikeVideo, obtenerEstadoLike } from '../../../../api/api';
 
 // Componente principal LikeIcon
 function LikeIcon ( {videoId, title} ) {

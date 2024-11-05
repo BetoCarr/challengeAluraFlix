@@ -32,6 +32,7 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
             onCancel: handleClose()
         })
     }
+
     return(
         <>
             {/* Componente que muestra el ícono y el mensaje de edicion y maneja la operación en el backend */}

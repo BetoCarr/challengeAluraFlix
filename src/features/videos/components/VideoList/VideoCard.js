@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import DeleteVideoIcon from '../DeleteVideoIcon/DeleteVideoIcon';
-import LikeIcon from '../../../../Components/LikeIcon/LikeIcon';
+import LikeIcon from '../LikeIcon/LikeIcon';
 import Box from '@mui/material/Box';
 import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
 
