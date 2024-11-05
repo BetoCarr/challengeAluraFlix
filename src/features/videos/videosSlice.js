@@ -10,6 +10,7 @@ const initialState = videosAdapter.getInitialState({
     status: 'idle',
     addVideoStatus: 'idle',
     deleteVideoStatus: 'idle',
+    likes: {},
     error: null,
 });
 
@@ -59,7 +60,22 @@ const videosSlice = createSlice({
     name: 'videos',
     initialState,
     reducers: {
-      // Puedes agregar más reducers si necesitas otras operaciones
+        // Puedes agregar más reducers si necesitas otras operaciones
+        toggleLike: (state, action) => {
+            const videoId = action.payload;
+            // Alterna el estado de "like" del video en el estado local
+            state.likes[videoId] = !state.likes[videoId];
+        }
+        // setVideos: (state, action) => {
+        //     // Usa el adaptador para cargar los videos en el estado
+        //     videosAdapter.setAll(state, action.payload);
+        //     // Inicializa el estado de "like" en "false" para cada video si no existe en `likes`
+        //     action.payload.forEach(video => {
+        //         if (!(video.id in state.likes)) {
+        //             state.likes[video.id] = false;
+        //         }
+        //     });
+        //}
     },
     extraReducers: (builder) => {
         builder
@@ -70,7 +86,14 @@ const videosSlice = createSlice({
             .addCase(fetchVideos.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 // Utilizas el adaptador para insertar los videos en el estado
-                videosAdapter.upsertMany(state, action.payload);
+                videosAdapter.upsertMany(state, action.payload)
+
+                // Inicializa el estado de "me gusta" para cada video
+                action.payload.forEach(video => {
+                    if (!(video.id in state.likes)) {
+                        state.likes[video.id] = false;
+                    }
+                })
             })
             .addCase(fetchVideos.rejected, (state, action) => {
                 state.status = 'failed';
@@ -83,7 +106,12 @@ const videosSlice = createSlice({
             .addCase(addNewVideo.fulfilled, (state, action) => {
                 const newVideo = action.payload;
                 videosAdapter.addOne(state, newVideo)
-                state.addVideoStatus = 'succeeded';
+                state.addVideoStatus = 'succeeded'
+
+                // Inicializa "me gusta" en "false" para el nuevo video
+                if (!(newVideo.id in state.likes)) {
+                    state.likes[newVideo.id] = false;
+                }  
             })
             .addCase(addNewVideo.rejected, (state, action) => {
                 state.addVideoStatus = 'failed';
@@ -104,6 +132,8 @@ const videosSlice = createSlice({
             });
     }
 });
+
+export const { toggleLike } = videosSlice.actions;
 
 // Asumiendo que tienes un videosAdapter en tu videosSlice
 export const {
