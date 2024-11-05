@@ -1,6 +1,6 @@
 // Importar los estilos y los componentes necesarios
 import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
-import React, { useState } from "react"; // Importa React y el hook useState
+import React from "react"; // Importa React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
@@ -8,9 +8,9 @@ import TextInput from "../../../../Components/TextInput/TextInput"; // Importa e
 import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
 import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
-// import FeedbackDialog from '../../../feedbackdialog/FeedbackDialog/FeedbackDialog'; // Importa el componente FeedbackDialog
 import { selectAllCategories, addCategory, updateCategory } from '../../videoCategoriesSlice'
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
+import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 
 // Función del componente principal FormNuevaCategoria
 function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
@@ -18,25 +18,11 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
     const navigate = useNavigate(); // Hook para navegar entre rutas
     const dispatch = useDispatch(); // Hook para despachar acciones de Redux
 
+    const { openFeedback, closeFeedback } = useFeedback()
+
     // Obtener las categorías y sus colores
     const categories = useSelector(selectAllCategories);
     const categoriesColors = categories.map(category => category.color);
-
-    // Estado local para FeedbackDialog
-    const [feedbackDialogOpen, setFeedbackDialogOpen] = useState(false); // Controla la visibilidad del diálogo
-    const [feedbackMessage, setFeedbackMessage] = useState(""); // Controla el mensaje mostrado en el diálogo
-
-    // Función para abrir el FeedbackDialog
-    const openFeedbackDialog = (message) => {
-        setFeedbackMessage(message);
-        setFeedbackDialogOpen(true);
-    };
-
-    // Función para cerrar el FeedbackDialog
-    const closeFeedbackDialog = () => {
-        setFeedbackDialogOpen(false);
-        setFeedbackMessage("");
-    };
 
     // Función para verificar la similitud de colores
     const isColorTooSimilar = (newColor, existingColors, threshold) => {
@@ -130,12 +116,14 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                         .unwrap()
                         .then(() => {
                             console.log('Edición exitosa, abriendo FeedbackDialog...');
-                            openFeedbackDialog("Categoría editada exitosamente!")
+                            openFeedback("FeedbackDialog", {
+                                message: "Categoria editada exitosamente!",
+                            })                           
                             setTimeout(() => {
-                                closeFeedbackDialog();
+                                closeFeedback();
                                 resetForm();
                                 navigate('/', { replace: true });
-                            }, 2000);
+                            }, 3000);
                         })
                         .catch((error) => {
                             console.log(error)
@@ -144,12 +132,14 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                         dispatch(addCategory(values))
                             .unwrap()
                             .then(() => {
-                                openFeedbackDialog("Categoría agregada exitosamente!");
+                                openFeedback("FeedbackDialog", {
+                                    message: "Categoria agregada exitosamente!",
+                                })                                
                                 setTimeout(() => {
-                                    closeFeedbackDialog();
+                                    closeFeedback();
                                     resetForm();
                                     navigate('/', { replace: true });
-                                }, 2000);
+                                }, 3000);
                             })
                             .catch((error) => {
                                 console.log(error)
@@ -192,12 +182,6 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
                     </Form>
                 )}
             </Formik>
-            {/* Componente FeedbackDialog */}
-            {/* <FeedbackDialog
-                isOpen={feedbackDialogOpen}
-                onClose={closeFeedbackDialog}
-                message={feedbackMessage}
-            /> */}
         </>
     );
 }

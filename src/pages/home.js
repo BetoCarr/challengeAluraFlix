@@ -6,16 +6,9 @@ import VideoList from '../features/videos/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
 import { fetchVideos } from '../features/videos/videosSlice';
-import { useFeedback } from '../features/feedbackdialog/feedBackDialogContext';
-
 
 // Función principal del componente Home
 function Home () {
-
-
-    // const { feedback, openFeedback } = useFeedback()
-    // console .log({ feedback, openFeedback })
-
 
     // Obtiene el dispatch de Redux para enviar acciones
     const dispatch = useDispatch()
@@ -58,11 +51,6 @@ function Home () {
 
     return(
         <MainContainer> 
-            {/* <button 
-                onClick={() => openFeedback("FeedbackDialog", { message: "Quieres eliminar el video", showActions: true, onConfirm: () => {console.log("Confirmandoo!")}})}
-            >
-                Oprime
-            </button> */}
             {content}
         </MainContainer>
     )

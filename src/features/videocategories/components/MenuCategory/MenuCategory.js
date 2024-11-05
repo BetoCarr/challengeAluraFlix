@@ -99,7 +99,6 @@ function MenuCategory ({ categoryId }) {
                 {/* Elemento de menú para la opción "Agregar video" */}
                 <AddVideoMenuItem 
                     categoryId={categoryId} 
-                    // categoryName={categoryName}
                     handleClose={handleClose}
                 />
             </StyledMenu>

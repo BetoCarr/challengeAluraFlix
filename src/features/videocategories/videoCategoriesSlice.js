@@ -65,9 +65,7 @@ export const deleteCategory = createAsyncThunk(
         try {
             const response = await eliminarCategoria(categoryId);
             if (response.status === 200) {
-                // console.log(response)
-                // return { response, categoryId }
-                return new Promise((resolve) => setTimeout(() => resolve({ response, categoryId }), 4000));
+                return categoryId 
             } else {
                 return rejectWithValue('Unexpected response status');
             }
@@ -135,9 +133,9 @@ const videoCategoriesSlice = createSlice({
                 state.deleteStatus = 'loading';
             })
             .addCase(deleteCategory.fulfilled, (state, action) => {
-                const { categoryId } = action.payload; // Desestructura el categoryId del payload
+                // const { categoryId } = action.payload; // Desestructura el categoryId del payload
                 state.deleteStatus = 'succeeded';
-                videoCategoriesAdapter.removeOne(state, categoryId);
+                videoCategoriesAdapter.removeOne(state, action.payload);
             })
             .addCase(deleteCategory.rejected, (state, action) => {
                 state.deleteStatus = 'failed';
