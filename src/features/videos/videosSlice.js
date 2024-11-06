@@ -66,16 +66,6 @@ const videosSlice = createSlice({
             // Alterna el estado de "like" del video en el estado local
             state.likes[videoId] = !state.likes[videoId];
         }
-        // setVideos: (state, action) => {
-        //     // Usa el adaptador para cargar los videos en el estado
-        //     videosAdapter.setAll(state, action.payload);
-        //     // Inicializa el estado de "like" en "false" para cada video si no existe en `likes`
-        //     action.payload.forEach(video => {
-        //         if (!(video.id in state.likes)) {
-        //             state.likes[video.id] = false;
-        //         }
-        //     });
-        //}
     },
     extraReducers: (builder) => {
         builder
