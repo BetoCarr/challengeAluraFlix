@@ -7,6 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import DeleteVideoIcon from '../DeleteVideoIcon/DeleteVideoIcon';
 import LikeIcon from '../LikeIcon/LikeIcon';
+import UpdateVideoIcon from '../UpdateVideoIcon/UpdateVideoIcon';
 import Box from '@mui/material/Box';
 import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
 
@@ -46,6 +47,10 @@ const VideoCard = ({ categoryId, video, isFirstVideo }) => {
                     <LikeIcon
                         videoId={video.id}
                         title={video.title}
+                    />                    
+                    <UpdateVideoIcon 
+                        categoryId={categoryId}
+                        videoId={video.id}
                     />
                     {/* Botón de eliminar video */}
                     <DeleteVideoIcon

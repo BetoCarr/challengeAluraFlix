@@ -18,8 +18,6 @@ function FormEditarCategoria({ categoryId }) {
         isBanner
     };
 
-    console.log(initialValuesForEdit);
-
     // Retorna el componente FormNuevaCategoria con los valores iniciales para la edición dentro de un dialogo
     return (
         <>

@@ -77,7 +77,6 @@ const videosSlice = createSlice({
                 state.status = 'succeeded';
                 // Utilizas el adaptador para insertar los videos en el estado
                 videosAdapter.upsertMany(state, action.payload)
-
                 // Inicializa el estado de "me gusta" para cada video
                 action.payload.forEach(video => {
                     if (!(video.id in state.likes)) {

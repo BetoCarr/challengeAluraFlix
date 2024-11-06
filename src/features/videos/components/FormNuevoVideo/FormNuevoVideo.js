@@ -10,7 +10,7 @@ import { addNewVideo } from '../../videosSlice';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
-function FormNuevoVideo ({ categoryId }) {
+function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
 
     const dispatch = useDispatch(); // Hook para despachar acciones de Redux
     const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
@@ -20,17 +20,19 @@ function FormNuevoVideo ({ categoryId }) {
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
 
+    const initialValues= initialValuesForEdit || {
+        titulo: '',
+        linkVideo: '',
+        linkImagen: ''
+    }
     return (
         <>
             {/* Título del formulario */}
-            <Typography variant='h3' color='text.primary'>Nuevo Video</Typography>
-            {/* Componente Formik para manejar el formulario */}
+            <Typography variant='h3' color='text.primary'>
+                {isEditing ? 'Editar Video' : 'Nuevo Video'}
+            </Typography>            {/* Componente Formik para manejar el formulario */}
             <Formik
-                initialValues={{
-                    titulo: '',
-                    linkVideo: '',
-                    linkImagen: ''
-                }}
+                initialValues={initialValues}
 
                 // Validación de los valores del formulario
                 validate={values => {

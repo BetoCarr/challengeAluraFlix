@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import NewCategory from "./pages/new-category";
 import UpdateCategory from "./pages/update-category";
 import AddVideo from "./pages/add-video";
+import UpdateVideo from "./pages/update-video";
 import { ThemeProvider } from '@mui/material/styles';
 import tema from "./Components/Temas/tema";
 import FeedbackDialogManager from "./features/feedbackdialog/FeedbackDialog/FeedbackDialogManager";
@@ -22,6 +23,7 @@ function App() {
                             <Route exact path="/nueva-categoria" element={<NewCategory />} />
                             <Route exact path="/editar-categoria/:categoryId" element={<UpdateCategory />} />
                             <Route exact path="/agregar-video/:categoryId" element={<AddVideo />} />
+                            <Route exact path="/editar-video/:categoryId/:videoId" element={<UpdateVideo />} />
                             <Route exact path="*" element={<h1>No existe :C</h1>} />
                         </Routes>
                     </DefaultPage>
