@@ -51,6 +51,7 @@ const VideoCard = ({ categoryId, video, isFirstVideo }) => {
                     <UpdateVideoIcon 
                         categoryId={categoryId}
                         videoId={video.id}
+                        title={video.title}
                     />
                     {/* Botón de eliminar video */}
                     <DeleteVideoIcon

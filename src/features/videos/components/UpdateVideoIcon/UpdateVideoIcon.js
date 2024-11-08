@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext'
 import { useNavigate } from 'react-router-dom';
 
-function UpdateVideoIcon ({ categoryId, videoId }) {
+function UpdateVideoIcon ({ categoryId, videoId, title }) {
     // console.log(videoId)
     const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ function UpdateVideoIcon ({ categoryId, videoId }) {
     const handleEditVideoClick = () => {
         // console.log("Quiero editar este video", videoId)
         openFeedback("FeedbackDialog", {
-            message: `¿Quieres editar el video ""?`,
+            message: `¿Quieres editar el video "${title}"?`,
             showActions: true,
             onConfirm: () => {
                 closeFeedback()

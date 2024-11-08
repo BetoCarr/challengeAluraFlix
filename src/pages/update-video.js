@@ -6,11 +6,12 @@ import MainContainer from "../Components/MainContainer/MainContainer";
 function UpdateVideo () {
 
     const { categoryId, videoId } = useParams(); // Extrae el categoryId de la URL
-    console.log(videoId)
+    
     return(
         <MainContainer>
             <FormEditarVideo 
                 categoryId={categoryId}
+                videoId={videoId}
             />
         </MainContainer>
     )

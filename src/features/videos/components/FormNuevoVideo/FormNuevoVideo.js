@@ -20,11 +20,12 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
 
-    const initialValues= initialValuesForEdit || {
-        titulo: '',
-        linkVideo: '',
-        linkImagen: ''
+    const initialValues = initialValuesForEdit || {
+        title: '',
+        videoUrl: '',
+        imageUrl: ''
     }
+
     return (
         <>
             {/* Título del formulario */}
@@ -33,28 +34,28 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
             </Typography>            {/* Componente Formik para manejar el formulario */}
             <Formik
                 initialValues={initialValues}
-
+                enableReinitialize
                 // Validación de los valores del formulario
                 validate={values => {
-                    const { titulo, linkVideo, linkImagen } = values;
+                    const { title, videoUrl, imageUrl } = values;
                     const errors = {};
 
-                    if (!titulo) {
-                        errors.titulo = 'El título es requerido';
-                    } else if(!/^[a-zA-Z0-9\s,.-]{3,100}$/.test(titulo)) {
-                        errors.titulo = 'El título del video debe contener entre 3 y 100 caracteres y solo puede incluir letras, números, espacios, comas, guiones y puntos.';
+                    if (!title) {
+                        errors.title = 'El título es requerido';
+                    } else if(!/^[a-zA-Z0-9\s,.-]{3,100}$/.test(title)) {
+                        errors.title = 'El título del video debe contener entre 3 y 100 caracteres y solo puede incluir letras, números, espacios, comas, guiones y puntos.';
                     }
 
-                    if (!linkVideo) {
-                        errors.linkVideo = 'El link del video es requerido';
-                    } else if(!/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/.test(linkVideo)) {
-                        errors.linkVideo = 'Por favor, ingresa un enlace de video válido. Asegúrate de que comience con http:// o https:// y que contenga solo letras, números, guiones, puntos y otros caracteres válidos.';
+                    if (!videoUrl) {
+                        errors.videoUrl = 'El link del video es requerido';
+                    } else if(!/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/.test(videoUrl)) {
+                        errors.videoUrl = 'Por favor, ingresa un enlace de video válido. Asegúrate de que comience con http:// o https:// y que contenga solo letras, números, guiones, puntos y otros caracteres válidos.';
                     }
 
-                    if (!linkImagen) {
-                        errors.linkImagen = 'El link de la imagen requerido';
-                    } else if(!/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/.test(linkImagen)) {
-                        errors.linkImagen = 'Por favor, ingresa un enlace de imagen válido. Asegúrate de que comience con http:// o https:// y que contenga solo letras, números, guiones, puntos y otros caracteres válidos.';
+                    if (!imageUrl) {
+                        errors.imageUrl = 'El link de la imagen requerido';
+                    } else if(!/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/.test(imageUrl)) {
+                        errors.imageUrl = 'Por favor, ingresa un enlace de imagen válido. Asegúrate de que comience con http:// o https:// y que contenga solo letras, números, guiones, puntos y otros caracteres válidos.';
                     }
 
                     return errors;
@@ -66,9 +67,9 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
                     setSubmitting(true);
 
                     const newVideo = {
-                        titulo: values.titulo,
-                        linkVideo: values.linkVideo,
-                        linkImagen: values.linkImagen,
+                        title: values.title,
+                        videoUrl: values.videoUrl,
+                        imageUrl: values.imageUrl,
                     }   
 
                     dispatch(addNewVideo({ categoryId, newVideo }))
@@ -98,19 +99,19 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
                         {/* Componentes TextInput para los campos del formulario */}
                         <TextInput 
                             label="Título"
-                            name="titulo"
+                            name="title"
                             placeholder="Introduce el título"
                         />
                         
                         <TextInput 
                             label="Link de video"
-                            name="linkVideo"
+                            name="videoUrl"
                             placeholder="Introduce el link del video"
                         />
 
                         <TextInput 
                             label="Link de imagen"
-                            name="linkImagen"
+                            name="imageUrl"
                             placeholder="Introduce el link de la imagen"
                         />
 
