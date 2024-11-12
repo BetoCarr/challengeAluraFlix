@@ -6,11 +6,11 @@ import { Formik, Form } from 'formik'; // Importación de componentes de Formik 
 import { Typography } from '@mui/material'; // Importación de componente Typography de Material-UI
 import TextInput from '../../../../Components/TextInput/TextInput'; // Importación de componente personalizado de entrada de texto
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importación de componente personalizado para botones de formulario
-import { addNewVideo } from '../../videosSlice';
+import { addNewVideo, updateVideo } from '../../videosSlice';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
 
-function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
+function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId }) {
 
     const dispatch = useDispatch(); // Hook para despachar acciones de Redux
     const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
@@ -19,6 +19,7 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
 
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
+    console.log(videoId)
 
     const initialValues = initialValuesForEdit || {
         title: '',
@@ -65,14 +66,14 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, categoryId }) {
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
 
                     setSubmitting(true);
+                    console.log(values)
+                    // const newVideo = {
+                    //     title: values.title,
+                    //     videoUrl: values.videoUrl,
+                    //     imageUrl: values.imageUrl,
+                    // }   
 
-                    const newVideo = {
-                        title: values.title,
-                        videoUrl: values.videoUrl,
-                        imageUrl: values.imageUrl,
-                    }   
-
-                    dispatch(addNewVideo({ categoryId, newVideo }))
+                    dispatch(addNewVideo({ categoryId, values }))
                     .unwrap()
                     .then(() => {
                         console.log('Video agregado exitosamente');

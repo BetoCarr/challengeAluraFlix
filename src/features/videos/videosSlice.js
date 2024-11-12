@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from '@reduxjs/toolkit';
-import { obtnerVideos, agregarNuevoVideo, eliminarVideo } from '../../api/api';
+import { obtnerVideos, agregarNuevoVideo, editarVideo, eliminarVideo } from '../../api/api';
 
 const videosAdapter = createEntityAdapter({
     selectId: (video) => video.id, // define que el 'id' es el campo identificador único de cada video
@@ -10,6 +10,7 @@ const initialState = videosAdapter.getInitialState({
     status: 'idle',
     addVideoStatus: 'idle',
     deleteVideoStatus: 'idle',
+    updateVideoStatus: 'idle',
     likes: {},
     error: null,
 });
@@ -38,6 +39,19 @@ export const addNewVideo = createAsyncThunk(
         }
     }
 );
+
+export const updateVideo = createAsyncThunk(
+    'videos/editarVideo',
+    async ({ videoId, updatedVideoData }, { rejectWithValue }) => {
+        try {
+            const response = await editarVideo(videoId, updatedVideoData); // Llama a la API para agregar el video
+            // console.log(response)
+            return response.data.video; // Retorna los datos del video editado
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
 
 export const deleteVideo = createAsyncThunk(
     'videos/eliminarVideo',
@@ -104,6 +118,19 @@ const videosSlice = createSlice({
             })
             .addCase(addNewVideo.rejected, (state, action) => {
                 state.addVideoStatus = 'failed';
+                state.error = action.payload;
+            })
+               // EDITAR VIDEO
+            .addCase(updateVideo.pending, (state) => {
+                state.updateVideoStatus = 'loading';
+            })
+            .addCase(updateVideo.fulfilled, (state, action) => {
+                const updatedVideo = action.payload;
+                videosAdapter.upsertOne(state, updatedVideo); // Actualiza el video en el estado
+                state.updateVideoStatus = 'succeeded';
+            })
+            .addCase(updateVideo.rejected, (state, action) => {
+                state.updateVideoStatus = 'failed';
                 state.error = action.payload;
             })
             // ELIMINAR VIDEO

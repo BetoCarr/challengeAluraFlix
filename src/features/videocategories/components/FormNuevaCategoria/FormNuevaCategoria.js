@@ -65,7 +65,6 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
         return { r, g, b };
     };
 
-
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
         nombre: '',

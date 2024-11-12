@@ -43,6 +43,11 @@ export function agregarNuevoVideo(categoryId, newVideo) {
     const rutaParaAgregarVideo = `/categoria/${categoryId}/agregar_video`; // Ruta para agregar un nuevo video
     return api.post(rutaParaAgregarVideo, newVideo); // Realiza una petición POST para agregar el nuevo video
 }
+// Función para editar un video en una categoría específica
+export function editarVideo(videoId, updatedVideoData) {
+    const rutaEditarVideo = `/videos/${videoId}/editar`; // Ruta para editar el video
+    return api.put(rutaEditarVideo, updatedVideoData); // Realiza una petición PUT para actualizar los datos del video
+}
 
 // Función para eliminar un video de una categoría específica
 export function eliminarVideo(categoryId, id) {
