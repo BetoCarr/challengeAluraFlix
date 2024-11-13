@@ -7,7 +7,7 @@ function FormEditarVideo({ categoryId, videoId  }) {
 
     const video = useSelector(state => selectVideoById(state, videoId));
 
-    const { title, videoUrl, imageUrl, id } = video
+    const { title, videoUrl, imageUrl } = video
 
     // Crea los valores iniciales para el formulario de edición
     const initialValuesForEdit = {
@@ -21,7 +21,7 @@ function FormEditarVideo({ categoryId, videoId  }) {
             <FormNuevoVideo 
                 initialValuesForEdit={initialValuesForEdit}
                 isEditing={true}
-                videoId={id}
+                videoId={videoId}
                 categoryId={categoryId}
             />
         </>

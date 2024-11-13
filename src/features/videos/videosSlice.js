@@ -32,7 +32,6 @@ export const addNewVideo = createAsyncThunk(
     async ({ categoryId, newVideo }, { rejectWithValue }) => {
         try {
             const response = await agregarNuevoVideo(categoryId, newVideo); // Llama a la API para agregar el video
-            // console.log(response)
             return response.data.video; // Retorna los datos del video agregado
         } catch (error) {
             return rejectWithValue(error.message);
@@ -57,7 +56,7 @@ export const deleteVideo = createAsyncThunk(
     'videos/eliminarVideo',
     async ({ categoryId, videoId }, { rejectWithValue }) => {
         try {
-            const response = await eliminarVideo(categoryId, videoId); // Llama a la API para agregar el video
+            const response = await eliminarVideo(categoryId, videoId); // Llama a la API para eliminar el video
             if (response.status === 200) {
                 console.log(response)
                 return { videoId }
@@ -120,19 +119,19 @@ const videosSlice = createSlice({
                 state.addVideoStatus = 'failed';
                 state.error = action.payload;
             })
-               // EDITAR VIDEO
-            .addCase(updateVideo.pending, (state) => {
-                state.updateVideoStatus = 'loading';
-            })
-            .addCase(updateVideo.fulfilled, (state, action) => {
-                const updatedVideo = action.payload;
-                videosAdapter.upsertOne(state, updatedVideo); // Actualiza el video en el estado
-                state.updateVideoStatus = 'succeeded';
-            })
-            .addCase(updateVideo.rejected, (state, action) => {
-                state.updateVideoStatus = 'failed';
-                state.error = action.payload;
-            })
+            //    // EDITAR VIDEO
+            // .addCase(updateVideo.pending, (state) => {
+            //     state.updateVideoStatus = 'loading';
+            // })
+            // .addCase(updateVideo.fulfilled, (state, action) => {
+            //     const updatedVideo = action.payload;
+            //     videosAdapter.upsertOne(state, updatedVideo); // Actualiza el video en el estado
+            //     state.updateVideoStatus = 'succeeded';
+            // })
+            // .addCase(updateVideo.rejected, (state, action) => {
+            //     state.updateVideoStatus = 'failed';
+            //     state.error = action.payload;
+            // })
             // ELIMINAR VIDEO
             .addCase(deleteVideo.pending, (state) => {
                 state.deleteVideoStatus = 'loading';

@@ -19,8 +19,9 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
 
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
-    console.log(videoId)
-
+    if(isEditing) {
+        console.log(videoId)
+    }
     const initialValues = initialValuesForEdit || {
         title: '',
         videoUrl: '',
@@ -32,7 +33,8 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
             {/* Título del formulario */}
             <Typography variant='h3' color='text.primary'>
                 {isEditing ? 'Editar Video' : 'Nuevo Video'}
-            </Typography>            {/* Componente Formik para manejar el formulario */}
+            </Typography>           
+            {/* Componente Formik para manejar el formulario */}
             <Formik
                 initialValues={initialValues}
                 enableReinitialize
@@ -64,16 +66,15 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
 
                 // Manejo de la acción de envío del formulario
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
-
                     setSubmitting(true);
-                    console.log(values)
-                    // const newVideo = {
-                    //     title: values.title,
-                    //     videoUrl: values.videoUrl,
-                    //     imageUrl: values.imageUrl,
-                    // }   
 
-                    dispatch(addNewVideo({ categoryId, values }))
+                    const newVideo = {
+                        title: values.title,
+                        videoUrl: values.videoUrl,
+                        imageUrl: values.imageUrl,
+                    }  
+
+                    dispatch(addNewVideo({ categoryId, newVideo }))
                     .unwrap()
                     .then(() => {
                         console.log('Video agregado exitosamente');
