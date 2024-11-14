@@ -19,9 +19,7 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
 
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
-    if(isEditing) {
-        console.log(videoId)
-    }
+
     const initialValues = initialValuesForEdit || {
         title: '',
         videoUrl: '',
@@ -66,30 +64,56 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
 
                 // Manejo de la acción de envío del formulario
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
-                    setSubmitting(true);
+                    if(isEditing) {
+                        
+                        const updatedVideoData = {
+                            title: values.title,
+                            videoUrl: values.videoUrl,
+                            imageUrl: values.imageUrl,
+                        }
 
-                    const newVideo = {
-                        title: values.title,
-                        videoUrl: values.videoUrl,
-                        imageUrl: values.imageUrl,
-                    }  
+                        dispatch(updateVideo({videoId, updatedVideoData}))
+                        .unwrap()
+                        .then(() => {
+                            console.log('Video editado exitosamente');
+                            openFeedback("FeedbackDialog", {
+                                message: "VIdeo editado exitosamente!",
+                            })                           
+                            setTimeout(() => {
+                                closeFeedback();
+                                resetForm();
+                                navigate('/', { replace: true });
+                            }, 3000);
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        });
+                    } else {
+                        setSubmitting(true)
+                    
+                        const newVideo = {
+                            title: values.title,
+                            videoUrl: values.videoUrl,
+                            imageUrl: values.imageUrl,
+                        }  
 
-                    dispatch(addNewVideo({ categoryId, newVideo }))
-                    .unwrap()
-                    .then(() => {
-                        console.log('Video agregado exitosamente');
-                        openFeedback("FeedbackDialog", {
-                            message: "VIdeo agregado exitosamente!",
-                        })                           
-                        setTimeout(() => {
-                            closeFeedback();
-                            resetForm();
-                            navigate('/', { replace: true });
-                        }, 3000);
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    });
+                        dispatch(addNewVideo({ categoryId, newVideo }))
+                        .unwrap()
+                        .then(() => {
+                            console.log('Video agregado exitosamente');
+                            openFeedback("FeedbackDialog", {
+                                message: "VIdeo agregado exitosamente!",
+                            })                           
+                            setTimeout(() => {
+                                closeFeedback();
+                                resetForm();
+                                navigate('/', { replace: true });
+                            }, 3000);
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        });
+                    }
                 }}
             >
                 {({ isSubmitting, resetForm }) => (

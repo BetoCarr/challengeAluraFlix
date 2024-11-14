@@ -44,8 +44,7 @@ export const updateVideo = createAsyncThunk(
     async ({ videoId, updatedVideoData }, { rejectWithValue }) => {
         try {
             const response = await editarVideo(videoId, updatedVideoData); // Llama a la API para agregar el video
-            // console.log(response)
-            return response.data.video; // Retorna los datos del video editado
+            return response.data; // Retorna los datos del video editado
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -119,19 +118,30 @@ const videosSlice = createSlice({
                 state.addVideoStatus = 'failed';
                 state.error = action.payload;
             })
-            //    // EDITAR VIDEO
-            // .addCase(updateVideo.pending, (state) => {
-            //     state.updateVideoStatus = 'loading';
-            // })
-            // .addCase(updateVideo.fulfilled, (state, action) => {
-            //     const updatedVideo = action.payload;
-            //     videosAdapter.upsertOne(state, updatedVideo); // Actualiza el video en el estado
-            //     state.updateVideoStatus = 'succeeded';
-            // })
-            // .addCase(updateVideo.rejected, (state, action) => {
-            //     state.updateVideoStatus = 'failed';
-            //     state.error = action.payload;
-            // })
+            // EDITAR VIDEO
+            .addCase(updateVideo.pending, (state) => {
+                state.updateVideoStatus = 'loading';
+            })
+            .addCase(updateVideo.fulfilled, (state, action) => {
+                state.updateVideoStatus = 'succeeded';
+                const { id, title, videoUrl, imageUrl } = action.payload.video || {}; // Verifica si `video` existe
+                if (id) {
+                    videosAdapter.updateOne(state, {
+                        id,
+                        changes: {
+                            title,
+                            videoUrl,
+                            imageUrl,
+                        },
+                    });
+                } else {
+                    console.warn("No se encontró el ID del video en los datos recibidos."); // Ayuda a detectar si falta el ID
+                }
+            })
+            .addCase(updateVideo.rejected, (state, action) => {
+                state.updateVideoStatus = 'failed';
+                state.error = action.payload;
+            })
             // ELIMINAR VIDEO
             .addCase(deleteVideo.pending, (state) => {
                 state.deleteVideoStatus = 'loading';
