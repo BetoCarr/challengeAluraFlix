@@ -27,7 +27,7 @@ function EditCategroyMenuItem({ categoryId, handleClose }) {
             showActions: true,
             onConfirm: () => {
                 closeFeedback()
-                navigate(`/editar-categoria/${categoryId}`);  // Navega a la ruta de edición
+                navigate(`/update-category/${categoryId}`);  // Navega a la ruta de edición
             },
             onCancel: handleClose()
         })

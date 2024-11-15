@@ -27,7 +27,7 @@ function AddVideoMenuItem ({ categoryId, handleClose }) {
             showActions: true,
             onConfirm: () => {
                 closeFeedback()
-                navigate(`/agregar-video/${categoryId}`);  // Navega a la ruta de edición
+                navigate(`/add-video/${categoryId}`);  // Navega a la ruta de edición
             },
             onCancel: handleClose()
         })

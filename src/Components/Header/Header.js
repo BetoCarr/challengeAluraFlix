@@ -20,7 +20,7 @@ function Header() {
                 {/* Contenedor de botones */}
                 <Box className='button-container'>
                     {/* Enlace para agregar una nueva categoría */}
-                    <Link to="/nueva-categoria">
+                    <Link to="/new-category">
                         <Button disableRipple size='medium' variant='outlined' className='theme-button'>
                             {/* Texto del botón */}
                             <Typography>Nueva Categoria</Typography>
