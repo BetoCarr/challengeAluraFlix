@@ -1,13 +1,13 @@
 // Importa React y los componentes necesarios
 import React, {useEffect} from 'react';
-import { CircularProgress } from '@mui/material';
-import MainContainer from "../Components/MainContainer/MainContainer";
-import VideoList from '../features/videos/components/VideoList/VideoList';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
 import { fetchVideos } from '../features/videos/videosSlice';
+import MainContainer from "../Components/MainContainer/MainContainer";
+import HomePageSkeleton from '../Components/HomePageSkeleton/HomePageSkeleton';
+import VideoList from '../features/videos/components/VideoList/VideoList';
 
-// Función principal del componente Home
+
 function Home () {
 
     // Obtiene el dispatch de Redux para enviar acciones
@@ -17,42 +17,45 @@ function Home () {
     const categories = useSelector(selectAllCategories)
 
     // Obtiene el estado de las categorías y el posible error del estado de Redux
-    const categoriesStatus = useSelector(state => state.videoCategories.status)
+    const categoryStatus = useSelector(state => state.videoCategories.status)
     const videosStatus = useSelector(state => state.videos.status)
-    const error = useSelector(state => state.videoCategories.error)
+    const categoryError = useSelector(state => state.videoCategories.error)
+    const videoError = useSelector((state) => state.videos.error);
 
-    // Llama al thunk para obtener las categorías cuando el componente se monta
+    // Llama al thunk para obtener las categorías y videos cuando el componente se monta
     useEffect(() => {
-        if (categoriesStatus === 'idle') {
-            dispatch(fetchCategories())
+        if (categoryStatus === 'idle' || videosStatus === 'idle') {
+            dispatch(fetchCategories());
             dispatch(fetchVideos());
         }
-    }, [categoriesStatus, dispatch])
+    }, [categoryStatus, videosStatus, dispatch]);
 
+    const renderCategories = () =>
+        categories.map((category) => (
+            <VideoList key={category.id} category={category} />
+        ));
 
     // Variable para almacenar el contenido a renderizar
     let content
 
     // Determina qué contenido mostrar basado en el estado de las categorías
-    if (categoriesStatus === 'loading' && videosStatus === 'loading') {
-        content = <CircularProgress />
-    } else if (categoriesStatus === 'succeeded' && videosStatus === 'succeeded') {
-        content = categories.map((category) => {
-            return (
-                <VideoList
-                    key={category.id}
-                    category={category}
-                />
-            );
-        });
-    } else if (categoriesStatus === 'failed') {
-        content = <p>Error: {error}</p>
+    if (categoryStatus === 'loading' && videosStatus === 'loading') {
+        content = (
+            <HomePageSkeleton />
+        )
+    } else if (categoryStatus === 'succeeded' && videosStatus === 'succeeded') {
+        content = renderCategories();
+    } else if (categoryStatus === 'failed' || videosStatus === 'failed') {
+        content = (
+            <p>
+                Error en categorías: {categoryError} <br />
+                Error en videos: {videoError}
+            </p>
+        );
     }
 
     return(
-        <MainContainer> 
-            {content}
-        </MainContainer>
+        <MainContainer>{content}</MainContainer>
     )
 }
 
