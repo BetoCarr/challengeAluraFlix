@@ -5,18 +5,18 @@ import { fetchCategories, selectAllCategories } from '../features/videocategorie
 import { fetchVideos } from '../features/videos/videosSlice';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import HomePageSkeleton from '../Components/HomePageSkeleton/HomePageSkeleton';
+import ErrorMessage from '../Components/ErrorMessage/ErrorMessage';
 import VideoList from '../features/videos/components/VideoList/VideoList';
 
 
 function Home () {
-
     // Obtiene el dispatch de Redux para enviar acciones
     const dispatch = useDispatch()
 
     // Obtiene los ids de las categorías del estado de Redux usando un selector
     const categories = useSelector(selectAllCategories)
 
-    // Obtiene el estado de las categorías y el posible error del estado de Redux
+    // Obtiene el estado de las categorías y videos el posible error del estado de Redux
     const categoryStatus = useSelector(state => state.videoCategories.status)
     const videosStatus = useSelector(state => state.videos.status)
     const categoryError = useSelector(state => state.videoCategories.error)
@@ -30,6 +30,7 @@ function Home () {
         }
     }, [categoryStatus, videosStatus, dispatch]);
 
+    // Función auxiliar para renderizar la lista de Videos
     const renderCategories = () =>
         categories.map((category) => (
             <VideoList key={category.id} category={category} />
@@ -47,10 +48,20 @@ function Home () {
         content = renderCategories();
     } else if (categoryStatus === 'failed' || videosStatus === 'failed') {
         content = (
-            <p>
-                Error en categorías: {categoryError} <br />
-                Error en videos: {videoError}
-            </p>
+            <>
+                {categoryStatus === 'failed' && (
+                    <ErrorMessage 
+                        message={`Error en categorías: ${categoryError}`} 
+                        onRetry={() => dispatch(fetchCategories())}
+                    />
+                )}
+                {videosStatus === 'failed' && (
+                    <ErrorMessage 
+                        message={`Error en videos: ${videoError}`} 
+                        onRetry={() => dispatch(fetchVideos())}
+                    />
+                )}
+            </>
         );
     }
 
