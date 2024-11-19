@@ -2,3 +2,18 @@
     width: 100%;
     padding: 6rem;
 }
+.title-container {
+    display: flex;
+    justify-content: space-between; /* Distribuir elementos con espacio entre ellos */
+    align-items: flex-start; /* Alinear elementos verticalmente al inicio */
+    gap: 16px; 
+}
+.left-content {
+    flex: 1; /* Ocupa el espacio necesario */
+}
+.right-content {
+    flex: 1; /* Ocupa el espacio necesario */
+}
+.cards-container {
+    margin-top: 16px; /* Espacio adicional entre el título y las tarjetas */
+}
