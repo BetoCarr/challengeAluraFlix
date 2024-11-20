@@ -2,7 +2,7 @@
 import './StylesBanner.css'
 import React from 'react';
 import Box from '@mui/material/Box';
-import ContainerTitulo from '../ContainerTitulo/ContainerTitulo';
+import TitleContainer from '../TitleContainer/TitleContainer';
 import VideoCard from '../../../videos/components/VideoList/VideoCard';
 import Typography from '@mui/material/Typography';
 import MessageBanner from './MessageBanner';
@@ -19,7 +19,7 @@ function Banner ({ categoryId, video}) {
                 <Box className='content-container-error'>
                     <Box className='not-found'>   
                         {/* Título de la categoría */}
-                        <ContainerTitulo categoryId={categoryId} />
+                        <TitleContainer categoryId={categoryId} />
                         {/* Mensaje de invitación a explorar deportes */}
                         <MessageBanner />
                     </Box>
@@ -48,7 +48,7 @@ function Banner ({ categoryId, video}) {
                 {/* Contenedor del contenido del banner */}
                 <Box className='content-container'>
                     {/* Título de la categoría */}
-                    <ContainerTitulo categoryId={categoryId} />
+                    <TitleContainer categoryId={categoryId} />
                     {/* Mensaje de invitación a explorar deportes */}
                     <MessageBanner />
                 </Box>

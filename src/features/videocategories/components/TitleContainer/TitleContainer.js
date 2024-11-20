@@ -1,5 +1,5 @@
 // Importación de React y componentes
-import './StylesContainerTitulo.css';
+import './TitleContainerStyle.css';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Paper from '@mui/material/Paper';
@@ -8,7 +8,7 @@ import MenuCategory from '../MenuCategory/MenuCategory';
 import { selectCategoryById } from '../../videoCategoriesSlice';
 
 // Componente que representa un contenedor de título con un menú desplegable
-function ContainerTitulo({ categoryId }) {
+function TitleContainer({ categoryId }) {
     const category = useSelector(state => selectCategoryById(state, categoryId));
     const { nombre, color, isBanner } = category;
 
@@ -31,5 +31,5 @@ function ContainerTitulo({ categoryId }) {
     );
 }
 
-// Exporta el componente ContainerTitulo para su uso en otras partes de la aplicación
-export default ContainerTitulo;
+// Exporta el componente TitleContainer para su uso en otras partes de la aplicación
+export default TitleContainer;

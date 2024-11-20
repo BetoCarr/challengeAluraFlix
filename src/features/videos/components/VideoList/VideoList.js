@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import React from 'react';
 import MySlider from '../../../../Components/Slider/Slider';
 import Banner from '../../../videocategories/components/Banner/Banner';
-import ContainerTitulo from '../../../videocategories/components/ContainerTitulo/ContainerTitulo';
+import TitleContainer from '../../../videocategories/components/TitleContainer/TitleContainer';
 import VideoCard from './VideoCard';
 
 // Componente funcional para renderizar las listas de videos
@@ -45,7 +45,7 @@ function VideoList({ category }){
         return(
             <div className='container-videolist'>
                 {/* Renderiza el título de la categoría */}
-                <ContainerTitulo 
+                <TitleContainer 
                     categoryId={category.id} 
                 />
                 {/* Renderiza el slider con los videos de la categoría */}
