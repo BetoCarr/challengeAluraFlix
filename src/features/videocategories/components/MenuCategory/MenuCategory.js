@@ -7,7 +7,7 @@ import Menu  from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import DeleteCategoryMenuItem from './DeleteCategoryMenuItem';
-import EditCategroyMenuItem from './EditCategoryMenuItem';
+import UpdateCategoryMenuItem from './UpdateCategoryMenuItem';
 import AddVideoMenuItem from './AddVideoMenuItem';
 
 const StyledMenu = styled((props) => (
@@ -92,7 +92,7 @@ function MenuCategory ({ categoryId }) {
                     handleClose={handleClose}
                 />
                 {/* Elemento de menú para la opción "Editar" */}
-                <EditCategroyMenuItem 
+                <UpdateCategoryMenuItem 
                     categoryId={categoryId} 
                     handleClose={handleClose}
                 />
