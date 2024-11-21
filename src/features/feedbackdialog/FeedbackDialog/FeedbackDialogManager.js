@@ -11,7 +11,6 @@ function FeedbackDialogManager() {
     if(!feedback) return null
 
     const Feedback = FeedbackLookup[feedback.name]
-    // console.log(Feedback)
 
     return <Feedback onClose={closeFeedback} {...feedback.props}/>
 }

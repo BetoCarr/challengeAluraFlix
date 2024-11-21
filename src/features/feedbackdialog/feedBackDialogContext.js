@@ -1,5 +1,5 @@
 // FeedbackContext.js
-import React, { createContext, useContext, useMemo, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 // Crea el contexto
 const FeedbackContext = createContext();
@@ -11,6 +11,7 @@ export const FeedbackProvider = ({ children }) => {
     const openFeedback = (name, props = {}) => {
         setFeedback({ name, props })
     }
+
     const closeFeedback = () => setFeedback(null)
 
     return (

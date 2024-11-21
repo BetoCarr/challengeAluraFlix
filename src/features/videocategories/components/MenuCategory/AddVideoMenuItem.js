@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { selectCategoryById } from '../../videoCategoriesSlice';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles'; 
 import MenuItem from '@mui/material/MenuItem';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import { useTheme } from '@mui/material/styles'; 
 
 // Componente para agregar un nuevo video a una categoría específica
 function AddVideoMenuItem ({ categoryId, handleClose }) {

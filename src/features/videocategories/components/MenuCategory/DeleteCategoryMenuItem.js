@@ -3,19 +3,23 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCategoryById, deleteCategory } from '../../videoCategoriesSlice';
 import { selectVideosByCategory } from '../../../videos/videosSlice';
+import { useTheme } from '@mui/material/styles'; 
+import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { useTheme } from '@mui/material/styles'; 
-import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 
+
+// Componente funcional para manejar la eliminación de una categoría
 function DeleteCategoryMenuItem({ categoryId, handleClose }) {
-
+    // Hook para obtener dispatch de Redux
     const dispatch = useDispatch();
 
+    // Selector para obtener la información de la categoría desde Redux
     const category = useSelector(state => selectCategoryById(state, categoryId));
-
     const { nombre } = category
+
+    // Hooks del contexto de feedback para abrir y cerrar el diálogo
     const { openFeedback, closeFeedback } = useFeedback()
 
     // Selecciona todos los videos y filtra los de la categoría
@@ -32,14 +36,12 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     // Función para abrir cuadro de dialogo de confirmación de eliminación de la categoría
     const handleDeleteCategoryClick = () => {
         const hayVideosAsociados = checkIfVideosExistForCategory();
-        console.log(hayVideosAsociados)
+        // Si hay videos, muestra el mensaje de error
         if (hayVideosAsociados) {
-            // Si hay videos, muestra el mensaje de error
             openFeedback("FeedbackDialog", {
                 message: `No se puede eliminar la categoria "${nombre}" por que tiene videos asociados`,
             })
-            
-        } else {
+        } else { // Si no hay videos asociados, muestra mensaje de confirmación
             openFeedback("FeedbackDialog", {
                 message: `¿Quieres eliminar la categoria "${nombre}"?`,
                 showActions: true,
@@ -54,25 +56,21 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
 
     // Función para manejar la confirmación de eliminación
     const handleConfirm =  () => {
-        dispatch(deleteCategory(categoryId))
-        .unwrap()
-        .then((response) => {
-            console.log(response);
-            openFeedback("FeedbackDialog", {
+        dispatch(deleteCategory(categoryId)) // Despacha la acción para eliminar una categoría utilizando su ID
+        .unwrap() // Desempaqueta la promesa para acceder a los datos o manejar errores
+        .then(() => {   // Si la eliminación es exitosa,
+            openFeedback("FeedbackDialog", { // Muestra un cuadro de diálogo de retroalimentación con un mensaje de éxito
                 message: "Categoria eliminada exitosamente!",
             })
-            setTimeout(() => {
+            setTimeout(() => { // Configura un temporizador para cerrar el cuadro de diálogo después de 3 segundos
                 closeFeedback();
             }, 3000);              
-        
         })
-        .catch((error) => {
-            console.error("Error al eliminar el video:", error);
-            // Configura el cuadro de diálogo de retroalimentación con un mensaje de error y una función de confirmación
+        .catch(() => { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error 
             openFeedback("FeedbackDialog", {
                 message: "Categoria NO eliminada!",
             })
-            setTimeout(() => {
+            setTimeout(() => {  // Configura un temporizador para cerrar el cuadro de diálogo después de 3 segundos
                 closeFeedback();
             }, 3000);
         });
