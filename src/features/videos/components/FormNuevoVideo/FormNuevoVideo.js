@@ -1,25 +1,31 @@
+// Importación de React, componentes y hooks
 import './StylesFormNuevoVideo.css'; // Importación de estilos CSS específicos para el formulario
-import React from 'react'; // Importación de React y el hook useState
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
-import { Formik, Form } from 'formik'; // Importación de componentes de Formik para manejar formularios
-import { Typography } from '@mui/material'; // Importación de componente Typography de Material-UI
-import TextInput from '../../../../Components/TextInput/TextInput'; // Importación de componente personalizado de entrada de texto
-import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importación de componente personalizado para botones de formulario
 import { addNewVideo, updateVideo } from '../../videosSlice';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
-import { useNavigate } from 'react-router-dom'; // Importación de hook para navegar en la aplicación
+import { useNavigate } from 'react-router-dom';
+import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
+import { Formik, Form } from 'formik';
+import { Typography } from '@mui/material';
+import TextInput from '../../../../Components/TextInput/TextInput';
+import FormButtons from '../../../../Components/FormButtons/FormButtons';
 
+// Componente principal UpdateVideoIcon
 function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId }) {
 
-    const dispatch = useDispatch(); // Hook para despachar acciones de Redux
-    const navigate = useNavigate(); // Obtención de la función de navegación desde el hook useNavigate()
+    // Inicializa hooks de Redux y navegación
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    // Hooks del contexto de feedback para abrir y cerrar diálogos
     const { openFeedback, closeFeedback } = useFeedback()
 
+    // Obtiene información de la categoría seleccionada usando su ID
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
 
+    // Valores iniciales del formulario, que varían según si es edición o creación
     const initialValues = initialValuesForEdit || {
         title: '',
         videoUrl: '',
@@ -40,19 +46,19 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
                 validate={values => {
                     const { title, videoUrl, imageUrl } = values;
                     const errors = {};
-
+                    // Validación del título
                     if (!title) {
                         errors.title = 'El título es requerido';
                     } else if(!/^[a-zA-Z0-9\s,.-]{3,100}$/.test(title)) {
                         errors.title = 'El título del video debe contener entre 3 y 100 caracteres y solo puede incluir letras, números, espacios, comas, guiones y puntos.';
                     }
-
+                    // Validación del link del video
                     if (!videoUrl) {
                         errors.videoUrl = 'El link del video es requerido';
                     } else if(!/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/.test(videoUrl)) {
                         errors.videoUrl = 'Por favor, ingresa un enlace de video válido. Asegúrate de que comience con http:// o https:// y que contenga solo letras, números, guiones, puntos y otros caracteres válidos.';
                     }
-
+                    // Validación del link de la imagen
                     if (!imageUrl) {
                         errors.imageUrl = 'El link de la imagen requerido';
                     } else if(!/^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?$/.test(imageUrl)) {
@@ -64,22 +70,21 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
 
                 // Manejo de la acción de envío del formulario
                 onSubmit={async (values, { setSubmitting, resetForm }) => {
+                    // Lógica para editar un video existente
                     if(isEditing) {
-                        
+                        // Datos actualizados
                         const updatedVideoData = {
                             title: values.title,
                             videoUrl: values.videoUrl,
                             imageUrl: values.imageUrl,
                         }
-
-                        dispatch(updateVideo({videoId, updatedVideoData}))
+                        dispatch(updateVideo({videoId, updatedVideoData})) // Llama a la acción de Redux
                         .unwrap()
                         .then(() => {
-                            console.log('Video editado exitosamente');
-                            openFeedback("FeedbackDialog", {
+                            openFeedback("FeedbackDialog", { // Muestra un cuadro de diálogo de éxito
                                 message: "VIdeo editado exitosamente!",
                             })                           
-                            setTimeout(() => {
+                            setTimeout(() => { // Cierra el diálogo, restablece el formulario y navega a "home" después de 3 segundos
                                 closeFeedback();
                                 resetForm();
                                 navigate('/', { replace: true });
@@ -87,24 +92,28 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
                         })
                         .catch((error) => {
                             console.log(error)
+                            openFeedback("FeedbackDialog", { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error
+                                message: "Video NO editado!",
+                            })
+                            setTimeout(() => { // Cierra el diálogo después de 3 segundos
+                                closeFeedback();
+                            }, 3000);
                         });
-                    } else {
+                    } else { // Lógica para agregar un video
                         setSubmitting(true)
-                    
+                        // Nuevos datos de video
                         const newVideo = {
                             title: values.title,
                             videoUrl: values.videoUrl,
                             imageUrl: values.imageUrl,
                         }  
-
-                        dispatch(addNewVideo({ categoryId, newVideo }))
+                        dispatch(addNewVideo({ categoryId, newVideo }))// Llama a la acción de Redux
                         .unwrap()
                         .then(() => {
-                            console.log('Video agregado exitosamente');
-                            openFeedback("FeedbackDialog", {
+                            openFeedback("FeedbackDialog", { // Muestra un cuadro de diálogo de éxito
                                 message: "VIdeo agregado exitosamente!",
                             })                           
-                            setTimeout(() => {
+                            setTimeout(() => { // Cierra el diálogo, restablece el formulario y navega a "home" después de 3 segundos
                                 closeFeedback();
                                 resetForm();
                                 navigate('/', { replace: true });
@@ -112,6 +121,12 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
                         })
                         .catch((error) => {
                             console.log(error)
+                            openFeedback("FeedbackDialog", { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error
+                                message: "Video NO agregado!",
+                            })
+                            setTimeout(() => { // Cierra el diálogo después de 3 segundos
+                                closeFeedback();
+                            }, 3000);
                         });
                     }
                 }}

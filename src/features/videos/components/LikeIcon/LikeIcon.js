@@ -1,29 +1,31 @@
-// Importacion de React y componentes
+// Importación de React, componentes y hooks
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleLike } from '../../videosSlice';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 
 // Componente principal LikeIcon
 function LikeIcon ( {videoId, title} ) {
-
-    const { openFeedback, closeFeedback } = useFeedback()
-
+    // Hook de Redux para despachar acciones
     const dispatch = useDispatch();
 
+    // Hooks del contexto de feedback para abrir y cerrar diálogos
+    const { openFeedback, closeFeedback } = useFeedback()
+
+    // Obtiene el estado de liked de Redux
     const liked = useSelector((state) => state.videos.likes[videoId])
 
     // Función para manejar el clic en el ícono de 'me gusta'
     function handleLikeClick() {
-        // Despachar la acción toggleLike en lugar de cambiar el estado local
-        dispatch(toggleLike(videoId))
-        openFeedback("FeedbackDialog", {
+        dispatch(toggleLike(videoId)) // Despachar la acción toggleLike en lugar de cambiar el estado local
+        openFeedback("FeedbackDialog", { // Configura el mensaje de de acuerdo al estado de like
             message: liked 
             ? `¡"${title}" eliminado de tus favoritos!` 
             : `¡"${title}" añadido a tus favoritos!`
         })
-        setTimeout(() => {
+        setTimeout(() => { // Cierra mensaje
             closeFeedback();
         }, 3000);
     }
