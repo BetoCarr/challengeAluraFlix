@@ -2,10 +2,10 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import { selectCategoryById } from '../../categoriesSlice';
-import FormNuevaCategoria from "../FormNuevaCategoria/FormNuevaCategoria";
+import NewCategoryForm from "../NewCategoryForm/NewCategoryForm";
 
 // Definición del componente FormEditarCategoria
-function FormEditarCategoria({ categoryId }) {
+function UpdateCategoryForm({ categoryId }) {
 
     const category = useSelector(state => selectCategoryById(state, categoryId))
 
@@ -18,10 +18,10 @@ function FormEditarCategoria({ categoryId }) {
         isBanner
     };
 
-    // Retorna el componente FormNuevaCategoria con los valores iniciales para la edición dentro de un dialogo
+    // Retorna el componente NewCategoryForm con los valores iniciales para la edición dentro de un dialogo
     return (
         <>
-            <FormNuevaCategoria
+            <NewCategoryForm
                 initialValuesForEdit={initialValuesForEdit} 
                 isEditing={true}
                 categoryId={categoryId}
@@ -30,5 +30,5 @@ function FormEditarCategoria({ categoryId }) {
     );
 }
 
-// Exporta el componente FormEditarCategoria para su uso en otras partes de la aplicación
-export default FormEditarCategoria;
+// Exporta el componente UpdateCategoryForm para su uso en otras partes de la aplicación
+export default UpdateCategoryForm;

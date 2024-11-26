@@ -1,5 +1,5 @@
 // Importar los estilos y los componentes necesarios
-import './FormNuevaCategoria.css'; // Importa los estilos específicos para este componente
+import './NewCategoryFormStyle.css'; // Importa los estilos específicos para este componente
 import React from "react"; // Importa React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
@@ -13,11 +13,14 @@ import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate d
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 
 // Función del componente principal FormNuevaCategoria
-function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
+function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
+    // Hook para navegar entre rutas
+    const navigate = useNavigate(); 
 
-    const navigate = useNavigate(); // Hook para navegar entre rutas
-    const dispatch = useDispatch(); // Hook para despachar acciones de Redux
+    // Hook para despachar acciones de Redux
+    const dispatch = useDispatch(); 
 
+    // Hooks del contexto de feedback para abrir y cerrar diálogos
     const { openFeedback, closeFeedback } = useFeedback()
 
     // Obtener las categorías y sus colores
@@ -185,4 +188,4 @@ function FormNuevaCategoria({ initialValuesForEdit, isEditing, categoryId }) {
     );
 }
 // Exporta comoponente principal
-export default FormNuevaCategoria;
+export default NewCategoryForm;

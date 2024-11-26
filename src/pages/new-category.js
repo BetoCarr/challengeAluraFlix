@@ -1,7 +1,7 @@
 // Importa React y componentes
 import React from "react";
 import MainContainer from "../Components/MainContainer/MainContainer";
-import FormNuevaCategoria from "../features/categories/components/FormNuevaCategoria/FormNuevaCategoria";
+import NewCategoryForm from "../features/categories/components/NewCategoryForm/NewCategoryForm";
 
 // Componente principal para la página de agregar una nueva categoría
 function NewCategory () {
@@ -9,7 +9,7 @@ function NewCategory () {
         // Usa el componente MainContainer como contenedor principal y aplica una clase para estilizarlo
         <MainContainer className={"main-container-form"}>
             {/* Renderiza el formulario para agregar una nueva categoría */}
-            <FormNuevaCategoria />
+            <NewCategoryForm />
         </MainContainer>
     );
 }

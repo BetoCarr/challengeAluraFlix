@@ -1,7 +1,7 @@
 // Importa React y componentes
 import React from "react";
 import { useParams } from 'react-router-dom';
-import FormEditarCategoria from "../features/categories/components/FormEditarCategoria/FormEditarCategoria";
+import UpdateCategoryForm from "../features/categories/components/UpdateCategoryForm/UpdateCategoryForm";
 import MainContainer from "../Components/MainContainer/MainContainer";
 
 // Componente principal para la página de actualización de categorías
@@ -13,7 +13,7 @@ function UpdateCategory () {
         // Usa el componente MainContainer como contenedor principal, con una clase para estilizar
         <MainContainer className={"main-container-form"}>
             {/* Renderiza el formulario para editar una categoría, pasándole el ID de la categoría como prop */}
-            <FormEditarCategoria categoryId={categoryId} />
+            <UpdateCategoryForm categoryId={categoryId} />
         </MainContainer>
     );
 }
