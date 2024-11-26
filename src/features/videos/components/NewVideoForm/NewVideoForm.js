@@ -1,5 +1,5 @@
 // Importación de React, componentes y hooks
-import './StylesFormNuevoVideo.css'; // Importación de estilos CSS específicos para el formulario
+import './UpdateVideoFormStyle.css'; // Importación de estilos CSS específicos para el formulario
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addNewVideo, updateVideo } from '../../videosSlice';
@@ -11,8 +11,8 @@ import { Typography } from '@mui/material';
 import TextInput from '../../../../Components/TextInput/TextInput';
 import FormButtons from '../../../../Components/FormButtons/FormButtons';
 
-// Componente principal UpdateVideoIcon
-function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId }) {
+// Componente principal NewVideoForm
+function NewVideoForm ({ initialValuesForEdit, isEditing, videoId, categoryId }) {
 
     // Inicializa hooks de Redux y navegación
     const dispatch = useDispatch();
@@ -171,4 +171,4 @@ function FormNuevoVideo ({ initialValuesForEdit, isEditing, videoId, categoryId 
 }
 
 // Exporta formulario
-export default FormNuevoVideo;
+export default NewVideoForm;
