@@ -9,7 +9,7 @@ import DeleteVideoIcon from '../DeleteVideoIcon/DeleteVideoIcon';
 import LikeIcon from '../LikeIcon/LikeIcon';
 import UpdateVideoIcon from '../UpdateVideoIcon/UpdateVideoIcon';
 import Box from '@mui/material/Box';
-import { selectCategoryById } from '../../../videocategories/videoCategoriesSlice';
+import { selectCategoryById } from '../../../categories/videoCategoriesSlice';
 
 // Componente VideoCard que recibe el ID de la categoría, el video y si es el primer video como props
 const VideoCard = ({ categoryId, video, isFirstVideo }) => {

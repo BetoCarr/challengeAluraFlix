@@ -1,7 +1,7 @@
 // Importa React y componentes
 import React from "react";
 import { useParams } from 'react-router-dom';
-import FormEditarCategoria from "../features/videocategories/components/FormEditarCategoria/FormEditarCategoria";
+import FormEditarCategoria from "../features/categories/components/FormEditarCategoria/FormEditarCategoria";
 import MainContainer from "../Components/MainContainer/MainContainer";
 
 // Componente principal para la página de actualización de categorías

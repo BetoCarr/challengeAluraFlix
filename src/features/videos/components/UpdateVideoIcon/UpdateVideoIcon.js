@@ -29,8 +29,8 @@ function UpdateVideoIcon ({ categoryId, videoId, title }) {
                 onClick={handleUpdatdeVideoClick}
             />
         </>
-
     )
 }
 
+// Exporta componente principal
 export default UpdateVideoIcon;

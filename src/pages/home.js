@@ -1,7 +1,7 @@
 // Importa React y los componentes necesarios
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCategories, selectAllCategories } from '../features/videocategories/videoCategoriesSlice';
+import { fetchCategories, selectAllCategories } from '../features/categories/videoCategoriesSlice';
 import { fetchVideos } from '../features/videos/videosSlice';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import HomePageSkeleton from '../Components/HomePageSkeleton/HomePageSkeleton';

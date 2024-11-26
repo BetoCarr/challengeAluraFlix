@@ -1,7 +1,7 @@
 // Importa React y componentes
 import React from "react";
 import MainContainer from "../Components/MainContainer/MainContainer";
-import FormNuevaCategoria from "../features/videocategories/components/FormNuevaCategoria/FormNuevaCategoria";
+import FormNuevaCategoria from "../features/categories/components/FormNuevaCategoria/FormNuevaCategoria";
 
 // Componente principal para la página de agregar una nueva categoría
 function NewCategory () {

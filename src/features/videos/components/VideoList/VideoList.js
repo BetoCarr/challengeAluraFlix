@@ -4,8 +4,8 @@ import { selectVideosByCategory } from '../../videosSlice';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import MySlider from '../../../../Components/Slider/Slider';
-import Banner from '../../../videocategories/components/Banner/Banner';
-import TitleContainer from '../../../videocategories/components/TitleContainer/TitleContainer';
+import Banner from '../../../categories/components/Banner/Banner';
+import TitleContainer from '../../../categories/components/TitleContainer/TitleContainer';
 import VideoCard from './VideoCard';
 
 // Componente funcional para renderizar las listas de videos
