@@ -1,7 +1,7 @@
 // Importa React y los componentes necesarios
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCategories, selectAllCategories } from '../features/categories/videoCategoriesSlice';
+import { fetchCategories, selectAllCategories } from '../features/categories/categoriesSlice';
 import { fetchVideos } from '../features/videos/videosSlice';
 import MainContainer from "../Components/MainContainer/MainContainer";
 import HomePageSkeleton from '../Components/HomePageSkeleton/HomePageSkeleton';
@@ -17,9 +17,9 @@ function Home () {
     const categories = useSelector(selectAllCategories)
 
     // Obtiene el estado de las categorías y videos el posible error del estado de Redux
-    const categoryStatus = useSelector(state => state.videoCategories.status)
+    const categoryStatus = useSelector(state => state.categories.status)
     const videosStatus = useSelector(state => state.videos.status)
-    const categoryError = useSelector(state => state.videoCategories.error)
+    const categoryError = useSelector(state => state.categories.error)
     const videoError = useSelector((state) => state.videos.error);
 
     // Llama al thunk para obtener las categorías y videos cuando el componente se monta

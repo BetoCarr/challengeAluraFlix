@@ -8,7 +8,7 @@ import TextInput from "../../../../Components/TextInput/TextInput"; // Importa e
 import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
 import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
-import { selectAllCategories, addCategory, updateCategory } from '../../videoCategoriesSlice'
+import { selectAllCategories, addCategory, updateCategory } from '../../categoriesSlice'
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 

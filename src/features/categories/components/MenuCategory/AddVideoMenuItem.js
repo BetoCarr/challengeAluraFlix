@@ -1,7 +1,7 @@
 // Importación de React y componentes
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectCategoryById } from '../../videoCategoriesSlice';
+import { selectCategoryById } from '../../categoriesSlice';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles'; 

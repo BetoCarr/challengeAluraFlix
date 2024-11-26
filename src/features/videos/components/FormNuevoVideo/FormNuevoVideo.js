@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addNewVideo, updateVideo } from '../../videosSlice';
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 import { useNavigate } from 'react-router-dom';
-import { selectCategoryById } from '../../../categories/videoCategoriesSlice';
+import { selectCategoryById } from '../../../categories/categoriesSlice';
 import { Formik, Form } from 'formik';
 import { Typography } from '@mui/material';
 import TextInput from '../../../../Components/TextInput/TextInput';

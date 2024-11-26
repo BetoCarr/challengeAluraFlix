@@ -3,7 +3,7 @@ import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/too
 import { buscar, agregarCategoria, editarCategoria, eliminarCategoria } from '../../api/api';
 
 // Crear un adaptador para manejar las categorías de videos
-const videoCategoriesAdapter = createEntityAdapter({
+const categoriesAdapter = createEntityAdapter({
     selectId: (category) => category.id,
     // Configurar un comparador de ordenación para colocar las categorías marcadas como banner al inicio
     sortComparer: (a, b) => {
@@ -14,7 +14,7 @@ const videoCategoriesAdapter = createEntityAdapter({
 });
 
 // Estado inicial utilizando el adaptador, con estado de carga y error
-const initialState = videoCategoriesAdapter.getInitialState({
+const initialState = categoriesAdapter.getInitialState({
     status: 'idle',
     deleteStatus: 'idle', // Estado específico para la eliminación de categorías
     error: null,
@@ -76,8 +76,8 @@ export const deleteCategory = createAsyncThunk(
 );
 
 // Crear un slice para manejar las categorías de videos
-const videoCategoriesSlice = createSlice({
-    name: 'videoCategories',
+const categoriesSlice = createSlice({
+    name: 'categories',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
@@ -88,7 +88,7 @@ const videoCategoriesSlice = createSlice({
             })
             .addCase(fetchCategories.fulfilled, (state, action) => { // Estado de éxito cuando se obtienen las categorías, e inserta categorias al estado
                 state.status = 'succeeded'
-                videoCategoriesAdapter.upsertMany(state, action.payload);
+                categoriesAdapter.upsertMany(state, action.payload);
             })
             .addCase(fetchCategories.rejected, (state, action) => { // Estado de error si la obtención falla
                 state.status = 'failed'
@@ -100,7 +100,7 @@ const videoCategoriesSlice = createSlice({
             })
             .addCase(addCategory.fulfilled, (state, action) => { // Estado de exito mientras se agrega la categoria
                 state.status = 'succeeded';
-                videoCategoriesAdapter.addOne(state, action.payload);
+                categoriesAdapter.addOne(state, action.payload);
             })
             .addCase(addCategory.rejected, (state, action) => { // Estado de error
                 state.status = 'failed'
@@ -115,7 +115,7 @@ const videoCategoriesSlice = createSlice({
                 state.status = 'succeeded';
                 const { id, nombre, color, isBanner } = action.payload.categoria;
                 // Actualiza la categoría en el estado usando `updateOne`
-                videoCategoriesAdapter.updateOne(state, {
+                categoriesAdapter.updateOne(state, {
                     id,
                     changes: {
                         nombre,
@@ -135,7 +135,7 @@ const videoCategoriesSlice = createSlice({
             .addCase(deleteCategory.fulfilled, (state, action) => {
                 // const { categoryId } = action.payload; // Desestructura el categoryId del payload
                 state.deleteStatus = 'succeeded';
-                videoCategoriesAdapter.removeOne(state, action.payload);
+                categoriesAdapter.removeOne(state, action.payload);
             })
             .addCase(deleteCategory.rejected, (state, action) => {
                 state.deleteStatus = 'failed';
@@ -145,11 +145,11 @@ const videoCategoriesSlice = createSlice({
 });
 
 // Exportar el reductor del slice
-export default videoCategoriesSlice.reducer;
+export default categoriesSlice.reducer;
 
 // Exportar selectores del adaptador para obtener todas las categorías
 export const {
     selectAll: selectAllCategories,
     selectById: selectCategoryById,
     selectIds: selectCategoryIds,
-} = videoCategoriesAdapter.getSelectors(state => state.videoCategories);
+} = categoriesAdapter.getSelectors(state => state.categories);

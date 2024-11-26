@@ -1,7 +1,7 @@
 // Importa React y el componente FormNuevaCategoria
 import React from "react";
 import { useSelector } from 'react-redux';
-import { selectCategoryById } from '../../videoCategoriesSlice';
+import { selectCategoryById } from '../../categoriesSlice';
 import FormNuevaCategoria from "../FormNuevaCategoria/FormNuevaCategoria";
 
 // Definición del componente FormEditarCategoria
