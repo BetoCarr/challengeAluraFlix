@@ -123,19 +123,6 @@ const categoriesSlice = createSlice({
                 state.status = 'succeeded';
                 categoriesAdapter.setAll(state, action.payload); // Reemplaza todas las categorías con las actualizadas
             })
-            // .addCase(updateCategory.fulfilled, (state, action) => {
-            //     state.status = 'succeeded';
-            //     const { id, nombre, color, isBanner } = action.payload.categoria;
-            //     // Actualiza la categoría en el estado usando `updateOne`
-            //     categoriesAdapter.updateOne(state, {
-            //         id,
-            //         changes: {
-            //             nombre,
-            //             color,
-            //             isBanner,
-            //         }
-            //     });
-            // })
             .addCase(updateCategory.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
