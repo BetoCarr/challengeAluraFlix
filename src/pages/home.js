@@ -15,7 +15,7 @@ function Home () {
 
     // Obtiene los ids de las categorías del estado de Redux usando un selector
     const categories = useSelector(selectAllCategories)
-
+    console.log(categories)
     // Obtiene el estado de las categorías y videos el posible error del estado de Redux
     const categoryStatus = useSelector(state => state.categories.status)
     const videosStatus = useSelector(state => state.videos.status)

@@ -51,7 +51,7 @@ export const updateCategory = createAsyncThunk(
         try {
             const response = await editarCategoria(categoryId, updatedCategory)
             console.log(response.data)
-            return response.data;
+            return response.data.categorias; // Devuelve el arreglo completo de categorías
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
@@ -98,9 +98,17 @@ const categoriesSlice = createSlice({
             .addCase(addCategory.pending, (state) => { // Estado de carga mientras se agrega la categoria
                 state.status = 'loading'
             })
-            .addCase(addCategory.fulfilled, (state, action) => { // Estado de exito mientras se agrega la categoria
+            .addCase(addCategory.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                categoriesAdapter.addOne(state, action.payload);
+        
+                const { categorias } = action.payload; // Extraer la lista actualizada de categorías
+        
+                if (categorias && Array.isArray(categorias)) {
+                    // Reemplazar completamente el estado con las categorías actualizadas
+                    categoriesAdapter.setAll(state, categorias);
+                } else {
+                    console.warn('Categorías no recibidas correctamente del backend.');
+                }
             })
             .addCase(addCategory.rejected, (state, action) => { // Estado de error
                 state.status = 'failed'
@@ -113,17 +121,21 @@ const categoriesSlice = createSlice({
             // Caso fulfilled: cuando la categoría se ha editado correctamente
             .addCase(updateCategory.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                const { id, nombre, color, isBanner } = action.payload.categoria;
-                // Actualiza la categoría en el estado usando `updateOne`
-                categoriesAdapter.updateOne(state, {
-                    id,
-                    changes: {
-                        nombre,
-                        color,
-                        isBanner,
-                    }
-                });
+                categoriesAdapter.setAll(state, action.payload); // Reemplaza todas las categorías con las actualizadas
             })
+            // .addCase(updateCategory.fulfilled, (state, action) => {
+            //     state.status = 'succeeded';
+            //     const { id, nombre, color, isBanner } = action.payload.categoria;
+            //     // Actualiza la categoría en el estado usando `updateOne`
+            //     categoriesAdapter.updateOne(state, {
+            //         id,
+            //         changes: {
+            //             nombre,
+            //             color,
+            //             isBanner,
+            //         }
+            //     });
+            // })
             .addCase(updateCategory.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
