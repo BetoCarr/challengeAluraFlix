@@ -10,20 +10,20 @@ function ColorSelector({ name, error }) {
     const [field, meta, helpers] = useField("color");
 
     // Estado local para rastrear si el campo de color ha sido tocado
-    const [touched, setTouched] = useState(false);
+    // const [touched, setTouched] = useState(false);
 
     // Función para manejar el cambio de color
     const handleChange = color => {
         helpers.setValue(color.hex); // Actualiza el valor del campo de Formik con el nuevo color seleccionado
-        setTouched(true); // Marcar el campo como tocado cuando se cambia el color
+        // setTouched(true); // Marcar el campo como tocado cuando se cambia el color
 
     };
 
     // Función para manejar la selección completa del color
-    const onComplete = color => {
-        helpers.setValue(color.hex); // Actualiza el valor del campo de Formik cuando se completa la selección del color
-        setTouched(true); // Marcar el campo como tocado cuando se cambia el color
-    };
+    // const onComplete = color => {
+    //     helpers.setValue(color.hex); // Actualiza el valor del campo de Formik cuando se completa la selección del color
+    //     setTouched(true); // Marcar el campo como tocado cuando se cambia el color
+    // };
 
     return (
         <>
@@ -34,14 +34,14 @@ function ColorSelector({ name, error }) {
                 <HuePicker
                     color={field.value}
                     onChange={handleChange}
-                    onChangeComplete={onComplete}
-                    name={name}
+                    // onChangeComplete={onComplete}
+                    // name={name}
                 />
             </Box>
             {/* Muestra el mensaje de error si el campo ha sido tocado y hay un error */}
-            {touched && error && (
-                <div className='error'>{error}</div>
-            )}        
+            {meta.touched && meta.error && (
+                <div className='error'>{meta.error}</div>
+            )}       
         </>
     );
 }
