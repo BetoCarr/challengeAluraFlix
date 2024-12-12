@@ -25,54 +25,13 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
 
     // Obtener las categorías y sus colores
     const categories = useSelector(selectAllCategories);
-    const categoriesColors = categories.map(category => category.color);
-
-    // Función para verificar la similitud de colores
-    const isColorTooSimilar = (newColor, existingColors, threshold) => {
-        for (const color of existingColors) {
-            // Calcula la diferencia de colores (por ejemplo, distancia euclidiana en RGB)
-            const distance = calculateColorDifference(newColor, color);
-            // Si la distancia es menor que el umbral, considera los colores como similares
-            if (distance < threshold) {
-                return true;
-            }
-        }
-        return false; // No se encontraron colores similares
-    };
-
-    // Función para calcular la distancia de los colores
-    const calculateColorDifference = (color1, color2) => {
-        // Convertir colores hexadecimales a valores RGB
-        const rgb1 = hexToRgb(color1);
-        const rgb2 = hexToRgb(color2);
-        // Extraer componentes R, G, B
-        const { r: r1, g: g1, b: b1 } = rgb1;
-        const { r: r2, g: g2, b: b2 } = rgb2;
-        // Calcular la diferencia euclidiana
-        const distance = Math.sqrt(
-            Math.pow((r2 - r1), 2) +
-            Math.pow((g2 - g1), 2) +
-            Math.pow((b2 - b1), 2)
-        );
-        return distance;
-    };
-
-    // Función para convertir colores hexadecimales a RGB
-    const hexToRgb = (hex) => {
-        // Eliminar el # del inicio si está presente
-        hex = hex.replace("#", "");
-        // Obtener componentes R, G, B
-        const r = parseInt(hex.substring(0, 2), 16);
-        const g = parseInt(hex.substring(2, 4), 16);
-        const b = parseInt(hex.substring(4, 6), 16);
-        return { r, g, b };
-    };
 
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
         nombre: '',
         color:'#00fff8', 
-        isBanner: false
+        isBanner: false,
+        colorError: ''
     };
 
     return(
@@ -99,9 +58,9 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                     }
 
                     // Validación del color
-                    const colorIsSimilar = isColorTooSimilar(color, categoriesColors, 50);
-                    if (colorIsSimilar) {
-                        errors.color = 'Ya existe una categoría con el color seleccionado';
+                     // Validación del color
+                    if (values.colorError) {
+                        errors.color = values.colorError;
                     }
 
                     // Validación de isBanner
@@ -150,7 +109,7 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                 }}
                 
             >
-                {({isSubmitting, resetForm, values, errors}) => (
+                {({isSubmitting, resetForm, values, setFieldValue, errors}) => (
                     <Form className='form-container'>
                         {/* Componente para el nombre */}
                         <TextInput
@@ -171,10 +130,6 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                             name="color"
                             id="color" 
                             label={("PROJET.COLOR")}
-                            onChange={color => {
-                                values.color = color;
-                            }}
-                            error={errors.color} // Pasa el error del campo de color como una propiedad
                         />
                         {/* Componente para los botones del formulario */}                       
                         <FormButtons

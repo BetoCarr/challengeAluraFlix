@@ -1,5 +1,5 @@
 // Importación de redux y funcion axios
-import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import { buscar, agregarCategoria, editarCategoria, eliminarCategoria } from '../../api/api';
 
 // Crear un adaptador para manejar las categorías de videos
@@ -143,12 +143,17 @@ const categoriesSlice = createSlice({
     },
 });
 
-// Exportar el reductor del slice
-export default categoriesSlice.reducer;
-
 // Exportar selectores del adaptador para obtener todas las categorías
 export const {
     selectAll: selectAllCategories,
     selectById: selectCategoryById,
     selectIds: selectCategoryIds,
 } = categoriesAdapter.getSelectors(state => state.categories);
+
+export const selectCategoryColors = createSelector(
+    [selectAllCategories], // Entrada: Todas las categorías
+    (categories) => categories.map((category) => category.color) // Salida: Lista de colores
+);
+
+// Exportar el reductor del slice
+export default categoriesSlice.reducer;

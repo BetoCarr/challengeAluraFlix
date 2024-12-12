@@ -8,14 +8,13 @@ import HomePageSkeleton from '../Components/HomePageSkeleton/HomePageSkeleton';
 import ErrorMessage from '../Components/ErrorMessage/ErrorMessage';
 import VideoList from '../features/videos/components/VideoList/VideoList';
 
-
 function Home () {
     // Obtiene el dispatch de Redux para enviar acciones
     const dispatch = useDispatch()
 
     // Obtiene los ids de las categorías del estado de Redux usando un selector
     const categories = useSelector(selectAllCategories)
-    console.log(categories)
+
     // Obtiene el estado de las categorías y videos el posible error del estado de Redux
     const categoryStatus = useSelector(state => state.categories.status)
     const videosStatus = useSelector(state => state.videos.status)
