@@ -2,8 +2,6 @@ import './FeedbackDialog.css';
 import React from 'react';
 import { Dialog, DialogContent, DialogActions, Button, Typography } from '@mui/material'
 
-// import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
-
 function FeedbackDialog({ onClose, message, showActions, onConfirm }) {
     return(
         <Dialog open fullWidth onClose={onClose}>

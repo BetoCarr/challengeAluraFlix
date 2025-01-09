@@ -4,16 +4,18 @@ import React from "react"; // Importa React y el hook useState
 import { useSelector, useDispatch } from 'react-redux';
 import {Typography} from '@mui/material'; // Importa el componente Typography de Material-UI
 import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form de Formik
+import { selectAllCategories, addCategory, updateCategory } from '../../categoriesSlice'
+import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
+import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
+import { calculateColorDifference } from '../../../../Components/ColorSelector/ColorSelector';
 import TextInput from "../../../../Components/TextInput/TextInput"; // Importa el componente TextInput
 import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
 import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
-import { selectAllCategories, addCategory, updateCategory } from '../../categoriesSlice'
-import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
-import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
 
 // Función del componente principal FormNuevaCategoria
 function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
+
     // Hook para navegar entre rutas
     const navigate = useNavigate(); 
 
@@ -25,14 +27,29 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
 
     // Obtener las categorías y sus colores
     const categories = useSelector(selectAllCategories);
+    const existingColors = categories.map(category => category.color);
+
+    console.log(existingColors)
 
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
         nombre: '',
-        color:'#00fff8', 
+        color:'#FF0000', 
         isBanner: false,
-        colorError: ''
     };
+    const validateColor = (value, existingColors) => {
+        const threshold = 50; // Define el umbral para colores similares
+
+        existingColors.forEach((color) => {
+            if (calculateColorDifference(value, color) < threshold) {
+                console.log(`El color es demasiado similar a ${color}`);
+                // return `El color es demasiado similar a ${color}`; // No funciona en forEach
+            }
+        });
+        
+        return undefined;
+        // console.log("Validando color", value)
+    }
 
     return(
         <>
@@ -57,11 +74,10 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                         errors.nombre = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
                     }
 
-                    // Validación del color
-                     // Validación del color
-                    if (values.colorError) {
-                        errors.color = values.colorError;
-                    }
+                    // // Validación del color
+                    // if(isColorTooSimilar(color, existingColors, 50)) {
+                    //     errors.color = "El color es demasiado similar a uno existente.";
+                    // }
 
                     // Validación de isBanner
                     if (typeof isBanner !== 'boolean') {
@@ -109,7 +125,7 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                 }}
                 
             >
-                {({isSubmitting, resetForm, values, setFieldValue, errors}) => (
+                {({isSubmitting, resetForm, values, touched, errors}) => (
                     <Form className='form-container'>
                         {/* Componente para el nombre */}
                         <TextInput
@@ -129,8 +145,13 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                         <ColorSelector
                             name="color"
                             id="color" 
-                            label={("PROJET.COLOR")}
+                            label="Selecciona un color"
+                            colors={existingColors}
+                            validate={(value) => validateColor(value, existingColors)}
                         />
+                        {errors.color && touched.color && (
+                            <div>{errors.color}</div>
+                        )}
                         {/* Componente para los botones del formulario */}                       
                         <FormButtons
                             isSubmitting={isSubmitting} 
