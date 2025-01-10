@@ -13,7 +13,7 @@ import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner
 import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
 
-// Función del componente principal FormNuevaCategoria
+// Función del componente principal NewCategoryForm
 function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
 
     // Hook para navegar entre rutas
@@ -29,28 +29,48 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
     const categories = useSelector(selectAllCategories);
     const existingColors = categories.map(category => category.color);
 
-    console.log(existingColors)
-
     // Valores iniciales del formulario
     const initialValues = initialValuesForEdit || {
         nombre: '',
         color:'#FF0000', 
         isBanner: false,
     };
-    const validateColor = (value, existingColors) => {
+
+    // // Función auxiliar para validar el color, utiliza la funcion importada de ColorSelector
+    // const validateColor = (value, existingColors) => {
+    //     const threshold = 50; // Define el umbral para colores similares
+    
+    //     // Usar Array.some para detenerse en el primer conflicto
+    //     const isTooSimilar = existingColors.some(color => 
+    //         calculateColorDifference(value, color) < threshold
+    //     )
+
+    //     if (isTooSimilar) {
+    //         return `El color es demasiado similar a uno existente`;
+    //     }
+    
+    //     return undefined; 
+    // }
+
+    const validateColor = (value, existingColors, isEditing, categoryId) => {
         const threshold = 50; // Define el umbral para colores similares
-
-        existingColors.forEach((color) => {
-            if (calculateColorDifference(value, color) < threshold) {
-                console.log(`El color es demasiado similar a ${color}`);
-                // return `El color es demasiado similar a ${color}`; // No funciona en forEach
-            }
+        console.log(isEditing)
+        // Excluir el color de la categoría actual en la validación si estás editando
+        const isTooSimilar = existingColors.some((color, index) => {
+            // Si estás editando, ignora el color de la categoría actual
+            const isCurrentCategoryColor = isEditing && categories[index]?.id === categoryId;
+            if (isCurrentCategoryColor) return false;
+    
+            return calculateColorDifference(value, color) < threshold;
         });
-        
+    
+        if (isTooSimilar) {
+            return `El color es demasiado similar a uno existente`;
+        }
+    
         return undefined;
-        // console.log("Validando color", value)
-    }
-
+    };
+    
     return(
         <>
             {/* Encabezado */}
@@ -74,10 +94,11 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                         errors.nombre = 'El nombre de la categoría solo puede incluir letras, números, espacios y guiones';
                     }
 
-                    // // Validación del color
-                    // if(isColorTooSimilar(color, existingColors, 50)) {
-                    //     errors.color = "El color es demasiado similar a uno existente.";
-                    // }
+                    // Validación del color
+                    const colorError = validateColor(color, existingColors, isEditing, categoryId);
+                    if (colorError) {
+                        errors.color = colorError; // Asignar el mensaje de error devuelto por validateColor
+                    }
 
                     // Validación de isBanner
                     if (typeof isBanner !== 'boolean') {
@@ -125,7 +146,7 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                 }}
                 
             >
-                {({isSubmitting, resetForm, values, touched, errors}) => (
+                {({isSubmitting, resetForm}) => (
                     <Form className='form-container'>
                         {/* Componente para el nombre */}
                         <TextInput
@@ -135,23 +156,14 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                         />
                         {/* Componente para el banner */}
                         <SwitchIsBanner
-                            name="isBanner"
-                            onChange={isBanner => {
-                                values.isBanner = isBanner;
-                            }} 
-                            categories={categories}
+                            name="isBanner"            
                         />
                         {/* Componente para seleccionar el color */}
                         <ColorSelector
                             name="color"
                             id="color" 
                             label="Selecciona un color"
-                            colors={existingColors}
-                            validate={(value) => validateColor(value, existingColors)}
                         />
-                        {errors.color && touched.color && (
-                            <div>{errors.color}</div>
-                        )}
                         {/* Componente para los botones del formulario */}                       
                         <FormButtons
                             isSubmitting={isSubmitting} 
@@ -163,5 +175,6 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
         </>
     );
 }
+
 // Exporta comoponente principal
 export default NewCategoryForm;
