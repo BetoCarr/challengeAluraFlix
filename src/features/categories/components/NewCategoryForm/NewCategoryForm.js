@@ -36,40 +36,31 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
         isBanner: false,
     };
 
-    // // Función auxiliar para validar el color, utiliza la funcion importada de ColorSelector
-    // const validateColor = (value, existingColors) => {
-    //     const threshold = 50; // Define el umbral para colores similares
-    
-    //     // Usar Array.some para detenerse en el primer conflicto
-    //     const isTooSimilar = existingColors.some(color => 
-    //         calculateColorDifference(value, color) < threshold
-    //     )
+    // Función auxiliar para validar el color, utiliza la funcion importada de ColorSelector
+    const validateColor = (value, existingColors, isEditing) => {
+        let filteredColors = existingColors
 
-    //     if (isTooSimilar) {
-    //         return `El color es demasiado similar a uno existente`;
-    //     }
-    
-    //     return undefined; 
-    // }
+        if(isEditing) {
+            let categoryColor = initialValuesForEdit.color
+            console.log(categoryColor)  
+            // Excluir el color de la categoría actual de la validación
+            filteredColors = existingColors.filter(color => color !== categoryColor);
+            // console.log(filteredColors)
+        }
 
-    const validateColor = (value, existingColors, isEditing, categoryId) => {
         const threshold = 50; // Define el umbral para colores similares
-        console.log(isEditing)
-        // Excluir el color de la categoría actual en la validación si estás editando
-        const isTooSimilar = existingColors.some((color, index) => {
-            // Si estás editando, ignora el color de la categoría actual
-            const isCurrentCategoryColor = isEditing && categories[index]?.id === categoryId;
-            if (isCurrentCategoryColor) return false;
     
-            return calculateColorDifference(value, color) < threshold;
-        });
-    
+        // Usar Array.some para detenerse en el primer conflicto
+        const isTooSimilar = filteredColors.some(color => 
+            calculateColorDifference(value, color) < threshold
+        )
+
         if (isTooSimilar) {
             return `El color es demasiado similar a uno existente`;
         }
     
-        return undefined;
-    };
+        return undefined; 
+    }
     
     return(
         <>
@@ -95,7 +86,7 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                     }
 
                     // Validación del color
-                    const colorError = validateColor(color, existingColors, isEditing, categoryId);
+                    const colorError = validateColor(color, existingColors, isEditing);
                     if (colorError) {
                         errors.color = colorError; // Asignar el mensaje de error devuelto por validateColor
                     }
