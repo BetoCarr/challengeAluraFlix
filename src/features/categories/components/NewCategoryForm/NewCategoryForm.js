@@ -36,29 +36,32 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
         isBanner: false,
     };
 
-    // Función auxiliar para validar el color, utiliza la funcion importada de ColorSelector
+    // Función auxiliar para validar el color, utiliza la funcion importada de ColorSelector,
+    // Recibe color a verificar, colores existentes, y el booleano isEditing para determinar si se está editando una categoria
     const validateColor = (value, existingColors, isEditing) => {
-        let filteredColors = existingColors
-
+        
+        let filteredColors = existingColors // Copia inicial de los colores existentes.
+        // Si se va a editar la categoria...
         if(isEditing) {
-            let categoryColor = initialValuesForEdit.color
-            console.log(categoryColor)  
-            // Excluir el color de la categoría actual de la validación
-            filteredColors = existingColors.filter(color => color !== categoryColor);
-            // console.log(filteredColors)
+            let categoryColor = initialValuesForEdit.color // Obtiene el color actual de la categoría que se está editando.
+            filteredColors = existingColors.filter(color => color !== categoryColor); // Excluye el color de la categoría actual de la validación
+        
         }
-
+        
         const threshold = 50; // Define el umbral para colores similares
-    
-        // Usar Array.some para detenerse en el primer conflicto
+        
+        // Verifica si el color seleccionado es demasiado similar a alguno ya existente.
+        // Si la diferencia entre el valor actual y cualquier color existente es menor
+        // que el umbral, se considera "demasiado similar".
         const isTooSimilar = filteredColors.some(color => 
             calculateColorDifference(value, color) < threshold
         )
 
+        // Si se detecta un color demasiado similar, devuelve un mensaje de error.
         if (isTooSimilar) {
             return `El color es demasiado similar a uno existente`;
         }
-    
+        // Si no hay conflictos, retorna undefined (sin errores).
         return undefined; 
     }
     
@@ -98,7 +101,7 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
 
                     return errors;
                 }}
-
+                
                 onSubmit={async (values, { resetForm }) => {
                     if (isEditing) {
                         dispatch(updateCategory({ categoryId, updatedCategory: values }))
