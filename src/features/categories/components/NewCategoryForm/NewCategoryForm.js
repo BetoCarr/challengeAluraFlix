@@ -102,81 +102,43 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                     return errors;
                 }}
                 
-                                
                 onSubmit={async (values, { resetForm }) => {
                     if (isEditing) {
                         dispatch(updateCategory({ categoryId, updatedCategory: values }))
                         .unwrap()
                         .then(() => {
                             console.log('Edición exitosa, abriendo FeedbackDialog...');
-                            openFeedback("FeedbackDialog", {
+                            openFeedback("InformativeFeedbackDialog", {
                                 message: "Categoria editada exitosamente!",
-                                showActions: false,
-                                onCloseCallback: () => {console.log("Llamando callback")}
-                                // onConfirm: () => {
-                                //     closeFeedback()
-                                //     navigate(`/update-category/${categoryId}`);  // Navega a la ruta de edición
-                                // },
-                                // onCancel: handleClose
+                                onCloseCallback: () => {
+                                    resetForm()
+                                    navigate('/', { replace: true });
+                                    console.log("Llamando callback")
+                                }
                             })
                         })
                         .catch((error) => {
                             console.log(error)
                         });
                     } else {
-                        // dispatch(addCategory(values))
-                        //     .unwrap()
-                        //     .then(() => {
-                        //         openFeedback("FeedbackDialog", {
-                        //             message: "Categoria agregada exitosamente!",
-                        //         })                                
-                        //         setTimeout(() => {
-                        //             closeFeedback();
-                        //             resetForm();
-                        //             navigate('/', { replace: true });
-                        //         }, 3000);
-                        //     })
-                        //     .catch((error) => {
-                        //         console.log(error)
-                        //     });
+                        dispatch(addCategory(values))
+                        .unwrap()
+                        .then(() => {
+                            openFeedback("FeedbackDialog", {
+                                message: "Categoria agregada exitosamente!",
+                                showActions: false,
+                                onCloseCallback: () => {
+                                    resetForm()
+                                    navigate('/', { replace: true });
+                                    console.log("Llamando callback")
+                                }
+                            })
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        });
                     }
                 }}
-                // onSubmit={async (values, { resetForm }) => {
-                //     if (isEditing) {
-                //         dispatch(updateCategory({ categoryId, updatedCategory: values }))
-                //         .unwrap()
-                //         .then(() => {
-                //             console.log('Edición exitosa, abriendo FeedbackDialog...');
-                //             openFeedback("FeedbackDialog", {
-                //                 message: "Categoria editada exitosamente!",
-                //             })                           
-                //             setTimeout(() => {
-                //                 closeFeedback();
-                //                 resetForm();
-                //                 navigate('/', { replace: true });
-                //             }, 3000);
-                //         })
-                //         .catch((error) => {
-                //             console.log(error)
-                //         });
-                //     } else {
-                //         dispatch(addCategory(values))
-                //             .unwrap()
-                //             .then(() => {
-                //                 openFeedback("FeedbackDialog", {
-                //                     message: "Categoria agregada exitosamente!",
-                //                 })                                
-                //                 setTimeout(() => {
-                //                     closeFeedback();
-                //                     resetForm();
-                //                     navigate('/', { replace: true });
-                //                 }, 3000);
-                //             })
-                //             .catch((error) => {
-                //                 console.log(error)
-                //             });
-                //     }
-                // }}
             >
                 {({isSubmitting, resetForm}) => (
                     <Form className='form-container'>

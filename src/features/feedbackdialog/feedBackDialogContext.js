@@ -8,37 +8,44 @@ const FeedbackContext = createContext();
 export const FeedbackProvider = ({ children }) => {
     const [feedback, setFeedback] = useState(null)
 
-    const openFeedback = (name, props = {}) => {
-        const {
-            autoCloseDuration = 3000, // Duración predeterminada
-            showActions = false,
-            onConfirm = () => {},
-            onCloseCallback = () => {},
-        } = props;
-        console.log(props)
-        setFeedback({ name, props })
-    }
+    const openFeedback = (name, customProps = {}) => {
+        // Configuraciones específicas según el tipo de Feedback
+        const defaultConfig = {
+            InformativeFeedbackDialog: {
+                autoCloseDuration: 3000,
+                showActions: false,
+                onCloseCallback: () => {
+                    console.log("Feedback informativo cerrado automáticamente.");
+                },
+            },
+            ConfirmationFeedbackDialog: {
+                autoCloseDuration: null, // No cierre automático
+                showActions: true,
+                // onConfirm: () => {
+                //     closeFeedback();
+                //     console.log("Acción confirmada desde Feedback de confirmación.");
+                // },
+                // onCancel: () => {
+                //     closeFeedback();
+                //     console.log("Feedback de confirmación cerrado.");
+                // },
+            },
+        };
 
-    // const openFeedback = ({
-    //     name,
-    //     props = {}
-    //     // autoCloseDuration = 3000,
-    //     // onConfirm = () => {},
-    //     // onCloseCallback = () => {},
-    //     // showActions = false,
-    // }) => {
-    //     // Configurar el feedback
-    //     setFeedback({ name, props: { ...props, showActions, onConfirm } });
+        // Combinar las configuraciones predeterminadas con las personalizadas
+        const finalProps = { ...defaultConfig[name], ...customProps };
 
-    //     // Configurar cierre automático si no se muestran acciones
-    //     if (!showActions && autoCloseDuration) {
-    //         setTimeout(() => {
-    //             closeFeedback();
-    //             onCloseCallback();
-    //         }, autoCloseDuration);
-    //     }
-    // };
-    
+        setFeedback({ name, props: finalProps });
+
+        // Manejar cierre automático para feedbacks informativos
+        if (!finalProps.showActions && finalProps.autoCloseDuration) {
+            setTimeout(() => {
+                closeFeedback();
+                finalProps.onCloseCallback?.();
+            }, finalProps.autoCloseDuration);
+        }
+    };
+
     const closeFeedback = () => setFeedback(null)
 
     return (
