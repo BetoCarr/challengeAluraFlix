@@ -20,8 +20,30 @@ function FeedbackDialogManager() {
         console.error(`El componente "${name}" no está registrado en FeedbackLookup.`);
         return null;
     }
+
+    // Configuraciones predeterminadas para cada tipo de feedback
+    const defaultConfig = {
+        InformativeFeedbackDialog: {
+            autoCloseDuration: 3000,
+            showActions: false,
+            onCloseCallback: () => {
+                console.log("Feedback informativo cerrado automáticamente.");
+            },
+        },
+        ConfirmationFeedbackDialog: {
+            autoCloseDuration: null, // No cierre automático
+            showActions: true,
+        },
+    };
+
+    // Combina la configuración predeterminada con las propiedades específicas
+    const combinedProps = {
+        ...defaultConfig[name], // Configuración predeterminada según el tipo
+        ...props, // Configuración específica pasada al abrir el feedback
+    };
+
     const handleConfirm = () => {
-        props.onConfirm?.(); // Llama la función personalizada si está definida
+        combinedProps.onConfirm?.(); // Ejecuta la función personalizada
         closeFeedback(); // Cierra el diálogo automáticamente
     };
 
@@ -32,7 +54,7 @@ function FeedbackDialogManager() {
 
     return (
         <FeedbackComponent
-            {...props}
+            {...combinedProps}
             onConfirm={handleConfirm}
             onClose={handleClose}
         />
