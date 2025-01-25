@@ -26,9 +26,6 @@ function FeedbackDialogManager() {
         InformativeFeedbackDialog: {
             autoCloseDuration: 3000,
             showActions: false,
-            onCloseCallback: () => {
-                console.log("Feedback informativo cerrado automáticamente.");
-            },
         },
         ConfirmationFeedbackDialog: {
             autoCloseDuration: null, // No cierre automático
@@ -50,6 +47,11 @@ function FeedbackDialogManager() {
     const handleClose = () => {
         closeFeedback();
         props.onCloseCallback?.(); // Ejecutar callback al cerrar
+    }
+
+    // Cierre automático para feedback informativo
+    if (!combinedProps.showActions && combinedProps.autoCloseDuration) {
+        setTimeout(handleClose, combinedProps.autoCloseDuration);
     }
 
     return (

@@ -107,13 +107,11 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
                         dispatch(updateCategory({ categoryId, updatedCategory: values }))
                         .unwrap()
                         .then(() => {
-                            console.log('Edición exitosa, abriendo FeedbackDialog...');
                             openFeedback("InformativeFeedbackDialog", {
                                 message: "Categoria editada exitosamente!",
                                 onCloseCallback: () => {
                                     resetForm()
                                     navigate('/', { replace: true });
-                                    console.log("Llamando callback")
                                 }
                             })
                         })
