@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFeedback } from "../feedBackDialogContext"
 import FeedbackDialog from "./FeedbackDialog";
 
@@ -53,6 +53,16 @@ function FeedbackDialogManager() {
     if (!combinedProps.showActions && combinedProps.autoCloseDuration) {
         setTimeout(handleClose, combinedProps.autoCloseDuration);
     }
+
+    // useEffect(() => {
+    //     if (!combinedProps.showActions && combinedProps.autoCloseDuration) {
+    //         const timer = setTimeout(handleClose, combinedProps.autoCloseDuration);
+
+    //         // Limpia el temporizador cuando se desmonta el componente
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [combinedProps.showActions, combinedProps.autoCloseDuration, handleClose]);
+
 
     return (
         <FeedbackComponent
