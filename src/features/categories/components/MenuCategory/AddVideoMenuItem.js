@@ -16,20 +16,18 @@ function AddVideoMenuItem ({ categoryId, handleClose }) {
     const category = useSelector(state => selectCategoryById(state, categoryId))
     const { nombre } = category
 
-    const { openFeedback, closeFeedback } = useFeedback()
+    const { openFeedback } = useFeedback()
 
     // Variable para acceder a ThemeProvider
     const theme = useTheme();
 
     const handleAddVideoClick = () => {
-        openFeedback("FeedbackDialog", {
+        handleClose()
+        openFeedback("ConfirmationFeedbackDialog", {
             message: `¿Quieres agregar video a la categoria "${nombre}"?`,
-            showActions: true,
             onConfirm: () => {
-                closeFeedback()
                 navigate(`/add-video/${categoryId}`);  // Navega a la ruta de edición
-            },
-            onCancel: handleClose()
+            }
         })
     }
 

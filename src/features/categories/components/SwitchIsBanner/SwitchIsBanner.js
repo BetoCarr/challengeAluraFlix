@@ -6,15 +6,6 @@ import { useField } from 'formik'; // Importa el hook useField de Formik
 function SwitchIsBanner ({ name }) {
     const [field] = useField(name); // name se refiere a "isBanner"
 
-    // // Usa el hook useField para obtener los props del campo de Formik relacionado con el switch
-    // const [field, meta, helpers] = useField(name);
-
-    // // Función para manejar el cambio del switch
-    // const handleChange = (event) => {
-    //     // Actualiza el valor del campo de Formik con el nuevo estado del switch
-    //     helpers.setValue(event.target.checked);
-    // }
-
     // Retorna componente 
     return(
         <Box className='switch-container'>
@@ -24,7 +15,6 @@ function SwitchIsBanner ({ name }) {
             <Switch 
                 {...field} // Propaga los props del campo de Formik al Switch
                 checked={field.value} // Establece el estado del switch basado en el valor del campo de Formik
-                // onChange={handleChange} // Maneja el cambio del switch
                 name={name}
                 size='large' // Tamaño del switch
             />

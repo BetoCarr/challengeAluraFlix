@@ -69,64 +69,28 @@ function NewVideoForm ({ initialValuesForEdit, isEditing, videoId, categoryId })
                 }}
 
                 // Manejo de la acción de envío del formulario
-                onSubmit={async (values, { setSubmitting, resetForm }) => {
-                    // Lógica para editar un video existente
-                    if(isEditing) {
-                        // Datos actualizados
-                        const updatedVideoData = {
-                            title: values.title,
-                            videoUrl: values.videoUrl,
-                            imageUrl: values.imageUrl,
-                        }
-                        dispatch(updateVideo({videoId, updatedVideoData})) // Llama a la acción de Redux
-                        .unwrap()
-                        .then(() => {
-                            openFeedback("FeedbackDialog", { // Muestra un cuadro de diálogo de éxito
-                                message: "VIdeo editado exitosamente!",
-                            })                           
-                            setTimeout(() => { // Cierra el diálogo, restablece el formulario y navega a "home" después de 3 segundos
-                                closeFeedback();
+                onSubmit={async (values, { resetForm }) => {
+                    const action = isEditing
+                    ? updateVideo({ videoId, updatedVideoData: values })
+                    : addNewVideo({ categoryId, newVideo: values });
+
+                    try {
+                        await dispatch(action).unwrap();
+                        openFeedback("InformativeFeedbackDialog", {
+                            message: isEditing 
+                                ? "Video editado exitosamente!" 
+                                : "Video agregado exitosamente!",
+                            onCloseCallback: () => {
                                 resetForm();
                                 navigate('/', { replace: true });
-                            }, 3000);
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                            openFeedback("FeedbackDialog", { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error
-                                message: "Video NO editado!",
-                            })
-                            setTimeout(() => { // Cierra el diálogo después de 3 segundos
-                                closeFeedback();
-                            }, 3000);
+                            },
                         });
-                    } else { // Lógica para agregar un video
-                        setSubmitting(true)
-                        // Nuevos datos de video
-                        const newVideo = {
-                            title: values.title,
-                            videoUrl: values.videoUrl,
-                            imageUrl: values.imageUrl,
-                        }  
-                        dispatch(addNewVideo({ categoryId, newVideo }))// Llama a la acción de Redux
-                        .unwrap()
-                        .then(() => {
-                            openFeedback("FeedbackDialog", { // Muestra un cuadro de diálogo de éxito
-                                message: "VIdeo agregado exitosamente!",
-                            })                           
-                            setTimeout(() => { // Cierra el diálogo, restablece el formulario y navega a "home" después de 3 segundos
-                                closeFeedback();
-                                resetForm();
-                                navigate('/', { replace: true });
-                            }, 3000);
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                            openFeedback("FeedbackDialog", { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error
-                                message: "Video NO agregado!",
-                            })
-                            setTimeout(() => { // Cierra el diálogo después de 3 segundos
-                                closeFeedback();
-                            }, 3000);
+                    } catch (error) {
+                        console.error("Error al procesar la acción:", error);
+                        openFeedback("FeedbackDialog", {
+                            message: isEditing 
+                                ? "Video NO editado!" 
+                                : "Video NO agregado!",
                         });
                     }
                 }}
@@ -161,8 +125,6 @@ function NewVideoForm ({ initialValuesForEdit, isEditing, videoId, categoryId })
                             isSubmitting={isSubmitting} 
                             resetForm={resetForm}
                         />
-                        {/* Mensaje de éxito al enviar el formulario */}
-                        {isSubmitting && <Typography variant='h6' color='text.primary'>Formulario enviado con exito!</Typography>}
                     </Form>
                 )}
             </Formik>

@@ -11,15 +11,13 @@ function DeleteVideoIcon({ categoryId, videoId, title }) {
     const dispatch = useDispatch()
 
     // Hooks del contexto de feedback para abrir y cerrar diálogos
-    const { openFeedback, closeFeedback } = useFeedback()
+    const { openFeedback } = useFeedback()
 
     // Maneja el clic en el icono de eliminar para abrir el cuadro de diálogo
     const handleDeleteClick = () => {
-        openFeedback("FeedbackDialog", {
+        openFeedback("ConfirmationFeedbackDialog", {
             message: `¿Quieres eliminar el video "${title}"?`,// Mensaje de confirmación
-            showActions: true, // Habilita los botones de confirmar y cancelar
             onConfirm: () => {
-                closeFeedback() // Cierra el cuadro de diálogo
                 handleVideoDelete(categoryId, videoId) // Ejecuta la lógica de eliminación
             }
         })
@@ -28,24 +26,17 @@ function DeleteVideoIcon({ categoryId, videoId, title }) {
     // Maneja la lógica de eliminación del video
     const handleVideoDelete = (categoryId, videoId) => {
         dispatch(deleteVideo({ categoryId, videoId })) // Llama a la acción de Redux
-            .then((response) => {
-                console.log("¡Video eliminado exitosamente!", response);
-                openFeedback("FeedbackDialog", { // Muestra un cuadro de diálogo de éxito
-                    message: "Video eliminado exitosamente!",
-                })
-                setTimeout(() => { // Cierra el diálogo después de 3 segundos
-                    closeFeedback();
-                }, 3000);
+        .unwrap() 
+        .then(() => {
+            openFeedback("InformativeFeedbackDialog", { // Muestra un cuadro de diálogo de éxito
+                message: "Video eliminado exitosamente!",
             })
-            .catch((error) => {
-                console.error("Error al eliminar el video:", error);
-                openFeedback("FeedbackDialog", { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error y una función de confirmación
-                    message: "Video NO eliminado!",
-                })
-                setTimeout(() => { // Cierra el diálogo después de 3 segundos
-                    closeFeedback();
-                }, 3000);
+        })
+        .catch(() => {
+            openFeedback("InformativeFeedbackDialog", { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error y una función de confirmación
+                message: "Video NO eliminado!",
             })
+        })
     };  
 
     return (

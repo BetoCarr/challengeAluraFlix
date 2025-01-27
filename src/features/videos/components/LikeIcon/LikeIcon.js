@@ -12,7 +12,7 @@ function LikeIcon ( {videoId, title} ) {
     const dispatch = useDispatch();
 
     // Hooks del contexto de feedback para abrir y cerrar diálogos
-    const { openFeedback, closeFeedback } = useFeedback()
+    const { openFeedback } = useFeedback()
 
     // Obtiene el estado de liked de Redux
     const liked = useSelector((state) => state.videos.likes[videoId])
@@ -20,14 +20,11 @@ function LikeIcon ( {videoId, title} ) {
     // Función para manejar el clic en el ícono de 'me gusta'
     function handleLikeClick() {
         dispatch(toggleLike(videoId)) // Despachar la acción toggleLike en lugar de cambiar el estado local
-        openFeedback("FeedbackDialog", { // Configura el mensaje de de acuerdo al estado de like
+        openFeedback("InformativeFeedbackDialog", { // Configura el mensaje de de acuerdo al estado de like
             message: liked 
             ? `¡"${title}" eliminado de tus favoritos!` 
             : `¡"${title}" añadido a tus favoritos!`
         })
-        setTimeout(() => { // Cierra mensaje
-            closeFeedback();
-        }, 3000);
     }
 
     return(

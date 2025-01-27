@@ -8,16 +8,13 @@ import EditIcon from '@mui/icons-material/Edit'
 function UpdateVideoIcon ({ categoryId, videoId, title }) {
     // Inicializa hooks de Redux y navegación
     const navigate = useNavigate();
-    const { openFeedback, closeFeedback } = useFeedback()
+    const { openFeedback } = useFeedback()
 
     // Maneja el clic en el ícono de edición
     const handleUpdatdeVideoClick = () => {
-        openFeedback("FeedbackDialog", { // Abre un diálogo de confirmación usando el hook de feedback
+        openFeedback("ConfirmationFeedbackDialog", { // Abre un diálogo de confirmación usando el hook de feedback
             message: `¿Quieres editar el video "${title}"?`, // Mensaje de confirmación
-            showActions: true, // Indica que el diálogo debe mostrar botones de acción
             onConfirm: () => {
-                closeFeedback() 
-                // Cierra el diálogo de feedback al confirmar
                 navigate(`/update-video/${categoryId}/${videoId}`) // Navega a la ruta de edición del video con los parámetros necesarios
             },
         })

@@ -7,10 +7,10 @@ import { Formik, Form } from 'formik'; // Importa los componentes Formik y Form 
 import { selectAllCategories, addCategory, updateCategory } from '../../categoriesSlice'
 import { useNavigate } from 'react-router-dom'; // Importa el hook useNavigate de React Router
 import { useFeedback } from '../../../feedbackdialog/feedBackDialogContext';
-import { calculateColorDifference } from '../../../../Components/ColorSelector/ColorSelector';
+import { calculateColorDifference } from '../ColorSelector/ColorSelector';
 import TextInput from "../../../../Components/TextInput/TextInput"; // Importa el componente TextInput
-import SwitchIsBanner from '../../../../Components/SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
-import ColorSelector from '../../../../Components/ColorSelector/ColorSelector'; // Importa el componente ColorSelector
+import SwitchIsBanner from '../SwitchIsBanner/SwitchIsBanner'; // Importa el componente SwitchIsBanner
+import ColorSelector from '../ColorSelector/ColorSelector'; // Importa el componente ColorSelector
 import FormButtons from '../../../../Components/FormButtons/FormButtons'; // Importa el componente FormButtons
 
 // Función del componente principal NewCategoryForm
@@ -101,40 +101,25 @@ function NewCategoryForm({ initialValuesForEdit, isEditing, categoryId }) {
 
                     return errors;
                 }}
-                
+                    
                 onSubmit={async (values, { resetForm }) => {
-                    if (isEditing) {
-                        dispatch(updateCategory({ categoryId, updatedCategory: values }))
-                        .unwrap()
-                        .then(() => {
-                            openFeedback("InformativeFeedbackDialog", {
-                                message: "Categoria editada exitosamente!",
-                                onCloseCallback: () => {
-                                    resetForm()
-                                    navigate('/', { replace: true });
-                                }
-                            })
-                        })
-                        .catch((error) => {
-                            console.log(error)
+                    const action = isEditing
+                        ? updateCategory({ categoryId, updatedCategory: values })
+                        : addCategory(values);
+                    
+                    try {
+                        await dispatch(action).unwrap();
+                        openFeedback("InformativeFeedbackDialog", {
+                            message: isEditing 
+                                ? "Categoría editada exitosamente!" 
+                                : "Categoría agregada exitosamente!",
+                            onCloseCallback: () => {
+                                resetForm();
+                                navigate('/', { replace: true });
+                            },
                         });
-                    } else {
-                        dispatch(addCategory(values))
-                        .unwrap()
-                        .then(() => {
-                            openFeedback("FeedbackDialog", {
-                                message: "Categoria agregada exitosamente!",
-                                showActions: false,
-                                onCloseCallback: () => {
-                                    resetForm()
-                                    navigate('/', { replace: true });
-                                    console.log("Llamando callback")
-                                }
-                            })
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        });
+                    } catch (error) {
+                        console.error("Error al procesar la acción:", error);
                     }
                 }}
             >

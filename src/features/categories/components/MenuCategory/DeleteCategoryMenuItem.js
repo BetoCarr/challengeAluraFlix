@@ -20,7 +20,7 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
     const { nombre } = category
 
     // Hooks del contexto de feedback para abrir y cerrar el diálogo
-    const { openFeedback, closeFeedback } = useFeedback()
+    const { openFeedback } = useFeedback()
 
     // Selecciona todos los videos y filtra los de la categoría
     const categoryVideos = useSelector(state => selectVideosByCategory(state, category.id));
@@ -38,18 +38,17 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
         const hayVideosAsociados = checkIfVideosExistForCategory();
         // Si hay videos, muestra el mensaje de error
         if (hayVideosAsociados) {
-            openFeedback("FeedbackDialog", {
+            handleClose()
+            openFeedback("InformativeFeedbackDialog", {
                 message: `No se puede eliminar la categoria "${nombre}" por que tiene videos asociados`,
             })
         } else { // Si no hay videos asociados, muestra mensaje de confirmación
-            openFeedback("FeedbackDialog", {
+            handleClose()
+            openFeedback("ConfirmationFeedbackDialog", {
                 message: `¿Quieres eliminar la categoria "${nombre}"?`,
-                showActions: true,
                 onConfirm: () => {
-                    closeFeedback()
                     handleConfirm()
                 },
-                onCancel: handleClose()
             })
         }
     };
@@ -59,20 +58,14 @@ function DeleteCategoryMenuItem({ categoryId, handleClose }) {
         dispatch(deleteCategory(categoryId)) // Despacha la acción para eliminar una categoría utilizando su ID
         .unwrap() // Desempaqueta la promesa para acceder a los datos o manejar errores
         .then(() => {   // Si la eliminación es exitosa,
-            openFeedback("FeedbackDialog", { // Muestra un cuadro de diálogo de retroalimentación con un mensaje de éxito
+            openFeedback("InformativeFeedbackDialog", { // Muestra un cuadro de diálogo de retroalimentación con un mensaje de éxito
                 message: "Categoria eliminada exitosamente!",
             })
-            setTimeout(() => { // Configura un temporizador para cerrar el cuadro de diálogo después de 3 segundos
-                closeFeedback();
-            }, 3000);              
         })
         .catch(() => { // Configura el cuadro de diálogo de retroalimentación con un mensaje de error 
-            openFeedback("FeedbackDialog", {
+            openFeedback("InformativeFeedbackDialog", {
                 message: "Categoria NO eliminada!",
             })
-            setTimeout(() => {  // Configura un temporizador para cerrar el cuadro de diálogo después de 3 segundos
-                closeFeedback();
-            }, 3000);
         });
     };
 

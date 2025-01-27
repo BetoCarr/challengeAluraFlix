@@ -11,7 +11,7 @@ import Divider from '@mui/material/Divider';
 
 
 // Componente funcional para manejar la edición de una categoría
-function UpdateCategoryMenuItem({ categoryId }) {
+function UpdateCategoryMenuItem({ categoryId, handleClose }) {
     // Hook para navegar entre rutas
     const navigate = useNavigate();
 
@@ -27,11 +27,12 @@ function UpdateCategoryMenuItem({ categoryId }) {
 
     // Maneja el clic en el elemento del menú para abrir el diálogo de confirmación
     const handleEditCategoryClick = () => {
+        handleClose()
         openFeedback("ConfirmationFeedbackDialog", {
             message: `¿Quieres editar la categoria "${nombre}"?`,
             onConfirm: () => {
                 navigate(`/update-category/${categoryId}`);  // Navega a la ruta de edición
-            },
+            }
         })
     }
 
