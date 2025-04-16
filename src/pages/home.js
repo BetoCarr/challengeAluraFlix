@@ -1,38 +1,73 @@
 // Importa React y los componentes necesarios
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCategories, selectAllCategories } from '../features/categories/categoriesSlice';
+import { fetchVideos } from '../features/videos/videosSlice';
 import MainContainer from "../Components/MainContainer/MainContainer";
-import Carousel from "../Components/Carousel/Carrusel/Carrusel";
-import { useCategorias } from '../CategoriaContext';
+import HomePageSkeleton from '../Components/HomePageSkeleton/HomePageSkeleton';
+import ErrorMessage from '../Components/ErrorMessage/ErrorMessage';
+import VideoList from '../features/videos/components/VideoList/VideoList';
 
-// Función principal del componente Home
 function Home () {
-    // Utiliza el hook useCategorias para obtener la lista de categorías
-    const categorias = useCategorias();
-    // console.log(categorias);
+    // Obtiene el dispatch de Redux para enviar acciones
+    const dispatch = useDispatch()
 
-    // Identifica la categoría marcada actualmente como Banner
-    const currentBannerCategory = categorias.find(categoria => categoria.isBanner);
+    // Obtiene los ids de las categorías del estado de Redux usando un selector
+    const categories = useSelector(selectAllCategories)
 
-  // Ordena las categorías, colocando la categoría marcada como banner primero
-    const categoriasOrdenadas = [...categorias].sort((a, b) => {
-        if (a.isBanner) return -1; // La categoría a es marcada como banner
-        if (b.isBanner) return 1; // La categoría b es marcada como banner
-        return 0; // Ninguna de las categorías es marcada como banner
-    });
+    // Obtiene el estado de las categorías y videos el posible error del estado de Redux
+    const categoryStatus = useSelector(state => state.categories.status)
+    const videosStatus = useSelector(state => state.videos.status)
+    const categoryError = useSelector(state => state.categories.error)
+    const videoError = useSelector((state) => state.videos.error);
+
+    // Llama al thunk para obtener las categorías y videos cuando el componente se monta
+    useEffect(() => {
+        if (categoryStatus === 'idle' || videosStatus === 'idle') {
+            dispatch(fetchCategories());
+            dispatch(fetchVideos());
+        }
+    }, [categoryStatus, videosStatus, dispatch]);
+
+    // Función auxiliar para renderizar la lista de Videos
+    const renderCategories = () =>
+        categories.map((category) => (
+            <VideoList key={category.id} category={category} />
+        ));
+
+    // Variable para almacenar el contenido a renderizar
+    let content
+
+    // Determina qué contenido mostrar basado en el estado de las categorías
+    if (categoryStatus === 'loading' && videosStatus === 'loading') {
+        content = (
+            <HomePageSkeleton />
+        )
+    } else if (categoryStatus === 'succeeded' && videosStatus === 'succeeded') {
+        content = renderCategories();
+    } else if (categoryStatus === 'failed' || videosStatus === 'failed') {
+        content = (
+            <>
+                {categoryStatus === 'failed' && (
+                    <ErrorMessage 
+                        message={`Error en categorías: ${categoryError}`} 
+                        onRetry={() => dispatch(fetchCategories())}
+                    />
+                )}
+                {videosStatus === 'failed' && (
+                    <ErrorMessage 
+                        message={`Error en videos: ${videoError}`} 
+                        onRetry={() => dispatch(fetchVideos())}
+                    />
+                )}
+            </>
+        );
+    }
 
     return(
-        <MainContainer>
-            {/* Mapea cada categoría y renderiza un Carousel para cada una */}
-            {categoriasOrdenadas.map((categoria, index) => (
-                <Carousel
-                    key={index} // Clave única para el mapeo de React
-                    categoria={categoria} // Pasa la categoría al componente Carousel
-                    isBanner={categoria === currentBannerCategory} // Pasa el estado de banner al componente Carousel
-                />
-            ))}
-        </MainContainer>
-    );
+        <MainContainer>{content}</MainContainer>
+    )
 }
 
 // Exporta el componente Home
-export default Home;
+export default Home

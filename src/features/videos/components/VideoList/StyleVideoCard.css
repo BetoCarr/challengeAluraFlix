@@ -1,0 +1,57 @@
+.card,
+.card-banner {
+    width: 80%;
+    height: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.card-banner {
+    width: 43%;
+}
+
+.image-card,
+.image-card-banner {
+    width: 100%;
+    height: 14rem;
+}
+
+.image-card-banner {
+    height: 18rem;
+}
+
+.typography-card {
+    color: var(--text-primary);
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.icotypo-container {
+    background-color: var(--main-primary);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 20px 0px 20px;
+}
+.icon {
+    font-size: 10px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;   
+}
+.liked {
+    color: red;
+}
+.icon:hover {
+    color: var(--text-secondary); /* Cambiar el color al pasar el cursor por encima */
+    cursor: pointer;
+}
+.container-videolist {
+    padding: 1.5rem 3rem;
+}

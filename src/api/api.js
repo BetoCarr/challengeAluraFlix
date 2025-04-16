@@ -6,15 +6,13 @@ export const api = axios.create({
 })
 
 // Función para buscar datos en la API y actualizar el estado de un componente
-export async function buscar (url, setData) {
-    const respuesta = await api.get(url) // Realiza una petición GET a la URL proporcionada
-    setData(respuesta.data) // Actualiza el estado del componente con los datos obtenidos
-}
-
-// Función para agregar un nuevo video a una categoría específica
-export function agregarNuevoVideo(categoryId, newVideo) {
-    const rutaParaAgregarVideo = `/categoria/${categoryId}/agregar_video`; // Ruta para agregar un nuevo video
-    return api.post(rutaParaAgregarVideo, newVideo); // Realiza una petición POST para agregar el nuevo video
+export async function buscar(url) {
+    try {
+        const respuesta = await api.get(url); // Realiza una petición GET a la URL proporcionada
+        return respuesta.data; // Retorna los datos obtenidos de la API
+    } catch (error) {
+        throw new Error(`Error al buscar datos: ${error.message}`);
+    }
 }
 
 // Función para agregar una nueva categoría
@@ -35,19 +33,20 @@ export function eliminarCategoria(categoryId) {
     return api.delete(rutaEliminarCategoria);  // Realiza una petición DELETE para eliminar la categoría
 }
 
-// Función para obtener la lista de videos de una categoría específica
-export function obtenerListaVideos(categoryId) {
-    const rutaObtenerListaVideos = `/videos/${categoryId}/obtener`; // Ruta para obtener la lista de videos
-    return new Promise((resolve, reject) => {
-        api
-        .get(rutaObtenerListaVideos)
-        .then((response) => {
-            resolve(response.data) // Resuelve la promesa con los datos obtenidos
-        })
-        .catch((error) => {
-            reject(error.response ? error.response.data : error.message); // Rechaza la promesa con el mensaje de error
-        })
-    });
+// Funcion para obtner videos por categoryId
+export function obtnerVideos() {
+    return api.get('/videos')
+}
+
+// Función para agregar un nuevo video a una categoría específica
+export function agregarNuevoVideo(categoryId, newVideo) {
+    const rutaParaAgregarVideo = `/categoria/${categoryId}/agregar_video`; // Ruta para agregar un nuevo video
+    return api.post(rutaParaAgregarVideo, newVideo); // Realiza una petición POST para agregar el nuevo video
+}
+// Función para editar un video en una categoría específica
+export function editarVideo(videoId, updatedVideoData) {
+    const rutaEditarVideo = `/videos/${videoId}/editar`; // Ruta para editar el video
+    return api.put(rutaEditarVideo, updatedVideoData); // Realiza una petición PUT para actualizar los datos del video
 }
 
 // Función para eliminar un video de una categoría específica
