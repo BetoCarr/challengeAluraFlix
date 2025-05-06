@@ -15,7 +15,7 @@ function Header() {
             <Toolbar className='tool-bar'>
                 {/* Enlace al inicio con el logotipo */}
                 <Link to="/">
-                    <Logotipo src={logo}/>
+                    <Logotipo src={logo} alt="Sportflix Logo"/>
                 </Link>
                 {/* Contenedor de botones */}
                 <Box className='button-container'>
