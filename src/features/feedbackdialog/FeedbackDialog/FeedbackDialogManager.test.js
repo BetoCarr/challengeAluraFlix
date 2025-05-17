@@ -133,3 +133,34 @@ describe("ConfirmationFeedbackDialog", () => {
         consoleSpy.mockRestore(); // Restaura el comportamiento normal de console.log
     });
 })
+
+// 📝 Sección 3: Pruebas de callbacks onConfirm / onCancel
+describe("ConfirmationFeedbackDialog - Event Handlers", () => {
+    // ✅ Prueba 3.1 - Ejecuta el callback onConfirm correctamente y cierra el feedback
+    test("Executes onConfirm callback and closes feedback on confirmation", () => {
+        const onConfirmMock = jest.fn(); // Crear un mock para onConfirm
+        renderWithProvider(); // Monta el componente
+        fireEvent.click(screen.getByText("Open Confirmation Feedback")); // Abre el diálogo de confirmación con un callback personalizado
+        const confirmButton = screen.getByRole("button", { name: /Aceptar/i });
+        confirmButton.onclick = () => {
+            onConfirmMock(); // Ejecuta el mock en lugar del callback real
+        };
+        fireEvent.click(confirmButton);        // Simula el clic en el botón de Aceptar
+        expect(onConfirmMock).toHaveBeenCalledTimes(1); // Verifica que se llamó al callback
+        expect(screen.queryByText("Confirmation Message")).toBeNull(); // Verifica que el diálogo se haya cerrado
+    });
+    // ✅ Prueba 3.2 - Maneja correctamente el evento de cierre manual
+    test("Executes onCloseCallback and closes feedback on manual close", () => {
+        const onCloseCallbackMock = jest.fn(); // Crear un mock para onCloseCallback
+        renderWithProvider(); // Monta el componente
+        fireEvent.click(screen.getByText("Open Confirmation Feedback"));         // Abre el diálogo con un callback personalizado
+        const closeButton = screen.getByRole("button", { name: /Cancelar/i });
+        closeButton.onclick = () => { // Sobrescribe el comportamiento del botón para llamar al mock
+            onCloseCallbackMock();
+        };
+        fireEvent.click(closeButton); // Simula el clic en el botón de cancelar
+        expect(onCloseCallbackMock).toHaveBeenCalledTimes(1); // Verifica que el callback fue llamado
+        expect(screen.queryByText("Confirmation Message")).toBeNull(); // Verifica que el diálogo se haya cerrado
+    });
+
+});
