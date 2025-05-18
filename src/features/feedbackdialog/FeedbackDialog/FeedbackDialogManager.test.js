@@ -4,7 +4,7 @@ import { FeedbackProvider, useFeedback } from "../feedBackDialogContext";
 import FeedbackDialogManager from "./FeedbackDialogManager";
 import { act } from "react-dom/test-utils";
 
-const TestComponent = () => {
+const TestComponent = ({ onConfirm, onCloseCallback }) => {
     const { openFeedback, closeFeedback } = useFeedback();
     return (
         <>
@@ -17,8 +17,8 @@ const TestComponent = () => {
             <button 
                 onClick={() => openFeedback("ConfirmationFeedbackDialog", { 
                     message: "Confirmation Message", 
-                    onConfirm: () => console.log("Confirmed"), // 👈 Aquí se pasa el callback
-                    onCloseCallback: () => console.log("Cancelled")  // 👈 Aquí se pasa el callback
+                    onConfirm,    
+                    onCloseCallback               
                 })}
             >
                 Open Confirmation Feedback
@@ -33,10 +33,10 @@ const TestComponent = () => {
 };
 
 // Funcion auxiliar para renderizar el TestComponent envuelto en FeedbackProvider
-const renderWithProvider = () => {
+const renderWithProvider = (props = {}) => {
     return render(
         <FeedbackProvider>
-            <TestComponent />
+            <TestComponent {...props}/>
         </FeedbackProvider>
     );
 };
@@ -114,24 +114,6 @@ describe("ConfirmationFeedbackDialog", () => {
         expect(acceptButton).toBeInTheDocument(); // Verifica que se muestre el botón de aceptar
         expect(cancelButton).toBeInTheDocument(); // Verifica que se muestre el botón de cancelar
     });
-    // ✅ Prueba 2.2.3 - Maneja correctamente el evento de confirmación
-    test("Handles confirmation event correctly", () => {
-            const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {}); // Espía el método console.log
-            renderWithProvider(); // Monta el componente
-            fireEvent.click(screen.getByText("Open Confirmation Feedback")); // Simula la apertura del diálogo de confirmación
-            fireEvent.click(screen.getByRole("button", { name: /Aceptar/i })); // Simula el clic en el botón de Aceptar
-            expect(consoleSpy).toHaveBeenCalledWith("Confirmed"); // Verifica que se haya registrado el mensaje de confirmación
-            consoleSpy.mockRestore(); // Restaura el comportamiento normal de console.log
-        });
-    // ✅ Prueba 2.2.4 - Maneja correctamente el evento de cancelación
-    test("Handles cancellation event correctly", () => {
-        const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {}); // Espía el método console.log
-        renderWithProvider(); // Monta el componente
-        fireEvent.click(screen.getByText("Open Confirmation Feedback")); // Simula la apertura del diálogo de confirmación
-        fireEvent.click(screen.getByRole("button", { name: /Cancelar/i })); // Simula el clic en el botón de Cancelar
-        expect(consoleSpy).toHaveBeenCalledWith("Cancelled"); // Verifica que se haya registrado el mensaje de cancelación
-        consoleSpy.mockRestore(); // Restaura el comportamiento normal de console.log
-    });
 })
 
 // 📝 Sección 3: Pruebas de callbacks onConfirm / onCancel
@@ -139,28 +121,19 @@ describe("ConfirmationFeedbackDialog - Event Handlers", () => {
     // ✅ Prueba 3.1 - Ejecuta el callback onConfirm correctamente y cierra el feedback
     test("Executes onConfirm callback and closes feedback on confirmation", () => {
         const onConfirmMock = jest.fn(); // Crear un mock para onConfirm
-        renderWithProvider(); // Monta el componente
+        renderWithProvider({ onConfirm: onConfirmMock }); // Pasa el mock como prop
         fireEvent.click(screen.getByText("Open Confirmation Feedback")); // Abre el diálogo de confirmación con un callback personalizado
-        const confirmButton = screen.getByRole("button", { name: /Aceptar/i });
-        confirmButton.onclick = () => {
-            onConfirmMock(); // Ejecuta el mock en lugar del callback real
-        };
-        fireEvent.click(confirmButton);        // Simula el clic en el botón de Aceptar
+        fireEvent.click(screen.getByRole("button", { name: /Aceptar/i })); // Simula el clic en Aceptar
         expect(onConfirmMock).toHaveBeenCalledTimes(1); // Verifica que se llamó al callback
-        expect(screen.queryByText("Confirmation Message")).toBeNull(); // Verifica que el diálogo se haya cerrado
+        expect(screen.queryByText("Confirmation Message")).toBeNull(); // Verifica que se cerró el diálogo
     });
     // ✅ Prueba 3.2 - Maneja correctamente el evento de cierre manual
     test("Executes onCloseCallback and closes feedback on manual close", () => {
         const onCloseCallbackMock = jest.fn(); // Crear un mock para onCloseCallback
-        renderWithProvider(); // Monta el componente
-        fireEvent.click(screen.getByText("Open Confirmation Feedback"));         // Abre el diálogo con un callback personalizado
-        const closeButton = screen.getByRole("button", { name: /Cancelar/i });
-        closeButton.onclick = () => { // Sobrescribe el comportamiento del botón para llamar al mock
-            onCloseCallbackMock();
-        };
-        fireEvent.click(closeButton); // Simula el clic en el botón de cancelar
-        expect(onCloseCallbackMock).toHaveBeenCalledTimes(1); // Verifica que el callback fue llamado
-        expect(screen.queryByText("Confirmation Message")).toBeNull(); // Verifica que el diálogo se haya cerrado
+        renderWithProvider({ onCloseCallback: onCloseCallbackMock }); // Pasa el mock como prop
+        fireEvent.click(screen.getByText("Open Confirmation Feedback")); // Abre el diálogo
+        fireEvent.click(screen.getByRole("button", { name: /Cancelar/i })); // Simula el clic en Cancelar
+        expect(onCloseCallbackMock).toHaveBeenCalledTimes(1); // Verifica que se llamó al callback
+        expect(screen.queryByText("Confirmation Message")).toBeNull(); // Verifica que se cerró el diálogo
     });
-
 });
