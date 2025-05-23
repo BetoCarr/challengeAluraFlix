@@ -1,12 +1,22 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import categoriesReducers from '../features/categories/categoriesSlice' // Importa tu slice aquí
 import videosReducer from '../features/videos/videosSlice'
 
-const store = configureStore({
-    reducer: {
-        categories: categoriesReducers,
-        videos: videosReducer
-    }
+// Combinar reducers
+const rootReducer = combineReducers({
+    categories: categoriesReducers,
+    videos: videosReducer,
 });
+
+// Creamos la función de setupStore, útil para testing
+export function setupStore(preloadedState) {
+    return configureStore({
+        reducer: rootReducer,
+        preloadedState, // estado inicial opcional para tests
+    });
+}
+
+// Este es el store real que usás en la app
+const store = setupStore();
 
 export default store;
