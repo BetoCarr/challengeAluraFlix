@@ -1,6 +1,4 @@
 import React from 'react'
-// import { http, HttpResponse, delay } from 'msw'
-// import { setupServer } from 'msw/node'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { renderWithProviders } from '../../../utils/testUtils'
 import CategoriesTestComponent from '../CategoriesTestComponent'
@@ -15,48 +13,6 @@ jest.mock('../../../api/api', () => ({
 }));
 
 import { buscar } from '../../../api/api';
-// We use msw to intercept the network request during the test,
-// and return the response 'John Smith' after 150ms
-// when receiving a get request to the `/api/user` endpoint
-// export const handlers = [
-//     http.get('/categorias', async () => {
-//         await delay(150)
-//         return HttpResponse.json({
-//             data: [
-//                 {
-//                     id: 1,
-//                     nombre: 'Fut-bol',
-//                     isBanner: false,
-//                     color: '#FF0000'
-//                 },
-//                 {
-//                     id: 2,
-//                     nombre: 'Frontenis',
-//                     isBanner: false,
-//                     color: '#00FF00'
-//                 },
-//                 {
-//                     id: 3,
-//                     nombre: 'Longboarding',
-//                     isBanner: true,
-//                     color: '#0000FF'
-//                 }
-//             ]
-//         })
-//     })
-// ]
-
-// const server = setupServer(...handlers)
-
-// // Enable API mocking before tests.
-// beforeAll(() => server.listen())
-
-// // Reset any runtime request handlers we may add during the tests.
-// afterEach(() => server.resetHandlers())
-
-// // Disable API mocking after the tests are done.
-// afterAll(() => server.close())
-
 
 
 describe("categories Integration Tests", () => {
@@ -74,9 +30,40 @@ describe("categories Integration Tests", () => {
 
         buscar.mockResolvedValue(mockCategories)
 
+   
         const { store } = renderWithProviders(<CategoriesTestComponent />);
-        expect(screen.queryByText('Deportes')).not.toBeInTheDocument();
 
+        // Verifica estado de loading
+        expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
+
+        await waitFor(() => {
+            expect(screen.getByText('Deportes')).toBeInTheDocument();
+            expect(screen.getByText('Entretenimiento')).toBeInTheDocument();
+            expect(screen.getByText('Noticias')).toBeInTheDocument();
+
+            // Verifica que la API se llamó correctamente
+            expect(buscar).toHaveBeenCalledTimes(1);
+            expect(buscar).toHaveBeenCalledWith('/categorias');
+
+            // Verifica que el estado en el store cambió
+            const state = store.getState();
+            expect(state.categories.status).toBe('succeeded');
+            expect(state.categories.entities['1'].nombre).toBe('Deportes');
+        });
+
+   
     })
+    test('should handle API error', async () => {
+        buscar.mockRejectedValue(new Error('Error de red'));
+
+        renderWithProviders(<CategoriesTestComponent />);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('error')).toBeInTheDocument();
+        });
+
+        expect(screen.getByText(/error/i)).toBeInTheDocument();
+        expect(buscar).toHaveBeenCalledTimes(1);
+    });
 });
 

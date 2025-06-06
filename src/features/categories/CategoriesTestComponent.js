@@ -23,7 +23,7 @@ export default function CategoriesTestComponent() {
       {status === 'succeeded' && (
         <ul data-testid="category-list">
           {categories.map((cat) => (
-            <li key={cat.id}>{cat.title}</li>
+            <li key={cat.id}>{cat.nombre}</li>
           ))}
         </ul>
       )}
