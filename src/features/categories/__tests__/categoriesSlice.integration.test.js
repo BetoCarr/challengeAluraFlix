@@ -7,57 +7,92 @@ import CategoriesTestComponent from '../CategoriesTestComponent'
 import { 
     mockBuscar,
     mockCategoriesData,
-    setupSuccessfulFetchMock
-    
- } from '../mocks/categoriesApiMocks';
+    setupSuccessfulFetchMock,
+    setupFailedFetchMock,
+    mockAddCategory,
+    setupSuccessfulAddCategoryMock,
+    clearAllMocks,
+    resetAllMocks
+} from '../mocks/categoriesApiMocks';
+
+import { assertionHelpers } from '../helpers/assertionHelpers';
+import { actionHelpers } from '../helpers/actionHelpers';
+import { createPreloadedCategoryState } from '../helpers/stateHelpers';
 
 // Mock de las funciones de API
 jest.mock('../../../api/api', () => ({
     buscar: require('../mocks/categoriesApiMocks').mockBuscar,
-
+    agregarCategoria : require('../mocks/categoriesApiMocks').mockAddCategory
 }));
 
 describe("categories Integration Tests", () => {
+
     beforeEach(() => {
         // Limpiar todos los mocks antes de cada test
-        jest.clearAllMocks();
+        clearAllMocks()
+        resetAllMocks()
     });
-   test('should fetch and render categories', async () => {
+    
+    test('should fetch and render categories', async () => {
         setupSuccessfulFetchMock(mockCategoriesData.basic);
-   
         const { store } = renderWithProviders(<CategoriesTestComponent />);
 
         // Verifica estado de loading
-        expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
+        assertionHelpers.expectLoadingVisible();
 
-        await waitFor(() => {
-            expect(screen.getByText('Deportes')).toBeInTheDocument();
-            expect(screen.getByText('Entretenimiento')).toBeInTheDocument();
-            expect(screen.getByText('Noticias')).toBeInTheDocument();
+        // Assert: categories render
+        await assertionHelpers.expectCategoriesToBeRendered([
+            'Fut-bol',
+            'Frontenis',
+            'Longboarding'
+        ]);
 
-            // Verifica que la API se llamó correctamente
-            expect(mockBuscar).toHaveBeenCalledWith('/categorias');
-            expect(mockBuscar).toHaveBeenCalledTimes(1);
-
-            // Verifica que el estado en el store cambió
-            const state = store.getState();
-            expect(state.categories.status).toBe('succeeded');
-            expect(state.categories.entities['1'].nombre).toBe('Deportes');
-        });
-
-   
+        // Verifica que la API se llamó correctamente
+        expect(mockBuscar).toHaveBeenCalledWith('/categorias');
+        expect(mockBuscar).toHaveBeenCalledTimes(1);
+    
+        const state = store.getState();
+        expect(state.categories.status).toBe('succeeded');
+        expect(state.categories.entities['1'].nombre).toBe('Fut-bol');
     })
-    // test('should handle API error', async () => {
-    //     buscar.mockRejectedValue(new Error('Error de red'));
+    test('should handle API error gracefully', async () => {
+        setupFailedFetchMock('Error de red');
 
-    //     renderWithProviders(<CategoriesTestComponent />);
+        renderWithProviders(<CategoriesTestComponent />);
 
-    //     await waitFor(() => {
-    //         expect(screen.getByTestId('error')).toBeInTheDocument();
-    //     });
+        await assertionHelpers.expectErrorVisible();
 
-    //     expect(screen.getByText(/error/i)).toBeInTheDocument();
-    //     expect(buscar).toHaveBeenCalledTimes(1);
-    // });
+        expect(mockBuscar).toHaveBeenCalledTimes(1);
+    });
+
+    test('should add a new category using helper', async () => {
+ 
+        const preloadedState = createPreloadedCategoryState(mockCategoriesData.basic);
+
+        // Configura el mock con el nuevo listado incluyendo la nueva categoría
+        setupSuccessfulAddCategoryMock();
+
+        const { store } = renderWithProviders(<CategoriesTestComponent />, { preloadedState });
+        actionHelpers.clickAddCategoryButton()
+
+        // Assert: verifica que la nueva categoría aparece en el DOM
+        await assertionHelpers.expectCategoriesToBeRendered([
+            'Fut-bol',
+            'Frontenis',
+            'Longboarding',
+            'Natacion' // La nueva
+        ]);
+        // Verifica que la API fue llamada correctamente
+        expect(mockAddCategory).toHaveBeenCalledTimes(1);
+         // Verifica que el estado global del store fue actualizado correctamente
+        const state = store.getState();
+        expect(state.categories.entities['4']).toEqual(
+            expect.objectContaining({
+                nombre: 'Natacion',
+                color: '#123456',
+                isBanner: false
+            })
+        );
+    });
 });
 

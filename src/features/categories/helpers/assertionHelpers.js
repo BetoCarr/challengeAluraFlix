@@ -5,7 +5,7 @@ export const assertionHelpers = {
   async expectCategoriesToBeRendered(names = []) {
     await waitFor(() => {
         names.forEach(name => {
-        expect(domHelpers.getCategoryByName(name)).toBeInTheDocument();
+          expect(domHelpers.getCategoryByName(name)).toBeInTheDocument();
         });
     });
   },
@@ -20,4 +20,3 @@ export const assertionHelpers = {
     });
   }
 };
-ß

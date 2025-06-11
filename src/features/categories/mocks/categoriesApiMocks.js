@@ -1,15 +1,23 @@
 import { jest } from '@jest/globals';
 
 export const mockBuscar = jest.fn();
+export const mockAddCategory = jest.fn();
 
 
 export const mockCategoriesData = {
     // Categorías básicas para testing
     basic: [
-        { id: 1, nombre: 'Deportes', color: '#FF5733', isBanner: true },
-        { id: 2, nombre: 'Entretenimiento', color: '#33C4FF', isBanner: false },
-        { id: 3, nombre: 'Noticias', color: '#33FF57', isBanner: false }
-    ]
+      { id: 1, nombre: 'Fut-bol', color: '#FF5733', isBanner: true },
+      { id: 2, nombre: 'Frontenis', color: '#33C4FF', isBanner: false },
+      { id: 3, nombre: 'Longboarding', color: '#33FF57', isBanner: false }
+    ],  
+    // Nueva categoría para agregar en el test
+    newCategory: {
+      id: 4,
+      nombre: 'Natacion',
+      color: '#123456',
+      isBanner: false
+    }
 }
 // Funciones helper para configurar mocks
 export const setupSuccessfulFetchMock = (data = mockCategoriesData.basic) => {
@@ -20,11 +28,29 @@ export const setupFailedFetchMock = (errorMessage = 'Error de red') => {
   mockBuscar.mockRejectedValue(new Error(errorMessage));
 };
 
-// export const clearAllMocks = () => {
-//     mockBuscar.mockClear();
-// };
+// Helper para simular un addCategory exitoso
+export const setupSuccessfulAddCategoryMock = () => {
+  const updatedList = [...mockCategoriesData.basic, mockCategoriesData.newCategory];
+  // La API responde con el nuevo arreglo bajo el campo `categorias`
+  mockAddCategory.mockResolvedValue({
+    data: {
+      categorias: updatedList
+    }
+  });
+};
 
-// // Función para resetear todos los mocks (incluyendo implementaciones)
-// export const resetAllMocks = () => {
-//     mockBuscar.mockReset();
-// };
+// Helper para simular un fallo en addCategory
+export const setupFailedAddCategoryMock = (errorMessage = 'Error al agregar') => {
+  mockAddCategory.mockRejectedValue(new Error(errorMessage));
+};
+
+export const clearAllMocks = () => {
+  mockBuscar.mockClear();
+  mockAddCategory.mockClear()
+};
+
+// Función para resetear todos los mocks (incluyendo implementaciones)
+export const resetAllMocks = () => {
+    mockBuscar.mockReset();
+    mockAddCategory.mockClear()
+};
