@@ -11,6 +11,7 @@ import {
     setupFailedFetchMock,
     mockAddCategory,
     setupSuccessfulAddCategoryMock,
+    setupFailedAddCategoryMock,
     clearAllMocks,
     resetAllMocks
 } from '../mocks/categoriesApiMocks';
@@ -65,7 +66,7 @@ describe("categories Integration Tests", () => {
         expect(mockBuscar).toHaveBeenCalledTimes(1);
     });
 
-    test('should add a new category using helper', async () => {
+    test('should add a new category', async () => {
  
         const preloadedState = createPreloadedCategoryState(mockCategoriesData.basic);
 
@@ -93,6 +94,32 @@ describe("categories Integration Tests", () => {
                 isBanner: false
             })
         );
+    });
+    test('should handle addCategory API error gracefully', async () => {
+ 
+        const preloadedState = createPreloadedCategoryState(mockCategoriesData.basic);
+        // Configura el mock con el nuevo listado incluyendo la nueva categoría
+        setupFailedAddCategoryMock();
+
+        const { store } = renderWithProviders(<CategoriesTestComponent />, { preloadedState });
+        // actionHelpers.clickAddCategoryButton()
+        //  // Espera a que se actualice el estado
+        await waitFor(() => {
+            screen.debug()
+
+            // const state = store.getState();
+            // expect(state.categories.status).toBe('failed');
+            // expect(state.categories.error).toMatch(/Cannot read properties of undefined (reading 'data')/i);
+        });
+        //   // Verifica que la categoría nueva NO fue agregada
+        // const state = store.getState();
+        // expect(state.categories.entities['4']).toBeUndefined();
+
+        // // Verifica que se llamó a la API
+        // expect(mockAddCategory).toHaveBeenCalledTimes(1);
+
+        // // (Opcional) Verifica si se muestra el mensaje de error en la UI
+        // await assertionHelpers.expectErrorVisible();
     });
 });
 

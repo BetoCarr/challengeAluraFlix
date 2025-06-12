@@ -40,9 +40,16 @@ export const setupSuccessfulAddCategoryMock = () => {
 };
 
 // Helper para simular un fallo en addCategory
-export const setupFailedAddCategoryMock = (errorMessage = 'Error al agregar') => {
-  mockAddCategory.mockRejectedValue(new Error(errorMessage));
+export const setupFailedAddCategoryMock = (errorMessage = 'Error de red al agregar') => {
+  mockBuscar.mockRejectedValue(new Error(errorMessage));
+
+  // mockAddCategory.mockRejectedValue({
+  //   response: {
+  //     data: errorMessage
+  //   }
+  // });
 };
+
 
 export const clearAllMocks = () => {
   mockBuscar.mockClear();

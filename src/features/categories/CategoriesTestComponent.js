@@ -25,6 +25,9 @@ export default function CategoriesTestComponent() {
       <div data-testid="status">{status}</div>
       {status === 'loading' && <p>Loading...</p>}
       {status === 'failed' && <p data-testid="error">{error}</p>}
+      {error && (
+        <p data-testid="error">{error}</p>  // ✅ Mostrar el error si existe
+      )}
       {status === 'succeeded' && (
         <ul data-testid="category-list">
           {categories.map((cat) => (
