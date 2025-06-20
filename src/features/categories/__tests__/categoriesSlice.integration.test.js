@@ -99,27 +99,23 @@ describe("categories Integration Tests", () => {
  
         const preloadedState = createPreloadedCategoryState(mockCategoriesData.basic);
         // Configura el mock con el nuevo listado incluyendo la nueva categoría
-        setupFailedAddCategoryMock();
+        setupFailedAddCategoryMock('Error de red al agregar');
 
         const { store } = renderWithProviders(<CategoriesTestComponent />, { preloadedState });
-        // actionHelpers.clickAddCategoryButton()
-        //  // Espera a que se actualice el estado
-        await waitFor(() => {
-            screen.debug()
+        actionHelpers.clickAddCategoryButton();
 
-            // const state = store.getState();
-            // expect(state.categories.status).toBe('failed');
-            // expect(state.categories.error).toMatch(/Cannot read properties of undefined (reading 'data')/i);
-        });
-        //   // Verifica que la categoría nueva NO fue agregada
-        // const state = store.getState();
-        // expect(state.categories.entities['4']).toBeUndefined();
+        // Espera a que el estado se actualice y el error sea visible
+        await assertionHelpers.expectErrorVisible();
 
-        // // Verifica que se llamó a la API
-        // expect(mockAddCategory).toHaveBeenCalledTimes(1);
+        const state = store.getState();
 
-        // // (Opcional) Verifica si se muestra el mensaje de error en la UI
-        // await assertionHelpers.expectErrorVisible();
+        // Verifica que no se agregó la nueva categoría
+        expect(state.categories.entities['4']).toBeUndefined();
+
+        // Verifica que el estado y error del slice fueron actualizados
+        expect(state.categories.status).toBe('failed');
+        expect(state.categories.error).toBe('Error de red al agregar');
+        expect(mockAddCategory).toHaveBeenCalledTimes(1);
     });
 });
 
